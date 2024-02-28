@@ -5,9 +5,4 @@ Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-
 Author: BootstrapMade.com
 License: https://bootstrapmade.com/license/
 
-
-UBAHH tambah
-
-sadasggit 
-
-ubah from new
+Dah duplicate
