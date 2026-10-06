@@ -315,14 +315,16 @@ kbd.is-hit { background: var(--accent); color: var(--on-accent); border-color: v
   width: min(1100px, calc(100vw - 32px)); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); padding: 0; border: 1px solid var(--line); border-radius: 22px;
   background: var(--surface); color: var(--text); box-shadow: 0 40px 120px -20px rgba(0, 0, 0, .8); overflow: auto; overscroll-behavior: contain;
 }
-.viewer::backdrop { background: rgba(6, 7, 14, .78); backdrop-filter: blur(6px); }
+/* No backdrop-filter here: in Chromium it blanks the page after scrolling the dialog. */
+.viewer::backdrop { background: rgba(6, 7, 14, .86); }
 .viewer[open] { animation: viewerIn .35s cubic-bezier(.2, .9, .3, 1.1); }
 @keyframes viewerIn { from { opacity: 0; transform: translateY(24px) scale(.97); } }
 .viewer__inner { position: relative; }
 .viewer__close { position: absolute; right: 14px; top: 14px; z-index: 5; background: rgba(10, 12, 24, .7); color: #fff; border-color: rgba(255, 255, 255, .2); }
 .viewer__stage { position: relative; background: #07080f; }
-.viewer__frame { aspect-ratio: 16 / 9; display: grid; place-items: center; overflow: hidden; }
-.viewer__frame img { max-width: 100%; max-height: 100%; object-fit: contain; animation: fadeImg .3s ease; }
+/* Fixed height so tall art (portraits, webtoon pages) gets as much room as wide screenshots. */
+.viewer__frame { position: relative; height: min(64vh, 640px); overflow: hidden; }
+.viewer__frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; animation: fadeImg .3s ease; }
 @keyframes fadeImg { from { opacity: 0; } }
 .viewer__clip { position: absolute; left: 14px; top: 14px; padding: 6px 10px; border-radius: 8px; background: var(--accent-2); color: #fff; font: 700 11px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; }
 .viewer__nav {

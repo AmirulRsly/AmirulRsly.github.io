@@ -67,6 +67,23 @@ window.PROJECTS = [
       { src: "covgif5.webp", clip: true }, { src: "covgif6.webp", clip: true }, { src: "covgif1.webp", clip: true }]
   },
   {
+    slug: "dnd-seraphim",
+    title: "Seraphim: DnD Character Commission",
+    short: "My first Fiverr commission: a seraphim character for a Dungeons & Dragons campaign, from sketch to full render.",
+    category: "art",
+    kind: "Character Design Commission",
+    engine: "Clip Studio Paint",
+    date: "2024-09",
+    cover: "cover-dnd.webp",
+    tags: ["Character Design", "Illustration", "Commission", "Fiverr"],
+    links: [],
+    body: [
+      "My first commission on Fiverr, for a client named Inari8: a character of the seraphim race from Dungeons & Dragons.",
+      "Girls and wings were two things I struggled to draw, so this one stretched me, and I love how it turned out. The gallery walks through the whole process: sketch, line art, flat colour, half render, glow lines and the full render."
+    ],
+    media: ["dnd6.webp", "dnd1.webp", "dnd2.webp", "dnd3.webp", "dnd4.webp", "dnd5.webp"]
+  },
+  {
     slug: "fuji-dojo",
     title: "Fuji Dojo Cafe",
     short: "A menu ordering GUI for a cafe. I built the back end for our group.",
@@ -115,6 +132,27 @@ window.PROJECTS = [
       "It pushed me, because the job was mostly backgrounds, which were not my strong suit. I finished the commission and the client was happy with it. My part of the video runs from 00:37 to 02:02."
     ],
     media: ["jawi1.webp", "jawi2.webp", "jawi3.webp", "jawi4.webp", "jawi5.webp"]
+  },
+  {
+    slug: "astralis",
+    title: "Astralis: Webtoon Series Test",
+    short: "A medieval fantasy webtoon I wrote and drew, tested on desktop and phone. 2.5 chapters finished.",
+    category: "art",
+    kind: "Webtoon",
+    engine: "Clip Studio Paint",
+    date: "2020-10",
+    cover: "cover-astralis.webp",
+    preview: "astralisclip2.webp",
+    tags: ["Comics", "Storytelling", "Character Design", "Paneling"],
+    links: [],
+    body: [
+      "A test of how my art reads on a webtoon site, in a desktop browser and on a phone. It was a passion project: my own webtoon series in a medieval fantasy setting.",
+      "Astralis is about humans who gain powers from the stars that could help them flourish, but human nature leads them to misuse those powers for personal gain and start a war against each other.",
+      "I started it in 2020 while waiting for my UPU result to begin my degree. I finished 2.5 chapters before balancing it with my studies got too hard. It is unfinished, but I am happy with how it turned out.",
+      "It also showed me I needed to improve my writing and my background art. That realisation is what got me reading novels and drawing more backgrounds."
+    ],
+    media: ["astralis1.webp", "astralis2.webp", "astralis3.webp",
+      { src: "astralisclip1.webp", clip: true }, { src: "astralisclip2.webp", clip: true }, { src: "astralisclip3.webp", clip: true }]
   },
   {
     slug: "flat-tire",

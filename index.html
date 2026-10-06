@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/site.css?v=5">
   <script>
     try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
@@ -88,7 +88,7 @@
           <p>I'm a Computer Science graduate (Multimedia Computing, CGPA 3.64) from Universiti Teknologi MARA, and a 2D digital artist and animator. I'm looking for a game developer role.</p>
           <p>Most of my projects are solo: I program the systems, like turn-based combat, rhythm spawners and an enemy AI that uses fuzzy logic, and I also draw and animate the characters frame by frame. That means I can talk to both the programmers and the artists on a team.</p>
           <div class="facts">
-            <div class="fact"><b data-count="7">0</b><span>featured projects</span></div>
+            <div class="fact"><b data-count="9" id="projCount">0</b><span>featured projects</span></div>
             <div class="fact"><b data-count="3">0</b><span>games on itch.io</span></div>
             <div class="fact"><b data-count="3.64" data-decimals="2">0</b><span>CGPA</span></div>
           </div>
@@ -194,7 +194,7 @@
       <div class="viewer__stage">
         <div class="viewer__frame">
           <img id="viewerImg" alt="">
-          <span class="viewer__clip" id="viewerClip" hidden>Gameplay clip</span>
+          <span class="viewer__clip" id="viewerClip" hidden>Clip</span>
         </div>
         <button class="viewer__nav viewer__nav--prev" type="button" data-step="-1" aria-label="Previous image">‹</button>
         <button class="viewer__nav viewer__nav--next" type="button" data-step="1" aria-label="Next image">›</button>
@@ -217,7 +217,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/projects.js"></script>
-  <script src="assets/js/site.js"></script>
+  <script src="assets/js/projects.js?v=5"></script>
+  <script src="assets/js/site.js?v=5"></script>
 </body>
 </html>

@@ -15,6 +15,7 @@
   var CAT = { games: "Game", apps: "App", art: "Art & Design" };
 
   $("#year").textContent = new Date().getFullYear();
+  $("#projCount").dataset.count = projects.length;
 
   /* ---------- Theme ---------- */
   $("#themeToggle").addEventListener("click", function () {
@@ -186,7 +187,7 @@
       '<div class="proj__media">' +
         '<img src="' + MEDIA + (p.featured && p.coverLarge ? p.coverLarge : p.cover) + '" alt="" loading="lazy" width="800" height="500">' +
         (p.preview ? '<img class="proj__preview" data-src="' + MEDIA + p.preview + '" alt="">' : "") +
-        (p.preview ? '<span class="proj__play">' + (finePointer ? "Hover to play" : "Gameplay") + "</span>" : "") +
+        (p.preview ? '<span class="proj__play">' + (finePointer ? "Hover to play" : (p.category === "games" ? "Gameplay" : "Preview")) + "</span>" : "") +
         (p.featured ? '<span class="proj__ribbon badge">Featured</span>' : "") +
       "</div>" +
       '<div class="proj__body">' +
@@ -244,7 +245,7 @@
   var ICON_CAP = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg>';
   var edu = [
     { date: "2015-07", title: "Diploma in Mechanical Engineering", sub: "UiTM Permatang Pauh, Pulau Pinang · 2015 to 2019" },
-    { date: "2020-03", title: "BCS (Hons.) Multimedia Computing", sub: "UiTM Shah Alam, Selangor · 2020 to 2023 · CGPA 3.64" }
+    { date: "2020-11", title: "BCS (Hons.) Multimedia Computing", sub: "UiTM Shah Alam, Selangor · 2020 to 2023 · CGPA 3.64" }
   ];
   var events = edu.map(function (e) { return { type: "edu", date: e.date, html: '<div class="tl__card"><span class="tl__icon">' + ICON_CAP + '</span><span><span class="tl__date">' + e.date.slice(0, 4) + '</span><span class="tl__title">' + esc(e.title) + '</span><span class="tl__sub">' + esc(e.sub) + "</span></span></div>" }; })
     .concat(projects.map(function (p, i) {
@@ -270,7 +271,7 @@
     $("#viewerLinks").innerHTML = p.links.map(function (l, k) { return '<a class="btn' + (k ? " btn--ghost" : "") + '" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + " ↗</a>"; }).join("");
     thumbs.innerHTML = p.media.map(function (m, k) {
       var clip = typeof m !== "string";
-      return '<button type="button" data-k="' + k + '" class="' + (clip ? "is-clip" : "") + '" aria-label="' + (clip ? "Gameplay clip " : "Image ") + (k + 1) + '"><img src="' + MEDIA + "thumbs/" + src(m) + '" alt=""></button>';
+      return '<button type="button" data-k="' + k + '" class="' + (clip ? "is-clip" : "") + '" aria-label="' + (clip ? "Clip " : "Image ") + (k + 1) + '"><img src="' + MEDIA + "thumbs/" + src(m) + '" alt=""></button>';
     }).join("");
     showMedia(mi || 0);
     if (!dlg.open) { lastFocus = document.activeElement; dlg.showModal(); document.body.style.overflow = "hidden"; }
@@ -282,7 +283,7 @@
     cur.m = (k + n) % n;
     var m = list[cur.m];
     img.src = MEDIA + src(m);
-    img.alt = projects[cur.p].title + ", " + (typeof m === "string" ? "screenshot " : "gameplay clip ") + (cur.m + 1);
+    img.alt = projects[cur.p].title + ", " + (typeof m === "string" ? "image " : "clip ") + (cur.m + 1);
     img.style.animation = "none"; void img.offsetWidth; img.style.animation = "";
     $("#viewerClip").hidden = typeof m === "string";
     $("#viewerCount").textContent = (cur.m + 1) + " / " + n;
@@ -294,6 +295,7 @@
   }
   function closeViewer() { if (dlg.open) dlg.close(); }
   dlg.addEventListener("close", function () {
+    if (dlg.open) return; // reopened before this queued event ran
     document.body.style.overflow = "";
     img.removeAttribute("src");
     if (location.hash.indexOf("#work/") === 0) history.replaceState(null, "", "#work");
