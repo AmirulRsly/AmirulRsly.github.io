@@ -1,8 +1,9 @@
-Thanks for downloading this template!
+Amirul Hakim Rosly, portfolio site. Plain HTML, CSS and JS with no build step.
 
-Template Name: iPortfolio
-Template URL: https://bootstrapmade.com/iportfolio-bootstrap-portfolio-websites-template/
-Author: BootstrapMade.com
-License: https://bootstrapmade.com/license/
+- index.html          the whole site
+- assets/js/projects.js   project content: edit this file to add or change projects
+- assets/js/site.js       interactions
+- assets/css/site.css     styles
+- assets/media/           images and clips (WebP)
 
-Dah duplicate
+The old per-project pages (covidbuster.html etc.) now redirect to index.html#work/<slug>.
