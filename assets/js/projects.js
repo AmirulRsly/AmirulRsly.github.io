@@ -1,6 +1,7 @@
 // All portfolio content lives here. Add a project by adding an object to this list;
 // the grid, the timeline and the detail viewer are all built from it.
 // media: "name.webp" for a still, { src: "name.webp", clip: true } for an animated clip.
+// Galleries always show clips before stills (site.js sorts them).
 window.PROJECTS = [
   {
     slug: "kanamoji",
@@ -24,6 +25,65 @@ window.PROJECTS = [
     media: ["fyp1.webp", "fyp2.webp", "fyp3.webp", "fyp4.webp", "fyp5.webp", "fyp6.webp", "fyp7.webp", "fyp8.webp",
       { src: "fypgif1.webp", clip: true }, { src: "fypgif2.webp", clip: true }, { src: "fypgif3.webp", clip: true },
       { src: "fypgif4.webp", clip: true }, { src: "fypgif5.webp", clip: true }]
+  },
+  {
+    slug: "keycombowombo",
+    title: "KeyComboWombo",
+    short: "A roguelike typing game inspired by Slay the Spire: every attack, parry and combo is a word you type.",
+    category: "games",
+    kind: "Roguelike Typing Game",
+    engine: "Unity · C#",
+    date: "2026-09",
+    cover: "cover-kcw.webp",
+    preview: "kcwclip3.webp",
+    tags: ["Unity", "C#", "Roguelike", "Typing", "Claude Code", "AI-assisted Art"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/keycombowombo" }],
+    body: [
+      "A roguelike typing game inspired by Slay the Spire. I couldn't find a game that had really tried this mix, and I thought typing and roguelike progression could make a great core mechanic together.",
+      "I built the game mechanics with Claude Code and generated the art assets with ChatGPT. The sound effects and music are royalty-free tracks from Pixabay. It turned out to be a very enjoyable game, especially for people who love typing on a keyboard.",
+      "The main feedback from players: they focus on the bottom half of the screen, where the words to type are, and miss the sprites, the effects and the HP bars. That is the next thing I want to solve."
+    ],
+    media: ["kcw1.webp", "kcw2.webp", "kcw3.webp", "kcw4.webp", "kcw5.webp",
+      { src: "kcwclip3.webp", clip: true }, { src: "kcwclip4.webp", clip: true }, { src: "kcwclip5.webp", clip: true },
+      { src: "kcwclip1.webp", clip: true }, { src: "kcwclip2.webp", clip: true }, { src: "kcwclip6.webp", clip: true }]
+  },
+  {
+    slug: "hotel-check-in",
+    title: "Cozy Cottage: Hotel Check-In",
+    short: "A Papers, Please style minigame prototype from my Novalearn internship: spot fake tickets and hand out the right keys.",
+    category: "games",
+    kind: "Minigame Prototype",
+    engine: "Unity · C# · WebGL",
+    date: "2023-11",
+    cover: "cover-hotel.webp",
+    preview: "hotelclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "Prototype", "Internship", "Novalearn"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/hotel-check-in-minigamefornovalearn" }],
+    body: [
+      "A small proof of concept for a minigame planned for Novalearn's gamified learning website, built during my internship there as a junior developer.",
+      "It is a hotel check-in game inspired by Papers, Please. The player checks each guest's ticket against the booking book, makes sure their appearance matches, and hands over the right room key."
+    ],
+    media: ["hotel1.webp", "hotel2.webp", "hotel3.webp", "hotel4.webp", "hotel5.webp", "hotel6.webp",
+      { src: "hotelclip1.webp", clip: true }]
+  },
+  {
+    slug: "grade-4-math",
+    title: "Grade 4 Math Activities",
+    short: "The gamified math quiz I built as Novalearn's hiring test. It got me the internship.",
+    category: "games",
+    kind: "Gamified Quiz",
+    engine: "Unity · C# · WebGL",
+    date: "2023-08",
+    cover: "cover-math.webp",
+    preview: "mathclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "Drag and Drop", "Educational"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/grade-4-math" }],
+    body: [
+      "The test Novalearn gave me before hiring me as a junior developer intern: take five grade 4 math questions and gamify them.",
+      "I kept the game layer light on purpose. Players answer with buttons that raise and lower values, and by dragging objects into the right place. I passed, and got the internship."
+    ],
+    media: ["math1.webp", "math2.webp", "math3.webp",
+      { src: "mathclip1.webp", clip: true }, { src: "mathclip2.webp", clip: true }]
   },
   {
     slug: "rhythm-hero",

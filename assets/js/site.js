@@ -3,6 +3,11 @@
 
   var MEDIA = "assets/media/";
   var projects = window.PROJECTS || [];
+  // Every gallery shows its clips first, then the stills, keeping each group's order from projects.js.
+  projects.forEach(function (p) {
+    var isClip = function (m) { return typeof m !== "string"; };
+    p.media = p.media.filter(isClip).concat(p.media.filter(function (m) { return !isClip(m); }));
+  });
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var $ = function (s, r) { return (r || document).querySelector(s); };
