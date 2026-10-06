@@ -21,6 +21,9 @@
 
   $("#year").textContent = new Date().getFullYear();
   $("#projCount").dataset.count = projects.length;
+  $("#itchCount").dataset.count = projects.filter(function (p) {
+    return p.category === "games" && p.links.some(function (l) { return /itch\.io/.test(l.url); });
+  }).length;
 
   /* ---------- Theme ---------- */
   $("#themeToggle").addEventListener("click", function () {
