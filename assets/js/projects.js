@@ -58,7 +58,7 @@ window.PROJECTS = [
     tags: ["Unity", "C#", "Coroutines", "Singletons", "Frame-by-frame Animation"],
     links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/covid-busters" }],
     body: [
-      "My first personal Unity project, built with what I learned from a Udemy Unity programming course and YouTube tutorials. After a month of development, the turn-based combat system worked as intended.",
+      "My first Unity project, built with what I learned from a Udemy Unity programming course and YouTube tutorials. After a month of development, the turn-based combat system worked as intended.",
       "It taught me how useful the singleton pattern is, and how to use coroutines with IEnumerators to sequence turns and animations.",
       "I designed and drew the player characters and monsters in Clip Studio Paint, and animated both heroes' attacks frame by frame."
     ],
