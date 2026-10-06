@@ -168,27 +168,6 @@ window.PROJECTS = [
       { src: "srclip1.webp", clip: true }, { src: "srclip2.webp", clip: true }]
   },
   {
-    slug: "maze-quiz",
-    title: "Maze Quiz",
-    short: "My first freelance game job: memorise a maze from above, then guide a fox through it in the dark.",
-    category: "games",
-    kind: "Memory Minigame",
-    engine: "Unity · C# · WebGL",
-    date: "2025-04",
-    client: true,
-    cover: "cover-mq.webp",
-    preview: "mqclip1.webp",
-    tags: ["Unity", "C#", "WebGL", "NavMesh AI", "Freelance"],
-    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/mazequiz-prototype1" }],
-    body: [
-      "My first ever freelance game developer job: a maze minigame.",
-      "The player first sees the whole maze from a bird's-eye view. Then the camera zooms in and their view shrinks to a small circle, so they have to rely on memory to pick the path to the exit. Wrong turns cost health.",
-      "It was my first time using Unity's AI NavMesh, and it worked nicely: the fox finds its own way to wherever the player chooses to move."
-    ],
-    media: ["mq1.webp", "mq2.webp", "mq3.webp", "mq4.webp", "mq5.webp",
-      { src: "mqclip1.webp", clip: true }]
-  },
-  {
     slug: "infinite-run",
     title: "Infinite Run",
     short: "A Temple Run style runner for a client, controlled by swiping.",
@@ -207,6 +186,27 @@ window.PROJECTS = [
     ],
     media: ["ir1.webp", "ir2.webp",
       { src: "irclip1.webp", clip: true }]
+  },
+  {
+    slug: "maze-quiz",
+    title: "Maze Quiz",
+    short: "My first freelance game job: memorise a maze from above, then guide a fox through it in the dark.",
+    category: "games",
+    kind: "Memory Minigame",
+    engine: "Unity · C# · WebGL",
+    date: "2024-10",
+    client: true,
+    cover: "cover-mq.webp",
+    preview: "mqclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "NavMesh AI", "Freelance"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/mazequiz-prototype1" }],
+    body: [
+      "My first ever freelance game developer job: a maze minigame.",
+      "The player first sees the whole maze from a bird's-eye view. Then the camera zooms in and their view shrinks to a small circle, so they have to rely on memory to pick the path to the exit. Wrong turns cost health.",
+      "It was my first time using Unity's AI NavMesh, and it worked nicely: the fox finds its own way to wherever the player chooses to move."
+    ],
+    media: ["mq1.webp", "mq2.webp", "mq3.webp", "mq4.webp", "mq5.webp",
+      { src: "mqclip1.webp", clip: true }]
   },
   {
     slug: "hotel-check-in",
