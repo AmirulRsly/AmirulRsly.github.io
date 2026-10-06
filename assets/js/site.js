@@ -277,6 +277,7 @@
     $("#viewerTitle").textContent = p.title;
     $("#viewerMeta").innerHTML = "<b>" + esc(p.kind) + "</b><span>" + esc(p.engine) + "</span><span>" + fmtDate(p.date) + "</span><span>" + CAT[p.category] + "</span>" + (p.client ? "<span>Freelance</span>" : "");
     $("#viewerBody").innerHTML = p.body.map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("");
+    if (p.clientAssets) $("#viewerBody").innerHTML += '<p class="viewer__note">The art assets were provided by the client and are AI-generated. I developed the game.</p>';
     $("#viewerTags").innerHTML = p.tags.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
     $("#viewerLinks").innerHTML = p.links.map(function (l, k) { return '<a class="btn' + (k ? " btn--ghost" : "") + '" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + " ↗</a>"; }).join("");
     thumbs.innerHTML = p.media.map(function (m, k) {

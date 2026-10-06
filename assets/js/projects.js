@@ -1,7 +1,8 @@
 // All portfolio content lives here. Add a project by adding an object to this list;
 // the grid, the timeline and the detail viewer are all built from it.
 // media: "name.webp" for a still, { src: "name.webp", clip: true } for an animated clip.
-// Galleries always show clips before stills (site.js sorts them). client: true adds a "Freelance" label.
+// Galleries always show clips before stills (site.js sorts them). client: true adds a "Freelance" label;
+// clientAssets: true adds a note that the client supplied the (AI-generated) art.
 window.PROJECTS = [
   {
     slug: "kanamoji",
@@ -56,6 +57,7 @@ window.PROJECTS = [
     engine: "Unity · C# · WebGL",
     date: "2026-02",
     client: true,
+    clientAssets: true,
     cover: "cover-jg.webp",
     preview: "jgclip1.webp",
     tags: ["Unity", "C#", "WebGL", "Gyroscope Controls", "Freelance"],
@@ -76,6 +78,7 @@ window.PROJECTS = [
     engine: "Unity · C# · WebGL",
     date: "2026-01",
     client: true,
+    clientAssets: true,
     cover: "cover-er.webp",
     preview: "erclip1.webp",
     tags: ["Unity", "C#", "WebGL", "Shaders", "Procedural Generation", "Freelance"],
@@ -96,6 +99,7 @@ window.PROJECTS = [
     engine: "Unity · C# · WebGL",
     date: "2025-07",
     client: true,
+    clientAssets: true,
     cover: "cover-bq.webp",
     preview: "bqclip1.webp",
     tags: ["Unity", "C#", "WebGL", "Quiz", "Freelance"],
@@ -116,6 +120,7 @@ window.PROJECTS = [
     engine: "Unity · C# · WebGL",
     date: "2025-06",
     client: true,
+    clientAssets: true,
     cover: "cover-inf.webp",
     preview: "infclip1.webp",
     tags: ["Unity", "C#", "WebGL", "Educational", "Freelance"],
@@ -136,6 +141,7 @@ window.PROJECTS = [
     engine: "Unity · C# · WebGL",
     date: "2025-05",
     client: true,
+    clientAssets: true,
     cover: "cover-lm.webp",
     preview: "lmclip1.webp",
     tags: ["Unity", "C#", "WebGL", "Memory Game", "UI Animation", "Freelance"],
@@ -156,6 +162,7 @@ window.PROJECTS = [
     engine: "Unity · C# · WebGL",
     date: "2025-05",
     client: true,
+    clientAssets: true,
     cover: "cover-sr.webp",
     preview: "srclip1.webp",
     tags: ["Unity", "C#", "WebGL", "Educational", "Freelance"],
@@ -176,6 +183,7 @@ window.PROJECTS = [
     engine: "Unity · C# · WebGL",
     date: "2025-01",
     client: true,
+    clientAssets: true,
     cover: "cover-ir.webp",
     preview: "irclip1.webp",
     tags: ["Unity", "C#", "WebGL", "Swipe Controls", "Procedural Generation", "Freelance"],
@@ -196,6 +204,7 @@ window.PROJECTS = [
     engine: "Unity · C# · WebGL",
     date: "2024-10",
     client: true,
+    clientAssets: true,
     cover: "cover-mq.webp",
     preview: "mqclip1.webp",
     tags: ["Unity", "C#", "WebGL", "NavMesh AI", "Freelance"],

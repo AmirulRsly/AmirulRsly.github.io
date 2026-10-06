@@ -349,6 +349,7 @@ kbd.is-hit { background: var(--accent); color: var(--on-accent); border-color: v
 .viewer__meta b { color: var(--accent); font-weight: 600; }
 .viewer__info h2 { font-size: clamp(26px, 3.4vw, 38px); margin-bottom: 16px; }
 .viewer__body { color: var(--muted); max-width: 760px; }
+.viewer__note { padding: 10px 14px; border-left: 3px solid var(--accent-3); border-radius: 6px; background: var(--bg-2); font-size: 15px; }
 .viewer__info .chips { margin: 18px 0 22px; }
 .viewer__links { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 26px; }
 .viewer__pager { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 20px; }
