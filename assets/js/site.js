@@ -193,10 +193,10 @@
         '<img src="' + MEDIA + (p.featured && p.coverLarge ? p.coverLarge : p.cover) + '" alt="" loading="lazy" width="800" height="500">' +
         (p.preview ? '<img class="proj__preview" data-src="' + MEDIA + p.preview + '" alt="">' : "") +
         (p.preview ? '<span class="proj__play">' + (finePointer ? "Hover to play" : (p.category === "games" ? "Gameplay" : "Preview")) + "</span>" : "") +
-        (p.featured ? '<span class="proj__ribbon badge">Featured</span>' : "") +
+        (p.featured ? '<span class="proj__ribbon badge">Featured</span>' : (p.client ? '<span class="proj__ribbon proj__client">Freelance</span>' : "")) +
       "</div>" +
       '<div class="proj__body">' +
-        '<div class="proj__meta"><b>' + esc(p.kind) + "</b><span>" + fmtDate(p.date) + "</span></div>" +
+        '<div class="proj__meta"><b>' + esc(p.kind) + "</b><span>" + fmtDate(p.date) + "</span>" + "</div>" +
         '<h3 class="proj__title">' + esc(p.title) + "</h3>" +
         '<p class="proj__short">' + esc(p.short) + "</p>" +
         '<span class="proj__more">View project</span>' +
@@ -216,6 +216,8 @@
     var pv = $(".proj__preview", card);
     card.addEventListener("click", function () { openProject(+card.dataset.i, 0, true); });
     if (!pv) return;
+    // Phone-recorded clips are tall: fit them inside the card instead of cropping to a sliver.
+    pv.addEventListener("load", function () { pv.classList.toggle("is-tall", pv.naturalHeight > pv.naturalWidth); });
     if (!finePointer) { if (!reduceMotion) autoplay.observe(card); return; }
     card.addEventListener("pointerenter", function () {
       if (!pv.src) pv.src = pv.dataset.src;
@@ -270,7 +272,7 @@
     var p = projects[pi]; if (!p) return;
     cur.p = pi;
     $("#viewerTitle").textContent = p.title;
-    $("#viewerMeta").innerHTML = "<b>" + esc(p.kind) + "</b><span>" + esc(p.engine) + "</span><span>" + fmtDate(p.date) + "</span><span>" + CAT[p.category] + "</span>";
+    $("#viewerMeta").innerHTML = "<b>" + esc(p.kind) + "</b><span>" + esc(p.engine) + "</span><span>" + fmtDate(p.date) + "</span><span>" + CAT[p.category] + "</span>" + (p.client ? "<span>Freelance</span>" : "");
     $("#viewerBody").innerHTML = p.body.map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("");
     $("#viewerTags").innerHTML = p.tags.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
     $("#viewerLinks").innerHTML = p.links.map(function (l, k) { return '<a class="btn' + (k ? " btn--ghost" : "") + '" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + " ↗</a>"; }).join("");

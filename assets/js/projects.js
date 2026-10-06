@@ -1,7 +1,7 @@
 // All portfolio content lives here. Add a project by adding an object to this list;
 // the grid, the timeline and the detail viewer are all built from it.
 // media: "name.webp" for a still, { src: "name.webp", clip: true } for an animated clip.
-// Galleries always show clips before stills (site.js sorts them).
+// Galleries always show clips before stills (site.js sorts them). client: true adds a "Freelance" label.
 window.PROJECTS = [
   {
     slug: "kanamoji",
@@ -32,7 +32,7 @@ window.PROJECTS = [
     short: "A roguelike typing game inspired by Slay the Spire: every attack, parry and combo is a word you type.",
     category: "games",
     kind: "Roguelike Typing Game",
-    engine: "Unity · C#",
+    engine: "Unity · C# · WebGL",
     date: "2026-09",
     cover: "cover-kcw.webp",
     preview: "kcwclip3.webp",
@@ -46,6 +46,167 @@ window.PROJECTS = [
     media: ["kcw1.webp", "kcw2.webp", "kcw3.webp", "kcw4.webp", "kcw5.webp",
       { src: "kcwclip3.webp", clip: true }, { src: "kcwclip4.webp", clip: true }, { src: "kcwclip5.webp", clip: true },
       { src: "kcwclip1.webp", clip: true }, { src: "kcwclip2.webp", clip: true }, { src: "kcwclip6.webp", clip: true }]
+  },
+  {
+    slug: "jump-game",
+    title: "Jump Game",
+    short: "A Doodle Jump style climber for a client, steered by tilting your phone.",
+    category: "games",
+    kind: "Mobile Minigame",
+    engine: "Unity · C# · WebGL",
+    date: "2026-02",
+    client: true,
+    cover: "cover-jg.webp",
+    preview: "jgclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "Gyroscope Controls", "Freelance"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/jump-game" }],
+    body: [
+      "A take on Doodle Jump without the shooting or the enemies, built for a client.",
+      "The game itself was simple to make. The real challenge was tuning the gyroscope that steers the player left and right: finding the sweet spot took a lot of playtesting. It was my first project with gyro controls."
+    ],
+    media: ["jg1.webp", "jg2.webp", "jg3.webp",
+      { src: "jgclip1.webp", clip: true }, { src: "jgclip2.webp", clip: true }]
+  },
+  {
+    slug: "endless-runner",
+    title: "Endless Runner",
+    short: "A Subway Surfers style runner for a client, with the curved-world shader that makes the track bend.",
+    category: "games",
+    kind: "Mobile Runner",
+    engine: "Unity · C# · WebGL",
+    date: "2026-01",
+    client: true,
+    cover: "cover-er.webp",
+    preview: "erclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "Shaders", "Procedural Generation", "Freelance"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/endlessrunner" }],
+    body: [
+      "My attempt at a Subway Surfers style runner, built for a client.",
+      "I found out that the way Subway Surfers' world sways left, right, up and down doesn't come from where the objects are placed: it is a shader. Following a YouTube tutorial, I recreated that curved-world shader and built it into this game."
+    ],
+    media: ["er1.webp", "er2.webp", "er3.webp",
+      { src: "erclip1.webp", clip: true }]
+  },
+  {
+    slug: "battle-quiz",
+    title: "Battle Quiz",
+    short: "A quiz battler for a client: answer right to attack, answer wrong and spin the roulette.",
+    category: "games",
+    kind: "Gamified Quiz",
+    engine: "Unity · C# · WebGL",
+    date: "2025-07",
+    client: true,
+    cover: "cover-bq.webp",
+    preview: "bqclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "Quiz", "Freelance"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/battlequiz" }],
+    body: [
+      "Another gamified quiz for a client, this time set in a battle.",
+      "Answer correctly and you attack the enemy: the damage depends on how many times you tap the prompt button before time runs out. Answer wrong and a roulette spins, and whatever it lands on changes your HP."
+    ],
+    media: ["bq1.webp", "bq2.webp", "bq3.webp", "bq4.webp", "bq5.webp",
+      { src: "bqclip1.webp", clip: true }, { src: "bqclip2.webp", clip: true }, { src: "bqclip3.webp", clip: true }]
+  },
+  {
+    slug: "inflation-game",
+    title: "Inflation Game",
+    short: "An educational game about addition and inflation: tap jewels until they add up to the target.",
+    category: "games",
+    kind: "Educational Minigame",
+    engine: "Unity · C# · WebGL",
+    date: "2025-06",
+    client: true,
+    cover: "cover-inf.webp",
+    preview: "infclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "Educational", "Freelance"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/inflationgame" }],
+    body: [
+      "An educational game about addition and how inflation works, built for a client.",
+      "The player taps numbered jewels until their total matches the number in the box, before time runs out."
+    ],
+    media: ["inf1.webp", "inf2.webp", "inf3.webp",
+      { src: "infclip1.webp", clip: true }]
+  },
+  {
+    slug: "land-mine-panic",
+    title: "Land Mine Panic",
+    short: "A memory game for a client: remember where the keys are hidden, or get blown up.",
+    category: "games",
+    kind: "Memory Minigame",
+    engine: "Unity · C# · WebGL",
+    date: "2025-05",
+    client: true,
+    cover: "cover-lm.webp",
+    preview: "lmclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "Memory Game", "UI Animation", "Freelance"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/landmine-panic" }],
+    body: [
+      "A memory minigame for a client. The player gets a few seconds to memorise where the keys are across the 2 × 2 hole segments, then the keys are buried under dirt.",
+      "Pick the right hole to find a key; pick wrong and you get bombed and lose health. The part I'm proudest of is the intro animation, with the hole segments dropping in one by one."
+    ],
+    media: ["lm1.webp", "lm2.webp", "lm3.webp",
+      { src: "lmclip1.webp", clip: true }, { src: "lmclip2.webp", clip: true }]
+  },
+  {
+    slug: "speed-reading",
+    title: "Speed Reading",
+    short: "A reading game for kids that tests speed and comprehension, with three answers to choose from.",
+    category: "games",
+    kind: "Educational Minigame",
+    engine: "Unity · C# · WebGL",
+    date: "2025-05",
+    client: true,
+    cover: "cover-sr.webp",
+    preview: "srclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "Educational", "Freelance"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/speed-reading-game" }],
+    body: [
+      "A minigame for kids that challenges their reading speed and comprehension, built for a client.",
+      "Players read a short passage, then pick the right answer from three choices. At heart it is a simple quiz, with extra interactivity and animation to make it fun."
+    ],
+    media: ["sr1.webp", "sr2.webp", "sr3.webp", "sr4.webp",
+      { src: "srclip1.webp", clip: true }, { src: "srclip2.webp", clip: true }]
+  },
+  {
+    slug: "maze-quiz",
+    title: "Maze Quiz",
+    short: "My first freelance game job: memorise a maze from above, then guide a fox through it in the dark.",
+    category: "games",
+    kind: "Memory Minigame",
+    engine: "Unity · C# · WebGL",
+    date: "2025-04",
+    client: true,
+    cover: "cover-mq.webp",
+    preview: "mqclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "NavMesh AI", "Freelance"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/mazequiz-prototype1" }],
+    body: [
+      "My first ever freelance game developer job: a maze minigame.",
+      "The player first sees the whole maze from a bird's-eye view. Then the camera zooms in and their view shrinks to a small circle, so they have to rely on memory to pick the path to the exit. Wrong turns cost health.",
+      "It was my first time using Unity's AI NavMesh, and it worked nicely: the fox finds its own way to wherever the player chooses to move."
+    ],
+    media: ["mq1.webp", "mq2.webp", "mq3.webp", "mq4.webp", "mq5.webp",
+      { src: "mqclip1.webp", clip: true }]
+  },
+  {
+    slug: "infinite-run",
+    title: "Infinite Run",
+    short: "A Temple Run style runner for a client, controlled by swiping.",
+    category: "games",
+    kind: "Mobile Runner",
+    engine: "Unity · C# · WebGL",
+    date: "2025-01",
+    client: true,
+    cover: "cover-ir.webp",
+    preview: "irclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "Swipe Controls", "Procedural Generation", "Freelance"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/infiniterun" }],
+    body: [
+      "My attempt at a Temple Run style game, built for a client, and it turned out well.",
+      "Players swipe up, left and right to jump and turn."
+    ],
+    media: ["ir1.webp", "ir2.webp",
+      { src: "irclip1.webp", clip: true }]
   },
   {
     slug: "hotel-check-in",
@@ -134,6 +295,7 @@ window.PROJECTS = [
     kind: "Character Design Commission",
     engine: "Clip Studio Paint",
     date: "2024-09",
+    client: true,
     cover: "cover-dnd.webp",
     tags: ["Character Design", "Illustration", "Commission", "Fiverr"],
     links: [],
@@ -184,6 +346,7 @@ window.PROJECTS = [
     kind: "Art Commission",
     engine: "Clip Studio Paint",
     date: "2021-11",
+    client: true,
     cover: "cover-jawi.webp",
     tags: ["Illustration", "Backgrounds", "Commission"],
     links: [{ label: "Watch the episode on YouTube (00:37 to 02:02)", url: "https://www.youtube.com/watch?v=2gbniv4gCBc" }],
