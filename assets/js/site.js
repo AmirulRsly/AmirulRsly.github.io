@@ -46,7 +46,7 @@
       navLinks.forEach(function (a) { a.classList.toggle("is-active", a.getAttribute("href") === "#" + e.target.id); });
     });
   }, { rootMargin: "-45% 0px -50% 0px" });
-  ["about", "work", "journey", "contact"].forEach(function (id) { spy.observe(document.getElementById(id)); });
+  ["about", "experience", "work", "journey", "contact"].forEach(function (id) { spy.observe(document.getElementById(id)); });
 
   /* ---------- Typed roles ---------- */
   (function () {
@@ -260,21 +260,68 @@
     });
   });
 
+  /* ---------- Experience ---------- */
+  var experience = window.EXPERIENCE || [];
+  var now = new Date(), NOW = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0");
+  // Inclusive month count, the way LinkedIn shows "1 yr 9 mos".
+  function span(start, end) {
+    var a = start.split("-"), b = (end || NOW).split("-");
+    var m = (+b[0] - +a[0]) * 12 + (+b[1] - +a[1]) + 1, y = Math.floor(m / 12), r = m % 12;
+    return [y ? y + (y > 1 ? " yrs" : " yr") : "", r ? r + (r > 1 ? " mos" : " mo") : ""].filter(Boolean).join(" ");
+  }
+  function earliest(c) { return c.roles.reduce(function (x, r) { return r.start < x ? r.start : x; }, c.roles[0].start); }
+  function latest(c) { return c.roles.some(function (r) { return !r.end; }) ? null : c.roles.reduce(function (x, r) { return r.end > x ? r.end : x; }, c.roles[0].end); }
+  $("#experienceList").innerHTML = experience.map(function (c) {
+    var current = latest(c) === null;
+    return '<article class="exp__co reveal">' +
+      '<header class="exp__head">' +
+        '<span class="exp__logo" aria-hidden="true">' + esc(c.company.charAt(0)) + "</span>" +
+        "<div><h3>" + esc(c.company) + (current ? ' <span class="exp__now">Current</span>' : "") + "</h3>" +
+        '<p class="exp__meta">' + esc(c.place) + " · " + span(earliest(c), latest(c)) + "</p></div>" +
+      "</header>" +
+      '<ol class="exp__roles">' + c.roles.map(function (r) {
+        return '<li class="exp__role">' +
+          "<h4>" + esc(r.title) + "</h4>" +
+          '<p class="exp__when"><b>' + esc(r.type) + "</b> · " + fmtDate(r.start) + " – " + (r.end ? fmtDate(r.end) : "Present") + " · " + span(r.start, r.end) + "</p>" +
+          (r.text ? '<p class="exp__text">' + esc(r.text) + "</p>" : "") +
+          '<ul class="chips">' + r.skills.map(function (k) { return "<li>" + esc(k) + "</li>"; }).join("") + "</ul>" +
+        "</li>";
+      }).join("") + "</ol>" +
+      (c.projects.length ? '<p class="exp__projects"><span>Projects here:</span> ' + c.projects.map(function (slug) {
+        var i = projects.findIndex(function (p) { return p.slug === slug; });
+        return i < 0 ? "" : '<button type="button" class="exp__proj" data-i="' + i + '">' + esc(projects[i].title) + " →</button>";
+      }).join("") + "</p>" : "") +
+    "</article>";
+  }).join("");
+  $$(".exp__co").forEach(function (el) { revealer.observe(el); });
+  $$(".exp__proj").forEach(function (b) { b.addEventListener("click", function () { openProject(+b.dataset.i, 0, true); }); });
+
   /* ---------- Timeline ---------- */
   var ICON_CAP = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg>';
   var edu = [
     { date: "2015-07", title: "Diploma in Mechanical Engineering", sub: "UiTM Permatang Pauh, Pulau Pinang · 2015 to 2019" },
     { date: "2020-11", title: "BCS (Hons.) Multimedia Computing", sub: "UiTM Shah Alam, Selangor · 2020 to 2023 · CGPA 3.64" }
   ];
+  var ICON_WORK = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg>';
+  var work = [];
+  experience.forEach(function (c) { c.roles.forEach(function (r) { work.push({ c: c, r: r }); }); });
   var events = edu.map(function (e) { return { type: "edu", date: e.date, html: '<div class="tl__card"><span class="tl__icon">' + ICON_CAP + '</span><span><span class="tl__date">' + e.date.slice(0, 4) + '</span><span class="tl__title">' + esc(e.title) + '</span><span class="tl__sub">' + esc(e.sub) + "</span></span></div>" }; })
     .concat(projects.map(function (p, i) {
       return { type: "proj", date: p.date, html: '<button class="tl__card" type="button" data-i="' + i + '"><img class="tl__thumb" src="' + MEDIA + p.cover + '" alt="" loading="lazy"><span><span class="tl__date">' + fmtDate(p.date) + '</span><span class="tl__title">' + esc(p.title) + '</span><span class="tl__sub">' + esc(p.kind) + " · " + esc(p.engine) + "</span></span></button>" };
     }))
+    .concat(work.map(function (w) {
+      return { type: "work", date: w.r.start, html: '<button class="tl__card" type="button" data-exp><span class="tl__icon">' + ICON_WORK + '</span><span><span class="tl__date">' + fmtDate(w.r.start) + " – " + (w.r.end ? fmtDate(w.r.end) : "Present") + '</span><span class="tl__title">' + esc(w.r.title) + '</span><span class="tl__sub">' + esc(w.c.company) + " · " + esc(w.r.type) + "</span></span></button>" };
+    }))
     .sort(function (a, b) { return a.date < b.date ? 1 : -1; });
   var tlEl = $("#timeline");
-  tlEl.innerHTML = events.map(function (e) { return '<li class="tl reveal' + (e.type === "edu" ? " tl--edu" : "") + '">' + e.html + "</li>"; }).join("");
+  tlEl.innerHTML = events.map(function (e) { return '<li class="tl reveal' + (e.type === "edu" ? " tl--edu" : e.type === "work" ? " tl--work" : "") + '">' + e.html + "</li>"; }).join("");
   $$(".tl", tlEl).forEach(function (li) { revealer.observe(li); });
-  $$("button.tl__card", tlEl).forEach(function (b) { b.addEventListener("click", function () { openProject(+b.dataset.i, 0, true); }); });
+  $$("button.tl__card", tlEl).forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (b.hasAttribute("data-exp")) document.getElementById("experience").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+      else openProject(+b.dataset.i, 0, true);
+    });
+  });
 
   /* ---------- Project viewer ---------- */
   var dlg = $("#viewer"), img = $("#viewerImg"), thumbs = $("#viewerThumbs");

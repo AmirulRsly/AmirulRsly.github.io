@@ -427,3 +427,32 @@ window.PROJECTS = [
     media: ["flat1.webp", "flat2.webp", "flat3.webp", "flat4.webp", "flat5.webp"]
   }
 ];
+
+// Work history, newest first. end: null means "Present"; durations are worked out like LinkedIn's.
+// projects: slugs from PROJECTS above, shown as links under that company.
+window.EXPERIENCE = [
+  {
+    company: "CraveFX",
+    place: "Kuala Lumpur, Malaysia · Hybrid",
+    roles: [
+      { title: "Junior Interactive Media and Game Developer", type: "Full-time", start: "2025-02", end: null,
+        skills: ["Web Application Development", "Game Development"] },
+      { title: "Junior Interactive Developer", type: "Contract", start: "2024-03", end: "2025-02",
+        skills: ["Game Development", "Unity"] }
+    ],
+    projects: []
+  },
+  {
+    company: "NovaLearn.org",
+    place: "Kuala Lumpur, Malaysia · On-site",
+    roles: [
+      { title: "Junior Developer", type: "Full-time", start: "2024-01", end: "2024-03",
+        text: "Oversaw the company's learning management system (LMS), learning and working hands-on with cloud services, PHP, SQL and Linux (Ubuntu).",
+        skills: ["PHP", "SQL", "Linux", "Cloud Services"] },
+      { title: "Game Design Intern", type: "Internship", start: "2023-09", end: "2023-12",
+        text: "Helped develop educational games and minigames for grade schoolers: programming, design and documentation in Unity and C#, in an agile team.",
+        skills: ["Unity", "C#", "Game Design"] }
+    ],
+    projects: ["hotel-check-in", "grade-4-math"]
+  }
+];

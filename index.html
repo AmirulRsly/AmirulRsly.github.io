@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/site.css?v=16">
+  <link rel="stylesheet" href="assets/css/site.css?v=17">
   <script>
     try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
@@ -28,6 +28,7 @@
     </a>
     <nav class="nav__links" aria-label="Sections">
       <a href="#about">About</a>
+      <a href="#experience">Experience</a>
       <a href="#work">Work</a>
       <a href="#journey">Journey</a>
       <a href="#contact">Contact</a>
@@ -124,12 +125,25 @@
       </div>
     </section>
 
-    <!-- Work -->
-    <section class="section section--alt" id="work">
+    <!-- Experience -->
+    <section class="section section--alt" id="experience">
       <div class="wrap">
         <div class="section__head reveal">
           <div>
-            <p class="kicker">02 · Work</p>
+            <p class="kicker">02 · Experience</p>
+            <h2 class="h2">Where I've worked</h2>
+          </div>
+        </div>
+        <div class="exp" id="experienceList"></div>
+      </div>
+    </section>
+
+    <!-- Work -->
+    <section class="section" id="work">
+      <div class="wrap">
+        <div class="section__head reveal">
+          <div>
+            <p class="kicker">03 · Work</p>
             <h2 class="h2">Selected projects</h2>
           </div>
           <div class="filters" role="tablist" aria-label="Filter projects" id="filters">
@@ -145,11 +159,11 @@
     </section>
 
     <!-- Journey -->
-    <section class="section" id="journey">
+    <section class="section section--alt" id="journey">
       <div class="wrap">
         <div class="section__head reveal">
           <div>
-            <p class="kicker">03 · Journey</p>
+            <p class="kicker">04 · Journey</p>
             <h2 class="h2">From mechanical engineering to games</h2>
           </div>
         </div>
@@ -158,9 +172,9 @@
     </section>
 
     <!-- Contact -->
-    <section class="section section--alt" id="contact">
+    <section class="section" id="contact">
       <div class="wrap contact reveal">
-        <p class="kicker">04 · Contact</p>
+        <p class="kicker">05 · Contact</p>
         <h2 class="contact__title">Let's make something <span class="grad">fun</span>.</h2>
         <p class="contact__lede">I'm open to game programmer and game developer roles, and art or animation collaborations. Email is the fastest way to reach me.</p>
         <div class="contact__mail">
@@ -217,7 +231,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/projects.js?v=16"></script>
-  <script src="assets/js/site.js?v=16"></script>
+  <script src="assets/js/projects.js?v=17"></script>
+  <script src="assets/js/site.js?v=17"></script>
 </body>
 </html>
