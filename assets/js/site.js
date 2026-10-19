@@ -28,7 +28,7 @@
   /* ---------- Theme ---------- */
   $("#themeToggle").addEventListener("click", function () {
     var root = document.documentElement;
-    var next = (root.dataset.theme || "dark") === "dark" ? "light" : "dark";
+    var next = (root.dataset.theme || "light") === "light" ? "dark" : "light";
     root.dataset.theme = next;
     try { localStorage.setItem("theme", next); } catch (e) {}
   });
@@ -76,7 +76,15 @@
     var hero = canvas.parentElement;
     var dpr = Math.min(window.devicePixelRatio || 1, 2);
     var W = 0, H = 0, sparks = [], mouse = { x: -9999, y: -9999 }, running = false, visible = true;
-    var colors = ["#ffb547", "#ff5d8f", "#4fd8ff", "#ffffff"];
+    // Sparks use the theme's teal, cyan and turquoise, re-read whenever the theme changes.
+    var colors = [];
+    function readColors() {
+      var cs = getComputedStyle(document.documentElement);
+      colors = ["--accent", "--accent-2", "--accent-3"].map(function (v) { return cs.getPropertyValue(v).trim(); });
+      if (document.documentElement.dataset.theme === "dark") colors.push("#ffffff");
+      sparks.forEach(function (p) { p.c = colors[(Math.random() * colors.length) | 0]; });
+    }
+    new MutationObserver(readColors).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     function resize() {
       W = hero.clientWidth; H = hero.clientHeight;
@@ -133,6 +141,7 @@
     });
     new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible) start(); }).observe(hero);
     window.addEventListener("resize", resize);
+    readColors();
     resize();
     // With reduced motion, draw a single still frame of sparks instead of animating.
     if (reduceMotion) { visible = false; frame(); ctx.globalAlpha = .5; sparks.forEach(function (p) { ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill(); }); ctx.globalAlpha = 1; } else start();

@@ -1,36 +1,39 @@
 /* ---------- Tokens ---------- */
 :root {
-  --bg: #0d0f1a;
-  --bg-2: #131628;
-  --surface: #181c33;
-  --line: #2a3054;
-  --text: #eef0fb;
-  --muted: #a3a8c7;
-  --accent: #ffb547;      /* warm gold, from the game art */
-  --accent-2: #ff5d8f;    /* hot pink */
-  --accent-3: #4fd8ff;    /* cyan */
-  --on-accent: #1a1206;
-  --grad: linear-gradient(100deg, var(--accent) 0%, var(--accent-2) 55%, var(--accent-3) 100%);
-  --shadow: 0 20px 60px -20px rgba(0, 0, 0, .65);
+  /* Default: white with teal, cyan and turquoise. */
+  --bg: #ffffff;
+  --bg-2: #eefaf8;
+  --surface: #ffffff;
+  --line: #cfe9e6;
+  --text: #08292b;
+  --muted: #4a6b6d;
+  --accent: #0f766e;      /* teal */
+  --accent-2: #0e7490;    /* cyan */
+  --accent-3: #0d9f8f;    /* turquoise */
+  --on-accent: #ffffff;
+  --grad: linear-gradient(100deg, #0f766e 0%, #0891b2 50%, #14b8a6 100%);
+  --overlay: rgba(3, 32, 34, .72);   /* dark chips that sit on top of screenshots */
+  --shadow: 0 20px 50px -24px rgba(8, 70, 72, .32);
   --radius: 18px;
   --display: "Chakra Petch", system-ui, sans-serif;
   --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --wrap: 1180px;
-  color-scheme: dark;
-}
-:root[data-theme="light"] {
-  --bg: #f7f5f0;
-  --bg-2: #efebe2;
-  --surface: #ffffff;
-  --line: #e0dacd;
-  --text: #17162a;
-  --muted: #5d5b72;
-  --accent: #e08600;
-  --accent-2: #e2306c;
-  --accent-3: #0b8fc2;
-  --on-accent: #ffffff;
-  --shadow: 0 20px 50px -24px rgba(40, 30, 10, .35);
   color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: #04181a;
+  --bg-2: #072226;
+  --surface: #0b2b2f;
+  --line: #17474c;
+  --text: #e9fbfa;
+  --muted: #9cc6c4;
+  --accent: #2dd4bf;
+  --accent-2: #22d3ee;
+  --accent-3: #5eead4;
+  --on-accent: #032326;
+  --grad: linear-gradient(100deg, #2dd4bf 0%, #22d3ee 50%, #99f6e4 100%);
+  --shadow: 0 20px 60px -20px rgba(0, 0, 0, .65);
+  color-scheme: dark;
 }
 
 /* ---------- Base ---------- */
@@ -83,9 +86,9 @@ p { margin: 0 0 1em; }
 }
 .icon-btn:hover { border-color: var(--accent); transform: rotate(-8deg); }
 .icon-btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
-.i-sun { display: none; }
-:root[data-theme="light"] .i-sun { display: block; }
-:root[data-theme="light"] .i-moon { display: none; }
+.i-moon { display: none; }
+:root[data-theme="dark"] .i-moon { display: block; }
+:root[data-theme="dark"] .i-sun { display: none; }
 
 /* ---------- Nav ---------- */
 .nav {
@@ -98,7 +101,7 @@ p { margin: 0 0 1em; }
 .nav__logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 700 16px var(--display); }
 .nav__mark {
   display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px;
-  background: var(--grad); color: #160d16; font-size: 14px; letter-spacing: .02em;
+  background: var(--grad); color: #ffffff; font-size: 14px; letter-spacing: .02em;
   transition: transform .4s cubic-bezier(.3, 1.6, .5, 1);
 }
 .nav__logo:hover .nav__mark { transform: rotate(-12deg) scale(1.08); }
@@ -255,7 +258,7 @@ p { margin: 0 0 1em; }
 .proj.is-playing .proj__preview { opacity: 1; }
 .proj__play {
   position: absolute; left: 14px; top: 14px; z-index: 2; display: inline-flex; align-items: center; gap: 6px;
-  padding: 6px 10px; border-radius: 8px; background: rgba(10, 12, 24, .72); color: #fff; backdrop-filter: blur(6px);
+  padding: 6px 10px; border-radius: 8px; background: var(--overlay); color: #fff; backdrop-filter: blur(6px);
   font: 600 11px/1 var(--display); letter-spacing: .12em; text-transform: uppercase;
 }
 .proj__play::before { content: ""; width: 0; height: 0; border-left: 7px solid var(--accent); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
@@ -263,7 +266,7 @@ p { margin: 0 0 1em; }
 .proj__body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; }
 .proj__meta { display: flex; gap: 10px; align-items: center; font: 600 12px var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .proj__meta b { color: var(--accent); font-weight: 600; }
-.proj__client { padding: 6px 9px; border-radius: 6px; background: rgba(10, 12, 24, .72); color: var(--accent-3); backdrop-filter: blur(6px); font: 700 11px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; }
+.proj__client { padding: 6px 9px; border-radius: 6px; background: var(--overlay); color: var(--accent-3); backdrop-filter: blur(6px); font: 700 11px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; }
 .proj__meta { flex-wrap: wrap; row-gap: 2px; }
 .proj__title { font-size: 22px; }
 .proj--featured .proj__title { font-size: 30px; }
@@ -320,11 +323,11 @@ kbd.is-hit { background: var(--accent); color: var(--on-accent); border-color: v
   background: var(--surface); color: var(--text); box-shadow: 0 40px 120px -20px rgba(0, 0, 0, .8); overflow: auto; overscroll-behavior: contain;
 }
 /* No backdrop-filter here: in Chromium it blanks the page after scrolling the dialog. */
-.viewer::backdrop { background: rgba(6, 7, 14, .86); }
+.viewer::backdrop { background: rgba(2, 22, 24, .86); }
 .viewer[open] { animation: viewerIn .35s cubic-bezier(.2, .9, .3, 1.1); }
 @keyframes viewerIn { from { opacity: 0; transform: translateY(24px) scale(.97); } }
 .viewer__inner { position: relative; }
-.viewer__close { position: absolute; right: 14px; top: 14px; z-index: 5; background: rgba(10, 12, 24, .7); color: #fff; border-color: rgba(255, 255, 255, .2); }
+.viewer__close { position: absolute; right: 14px; top: 14px; z-index: 5; background: var(--overlay); color: #fff; border-color: rgba(255, 255, 255, .2); }
 .viewer__stage { position: relative; background: #07080f; }
 /* Fixed height so tall art (portraits, webtoon pages) gets as much room as wide screenshots. */
 .viewer__frame { position: relative; height: min(64vh, 640px); overflow: hidden; }
@@ -333,11 +336,11 @@ kbd.is-hit { background: var(--accent); color: var(--on-accent); border-color: v
 .viewer__clip { position: absolute; left: 14px; top: 14px; padding: 6px 10px; border-radius: 8px; background: var(--accent-2); color: #fff; font: 700 11px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; }
 .viewer__nav {
   position: absolute; top: 50%; translate: 0 -50%; width: 46px; height: 46px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .25);
-  background: rgba(10, 12, 24, .6); color: #fff; font-size: 28px; line-height: 1; display: grid; place-items: center; transition: background-color .2s, scale .2s;
+  background: var(--overlay); color: #fff; font-size: 28px; line-height: 1; display: grid; place-items: center; transition: background-color .2s, scale .2s;
 }
 .viewer__nav:hover { background: var(--accent); color: var(--on-accent); scale: 1.08; }
 .viewer__nav--prev { left: 14px; } .viewer__nav--next { right: 14px; }
-.viewer__count { position: absolute; right: 16px; bottom: 12px; font: 600 12px var(--display); letter-spacing: .1em; color: #fff; background: rgba(10, 12, 24, .6); padding: 5px 9px; border-radius: 6px; }
+.viewer__count { position: absolute; right: 16px; bottom: 12px; font: 600 12px var(--display); letter-spacing: .1em; color: #fff; background: var(--overlay); padding: 5px 9px; border-radius: 6px; }
 .viewer__thumbs { display: flex; gap: 8px; padding: 12px 16px; overflow-x: auto; background: var(--bg-2); border-bottom: 1px solid var(--line); scrollbar-width: thin; }
 .viewer__thumbs button { flex: none; width: 84px; height: 50px; padding: 0; border-radius: 8px; overflow: hidden; border: 2px solid transparent; opacity: .55; position: relative; background: #000; transition: opacity .2s, border-color .2s; }
 .viewer__thumbs button:hover { opacity: .9; }
