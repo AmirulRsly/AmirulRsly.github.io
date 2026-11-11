@@ -25,6 +25,16 @@
     return p.category === "games" && p.links.some(function (l) { return /itch\.io/.test(l.url); });
   }).length;
 
+  /* ---------- Analytics ---------- */
+  // GoatCounter counts the page itself; these record the extra things a single page can't show:
+  // which projects get opened (as /work/<slug>) and which buttons get clicked (as events).
+  // count.js loads async, so anything counted before it arrives waits for the page load.
+  function track(o) {
+    var send = function () { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count(o); };
+    if (window.goatcounter && window.goatcounter.count) send();
+    else window.addEventListener("load", send, { once: true });
+  }
+
   /* ---------- Theme ---------- */
   $("#themeToggle").addEventListener("click", function () {
     var root = document.documentElement;
@@ -344,6 +354,7 @@
     if (!dlg.open) { lastFocus = document.activeElement; dlg.showModal(); document.body.style.overflow = "hidden"; }
     dlg.scrollTop = 0;
     if (push) history.replaceState(null, "", "#work/" + p.slug);
+    track({ path: "/work/" + p.slug, title: p.title });
   }
   function showMedia(k) {
     var list = projects[cur.p].media, n = list.length;
@@ -377,6 +388,11 @@
     else if (t.dataset.k) showMedia(+t.dataset.k);
     else if (t.dataset.proj) openProject((cur.p + +t.dataset.proj + projects.length) % projects.length, 0, true);
   });
+  // Count clicks on a project's outbound links (itch.io, YouTube, GitHub, guides).
+  $("#viewerLinks").addEventListener("click", function (e) {
+    var a = e.target.closest("a"); if (!a) return;
+    track({ path: "link: " + projects[cur.p].title + " – " + a.textContent.replace(" ↗", "").replace(/\s*\(.*\)/, ""), title: a.href, event: true });
+  });
   dlg.addEventListener("keydown", function (e) {
     if (e.key === "ArrowRight") { e.preventDefault(); showMedia(cur.m + 1); }
     if (e.key === "ArrowLeft") { e.preventDefault(); showMedia(cur.m - 1); }
@@ -405,7 +421,11 @@
   /* ---------- Copy email ---------- */
   var toastEl = $("#toast"), toastT;
   function toast(msg) { toastEl.textContent = msg; toastEl.classList.add("is-on"); clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove("is-on"); }, 2200); }
+  $$(".socials a").forEach(function (a) {
+    a.addEventListener("click", function () { track({ path: "contact: " + a.textContent, event: true }); });
+  });
   $("#copyEmail").addEventListener("click", function () {
+    track({ path: "contact: copy email", event: true });
     var email = this.dataset.email;
     var done = function () { toast("Email copied: " + email); };
     if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(email).then(done, fallback); else fallback();
