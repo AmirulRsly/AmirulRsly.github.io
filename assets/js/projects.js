@@ -5,29 +5,6 @@
 // clientAssets: true adds a note that the client supplied the (AI-generated) art.
 window.PROJECTS = [
   {
-    slug: "kanamoji",
-    title: "Kanamoji: Final Year Project",
-    short: "A turn-based battle game where you learn Japanese kana by racing an AI to answer quiz questions.",
-    category: "games",
-    kind: "Educational Game",
-    engine: "Unity · C#",
-    date: "2023-06",
-    featured: true,
-    cover: "cover-fyp.webp",
-    coverLarge: "fyp3.webp",
-    preview: "fypgif3.webp",
-    tags: ["Unity", "C#", "Finite State Machine", "Fuzzy Logic", "2D Art"],
-    links: [{ label: "Play the demo on itch.io", url: "https://amirulrsly.itch.io/amirulrsly-fyp-demo" }],
-    body: [
-      "My degree final year project, titled “Intelligent Enemy in Turn-Based Battle System to Learn Kanamoji”. It is an educational game about learning the Japanese alphabet, built around a mechanic I designed: a turn-based combat system fused with a quiz game, so every attack is a question.",
-      "I built the enemy AI with a finite state machine and fuzzy logic. The AI learns Kanamoji alongside the player and competes with them on who can answer correctly and fastest.",
-      "The project was still in development when I wrote this, but a playable demo is available on itch.io."
-    ],
-    media: ["fyp1.webp", "fyp2.webp", "fyp3.webp", "fyp4.webp", "fyp5.webp", "fyp6.webp", "fyp7.webp", "fyp8.webp",
-      { src: "fypgif1.webp", clip: true }, { src: "fypgif2.webp", clip: true }, { src: "fypgif3.webp", clip: true },
-      { src: "fypgif4.webp", clip: true }, { src: "fypgif5.webp", clip: true }]
-  },
-  {
     slug: "13-malam",
     title: "13 Malam",
     short: "A PS1-style horror fishing game set in a Malaysian kampung, with local fish, local ghosts and multiple endings.",
@@ -35,7 +12,9 @@ window.PROJECTS = [
     kind: "Horror Fishing Game",
     engine: "Unity · C# · WebGL",
     date: "2026-10",
+    featured: true,
     cover: "cover-malam.webp",
+    coverLarge: "malam2.webp",
     preview: "malamclip1.webp",
     tags: ["Unity", "C#", "WebGL", "Horror", "AI Navigation", "Day/Night Cycle", "Tripo", "Claude Code", "Codex"],
     links: [
@@ -64,7 +43,7 @@ window.PROJECTS = [
     links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/keycombowombo" }],
     body: [
       "A roguelike typing game inspired by Slay the Spire. I couldn't find a game that had really tried this mix, and I thought typing and roguelike progression could make a great core mechanic together.",
-      "I built the game mechanics with Claude Code and generated the art assets with ChatGPT. The sound effects and music are royalty-free tracks from Pixabay. It turned out to be a very enjoyable game, especially for people who love typing on a keyboard.",
+      "I designed the game and its systems, then built it with Claude Code as my coding partner, play-testing and tuning each mechanic as it went in. The art was generated with ChatGPT, and the sound effects and music are royalty-free tracks from Pixabay. It turned out to be a very enjoyable game, especially for people who love typing on a keyboard.",
       "The main feedback from players: they focus on the bottom half of the screen, where the words to type are, and miss the sprites, the effects and the HP bars. That is the next thing I want to solve."
     ],
     media: ["kcw1.webp", "kcw2.webp", "kcw3.webp", "kcw4.webp", "kcw5.webp",
@@ -277,6 +256,27 @@ window.PROJECTS = [
     ],
     media: ["math1.webp", "math2.webp", "math3.webp",
       { src: "mathclip1.webp", clip: true }, { src: "mathclip2.webp", clip: true }]
+  },
+  {
+    slug: "kanamoji",
+    title: "Kanamoji: Final Year Project",
+    short: "A turn-based battle game where you learn Japanese kana by racing an AI to answer quiz questions.",
+    category: "games",
+    kind: "Educational Game",
+    engine: "Unity · C#",
+    date: "2023-06",
+    cover: "cover-fyp.webp",
+    preview: "fypgif3.webp",
+    tags: ["Unity", "C#", "Finite State Machine", "Fuzzy Logic", "2D Art"],
+    links: [{ label: "Play the demo on itch.io", url: "https://amirulrsly.itch.io/amirulrsly-fyp-demo" }],
+    body: [
+      "My degree final year project, titled “Intelligent Enemy in Turn-Based Battle System to Learn Kanamoji”. It is an educational game about learning the Japanese alphabet, built around a mechanic I designed: a turn-based combat system fused with a quiz game, so every attack is a question.",
+      "I built the enemy AI with a finite state machine and fuzzy logic. The AI learns Kanamoji alongside the player and competes with them on who can answer correctly and fastest.",
+      "The project was still in development when I wrote this, but a playable demo is available on itch.io."
+    ],
+    media: ["fyp1.webp", "fyp2.webp", "fyp3.webp", "fyp4.webp", "fyp5.webp", "fyp6.webp", "fyp7.webp", "fyp8.webp",
+      { src: "fypgif1.webp", clip: true }, { src: "fypgif2.webp", clip: true }, { src: "fypgif3.webp", clip: true },
+      { src: "fypgif4.webp", clip: true }, { src: "fypgif5.webp", clip: true }]
   },
   {
     slug: "rhythm-hero",

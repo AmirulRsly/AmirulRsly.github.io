@@ -220,6 +220,7 @@ p { margin: 0 0 1em; }
 .stat-list li:nth-child(4) i { transition-delay: .24s; } .stat-list li:nth-child(5) i { transition-delay: .32s; }
 .stat-list li:nth-child(6) i { transition-delay: .4s; }
 .perks .kicker { color: var(--muted); }
+.perks + .perks { margin-top: 20px; }
 .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
 .chips li { padding: 6px 12px; border-radius: 999px; font-size: 13px; border: 1px solid var(--line); background: var(--bg-2); color: var(--muted); transition: border-color .2s, color .2s, transform .2s; }
 .chips li:hover { border-color: var(--accent-3); color: var(--text); transform: translateY(-2px); }

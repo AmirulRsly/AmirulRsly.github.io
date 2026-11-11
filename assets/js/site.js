@@ -21,6 +21,15 @@
 
   $("#year").textContent = new Date().getFullYear();
   $("#projCount").dataset.count = projects.length;
+  // Whole years since the first role in EXPERIENCE (the NovaLearn internship).
+  (function () {
+    var starts = [];
+    (window.EXPERIENCE || []).forEach(function (c) { c.roles.forEach(function (r) { starts.push(r.start); }); });
+    if (!starts.length) return;
+    var first = starts.sort()[0].split("-"), d = new Date();
+    var months = (d.getFullYear() - +first[0]) * 12 + (d.getMonth() + 1 - +first[1]);
+    $("#yearsCount").dataset.count = Math.floor(months / 12);
+  })();
   $("#itchCount").dataset.count = projects.filter(function (p) {
     return p.category === "games" && p.links.some(function (l) { return /itch\.io/.test(l.url); });
   }).length;
@@ -61,7 +70,7 @@
   /* ---------- Typed roles ---------- */
   (function () {
     var el = $("#typed");
-    var roles = ["Game Programmer", "Unity Developer", "2D Artist", "Animator", "Software Developer"];
+    var roles = ["Game Developer", "Unity Developer", "Interactive Developer", "2D Artist", "Animator"];
     if (reduceMotion) return;
     var r = 0, i = roles[0].length, deleting = true;
     function tick() {
