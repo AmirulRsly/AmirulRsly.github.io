@@ -309,7 +309,6 @@
   /* ---------- Timeline ---------- */
   var ICON_CAP = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg>';
   var edu = [
-    { date: "2015-07", title: "Diploma in Mechanical Engineering", sub: "UiTM Permatang Pauh, Pulau Pinang · 2015 to 2019" },
     { date: "2020-11", title: "BCS (Hons.) Multimedia Computing", sub: "UiTM Shah Alam, Selangor · 2020 to 2023 · CGPA 3.64" }
   ];
   var ICON_WORK = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg>';
