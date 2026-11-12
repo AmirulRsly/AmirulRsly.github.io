@@ -354,27 +354,51 @@
 
   /* ---------- Timeline ---------- */
   var ICON_CAP = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg>';
+  var ICON_WORK = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg>';
+  function tlBadge(c, icon) {
+    return c && c.logo ? '<img class="tl__icon tl__logo" src="' + MEDIA_EXP + c.logo + '" alt="' + esc(c.company) + ' logo" loading="lazy">' : '<span class="tl__icon">' + icon + "</span>";
+  }
+  var school = experience.filter(function (c) { return c.education; })[0];
   var edu = [
     { date: "2020-11", title: "BCS (Hons.) Multimedia Computing", sub: "UiTM Shah Alam, Selangor · 2020 to 2023 · CGPA 3.64" }
   ];
-  var ICON_WORK = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg>';
   var work = [];
   experience.forEach(function (c) { if (!c.education) c.roles.forEach(function (r) { work.push({ c: c, r: r }); }); });
-  var events = edu.map(function (e) { return { type: "edu", date: e.date, html: '<div class="tl__card"><span class="tl__icon">' + ICON_CAP + '</span><span><span class="tl__date">' + e.date.slice(0, 4) + '</span><span class="tl__title">' + esc(e.title) + '</span><span class="tl__sub">' + esc(e.sub) + "</span></span></div>" }; })
+  // cat matches a Journey filter button: work, edu, or the project category.
+  var events = edu.map(function (e) { return { type: "edu", cat: "edu", date: e.date, html: '<button class="tl__card" type="button" data-exp>' + tlBadge(school, ICON_CAP) + '<span><span class="tl__date">' + e.date.slice(0, 4) + '</span><span class="tl__title">' + esc(e.title) + '</span><span class="tl__sub">' + esc(e.sub) + "</span></span></button>" }; })
     .concat(projects.map(function (p, i) {
-      return { type: "proj", date: p.date, html: '<button class="tl__card" type="button" data-i="' + i + '"><img class="tl__thumb" src="' + MEDIA + p.cover + '" alt="" loading="lazy"><span><span class="tl__date">' + fmtDate(p.date) + '</span><span class="tl__title">' + esc(p.title) + '</span><span class="tl__sub">' + esc(p.kind) + " · " + esc(p.engine) + "</span></span></button>" };
+      return { type: "proj", cat: p.category, date: p.date, html: '<button class="tl__card" type="button" data-i="' + i + '"><img class="tl__thumb" src="' + MEDIA + p.cover + '" alt="" loading="lazy"><span><span class="tl__date">' + fmtDate(p.date) + '</span><span class="tl__title">' + esc(p.title) + '</span><span class="tl__sub">' + esc(p.kind) + " · " + esc(p.engine) + "</span></span></button>" };
     }))
     .concat(work.map(function (w) {
-      return { type: "work", date: w.r.start, html: '<button class="tl__card" type="button" data-exp><span class="tl__icon">' + ICON_WORK + '</span><span><span class="tl__date">' + fmtDate(w.r.start) + " – " + (w.r.end ? fmtDate(w.r.end) : "Present") + '</span><span class="tl__title">' + esc(w.r.title) + '</span><span class="tl__sub">' + esc(w.c.company) + " · " + esc(w.r.type) + "</span></span></button>" };
+      return { type: "work", cat: "work", date: w.r.start, html: '<button class="tl__card" type="button" data-exp>' + tlBadge(w.c, ICON_WORK) + '<span><span class="tl__date">' + fmtDate(w.r.start) + " – " + (w.r.end ? fmtDate(w.r.end) : "Present") + '</span><span class="tl__title">' + esc(w.r.title) + '</span><span class="tl__sub">' + esc(w.c.company) + " · " + esc(w.r.type) + "</span></span></button>" };
     }))
     .sort(function (a, b) { return a.date < b.date ? 1 : -1; });
   var tlEl = $("#timeline");
-  tlEl.innerHTML = events.map(function (e) { return '<li class="tl reveal' + (e.type === "edu" ? " tl--edu" : e.type === "work" ? " tl--work" : "") + '">' + e.html + "</li>"; }).join("");
-  $$(".tl", tlEl).forEach(function (li) { revealer.observe(li); });
-  $$("button.tl__card", tlEl).forEach(function (b) {
+  // Rebuild the list for each filter so the cards keep alternating left and right with no gaps.
+  function renderTimeline(f, animate) {
+    var shown = events.filter(function (e) { return f === "all" || e.cat === f; });
+    tlEl.innerHTML = shown.map(function (e, k) {
+      return '<li class="tl ' + (animate ? "tl--enter" : "reveal") + (e.type === "edu" ? " tl--edu" : e.type === "work" ? " tl--work" : "") + '"' +
+        (animate ? ' style="animation-delay:' + Math.min(k * 50, 600) + 'ms"' : "") + ">" + e.html + "</li>";
+    }).join("");
+    if (!animate) $$(".tl", tlEl).forEach(function (li) { revealer.observe(li); });
+    $$("button.tl__card", tlEl).forEach(function (b) {
+      b.addEventListener("click", function () {
+        if (b.hasAttribute("data-exp")) document.getElementById("experience").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+        else openProject(+b.dataset.i, 0, true);
+      });
+    });
+  }
+  renderTimeline("all", false);
+  var tlBtns = $$("#tlFilters button");
+  tlBtns.forEach(function (b) {
+    var f = b.dataset.filter;
+    var n = events.filter(function (e) { return f === "all" || e.cat === f; }).length;
+    $("sup", b).textContent = n;
+    if (!n) b.hidden = true;
     b.addEventListener("click", function () {
-      if (b.hasAttribute("data-exp")) document.getElementById("experience").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
-      else openProject(+b.dataset.i, 0, true);
+      tlBtns.forEach(function (x) { x.setAttribute("aria-selected", x === b ? "true" : "false"); });
+      renderTimeline(f, true);
     });
   });
 
@@ -443,7 +467,7 @@
     else if (t.dataset.k) showMedia(+t.dataset.k);
     else if (t.dataset.proj) openProject((cur.p + +t.dataset.proj + projects.length) % projects.length, 0, true);
   });
-  // Count clicks on a project's outbound links (itch.io, YouTube, GitHub, guides).
+  // Count clicks on a project's outbound links (itch.io, YouTube, guides).
   $("#viewerLinks").addEventListener("click", function (e) {
     var a = e.target.closest("a"); if (!a) return;
     track({ path: "link: " + projects[cur.p].title + " – " + a.textContent.replace(" ↗", "").replace(/\s*\(.*\)/, ""), title: a.href, event: true });

@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/site.css?v=35">
+  <link rel="stylesheet" href="assets/css/site.css?v=38">
   <script>
     try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
@@ -169,6 +169,14 @@
             <p class="kicker">04 · Journey</p>
             <h2 class="h2">How I got here</h2>
           </div>
+          <div class="filters" role="tablist" aria-label="Filter journey" id="tlFilters">
+            <button role="tab" aria-selected="true" data-filter="all">All <sup></sup></button>
+            <button role="tab" aria-selected="false" data-filter="work">Work <sup></sup></button>
+            <button role="tab" aria-selected="false" data-filter="edu">Education <sup></sup></button>
+            <button role="tab" aria-selected="false" data-filter="games">Games <sup></sup></button>
+            <button role="tab" aria-selected="false" data-filter="apps">Apps <sup></sup></button>
+            <button role="tab" aria-selected="false" data-filter="art">Art &amp; Design <sup></sup></button>
+          </div>
         </div>
         <ol class="timeline" id="timeline"></ol>
       </div>
@@ -187,7 +195,6 @@
         <ul class="socials">
           <li><a href="https://www.linkedin.com/in/amirulrsly/" target="_blank" rel="noopener">LinkedIn</a></li>
           <li><a href="https://amirulrsly.itch.io/" target="_blank" rel="noopener">itch.io</a></li>
-          <li><a href="https://github.com/AmirulRsly" target="_blank" rel="noopener">GitHub</a></li>
         </ul>
         <p class="contact__loc">Based in Kuala Lumpur, Malaysia</p>
       </div>
@@ -254,8 +261,8 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/projects.js?v=35"></script>
-  <script src="assets/js/site.js?v=35"></script>
+  <script src="assets/js/projects.js?v=38"></script>
+  <script src="assets/js/site.js?v=38"></script>
   <!-- GoatCounter analytics (no cookies). Dashboard: https://amirulrsly.goatcounter.com -->
   <script data-goatcounter="https://amirulrsly.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

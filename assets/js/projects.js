@@ -410,7 +410,7 @@ window.PROJECTS = [
     date: "2022-02",
     cover: "cover-fuji.webp",
     tags: ["Java", "Apache NetBeans", "Back end", "Group Project"],
-    links: [{ label: "Source on GitHub", url: "https://github.com/AmirulRsly/fujiDojoGUI/" }],
+    links: [],
     body: [
       "A graphical menu ordering system my group developed for a mini project, built in Apache NetBeans. I was responsible for the back end.",
       "The finished app takes orders, edits them, keeps a running total and prints a receipt with the order list and total price."
