@@ -221,7 +221,7 @@ window.PROJECTS = [
   {
     slug: "maze-quiz",
     title: "Maze Quiz",
-    short: "My first freelance game job: memorise a maze from above, then guide a fox through it in the dark.",
+    short: "A maze memory game for a client: memorise it from above, then guide a fox through it in the dark.",
     category: "games",
     kind: "Memory Minigame",
     engine: "Unity · C# · WebGL",
@@ -233,12 +233,33 @@ window.PROJECTS = [
     tags: ["Unity", "C#", "WebGL", "NavMesh AI", "Freelance"],
     links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/mazequiz-prototype1" }],
     body: [
-      "My first ever freelance game developer job: a maze minigame.",
+      "A maze minigame built for a client.",
       "The player first sees the whole maze from a bird's-eye view. Then the camera zooms in and their view shrinks to a small circle, so they have to rely on memory to pick the path to the exit. Wrong turns cost health.",
       "It was my first time using Unity's AI NavMesh, and it worked nicely: the fox finds its own way to wherever the player chooses to move."
     ],
     media: ["mq1.webp", "mq2.webp", "mq3.webp", "mq4.webp", "mq5.webp",
       { src: "mqclip1.webp", clip: true }]
+  },
+  {
+    slug: "net-the-numbers",
+    title: "Net The Numbers",
+    short: "My first freelance game: a maths puzzle where you drag a net over a grid to catch the highest possible total.",
+    category: "games",
+    kind: "Educational Game",
+    engine: "Unity · C# · WebGL",
+    date: "2024-06",
+    client: true,
+    clientAssets: true,
+    cover: "cover-nn.webp",
+    preview: "nnclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "Maths", "Drag and Drop", "Freelance"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/netnumber" }],
+    body: [
+      "My first freelance game development job: the client asked me to recreate an existing game called Net Number.",
+      "It's an educational maths game. The player drags a net over a grid of positive and negative numbers to catch the highest possible sum, and only the best possible placement counts as correct.",
+      "I remember feeling grateful and really enjoying the challenge. It's where I realised I have a knack for making games for other people, because to me it feels like playing a game."
+    ],
+    media: ["nn1.webp", "nn2.webp", { src: "nnclip1.webp", clip: true }, { src: "nnclip2.webp", clip: true }, { src: "nnclip3.webp", clip: true }]
   },
   {
     slug: "jumpchain",
@@ -429,6 +450,44 @@ window.PROJECTS = [
       "A product design for the entrepreneurship course in my degree. The brief was a portable massage chair that stays marketable within strict limits on dimensions, materials and budget."
     ],
     media: ["sitstay1.webp", "sitstay2.webp", "sitstay3.webp", "sitstay4.webp", "sitstay5.webp", "sitstay6.webp", "sitstay7.webp"]
+  },
+  {
+    slug: "covid-busters-brawler",
+    title: "Covid Busters: Brawler Sprites",
+    short: "The brawler hero I drew and animated for Covid Busters: a 8-frame attack animation and nine battle poses.",
+    category: "art",
+    kind: "2D Sprite Animation",
+    engine: "Clip Studio Paint",
+    date: "2022-06",
+    cover: "cover-brawler.webp",
+    preview: "brawler-attack.webp",
+    tags: ["2D Animation", "Sprite Art", "Frame-by-frame", "Character Design", "Clip Studio Paint"],
+    links: [],
+    body: [
+      "A 2D sprite brawler character I drew and animated for my UiTM game assignment, Covid Busters.",
+      "It has nine static battle poses and one frame-by-frame attack animation (8 frames). With limited time, the attack was the only move I could fully animate, because I also had to build the game's mechanics myself. I'm still really happy with how it turned out.",
+      "The pose sheet shows every pose on one page: idle, ready, ready weapon, dash, defend, hurt, return, victory and dead, plus the peak frame of the attack."
+    ],
+    media: ["brawler-poses.webp", { src: "brawler-attack.webp", clip: true }]
+  },
+  {
+    slug: "covid-busters-swordmaster",
+    title: "Covid Busters: Swordmaster Sprites",
+    short: "The swordmaster hero I drew and animated for Covid Busters: a 10-frame attack animation and nine battle poses.",
+    category: "art",
+    kind: "2D Sprite Animation",
+    engine: "Clip Studio Paint",
+    date: "2022-06",
+    cover: "cover-swordmaster.webp",
+    preview: "swordmaster-attack.webp",
+    tags: ["2D Animation", "Sprite Art", "Frame-by-frame", "Character Design", "Clip Studio Paint"],
+    links: [],
+    body: [
+      "A 2D sprite swordmaster character I drew and animated for my UiTM game assignment, Covid Busters.",
+      "It has nine static battle poses and one frame-by-frame attack animation (10 frames). With limited time, the attack was the only move I could fully animate, because I also had to build the game's mechanics myself. I'm still really happy with how it turned out.",
+      "The pose sheet shows every pose on one page: idle, ready, ready weapon, dash, defend, hurt, return, victory and dead, plus the peak frame of the attack."
+    ],
+    media: ["swordmaster-poses.webp", { src: "swordmaster-attack.webp", clip: true }]
   },
   {
     slug: "jawi-nft",
