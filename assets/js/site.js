@@ -2,7 +2,7 @@
   "use strict";
 
   var MEDIA = "assets/media/";
-  var projects = window.PROJECTS || [];
+  var projects = (window.PROJECTS || []).filter(function (p) { return !p.hidden; });
   // Every gallery shows its clips first, then the stills, keeping each group's order from projects.js.
   projects.forEach(function (p) {
     var isClip = function (m) { return typeof m !== "string"; };

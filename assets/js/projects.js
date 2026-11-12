@@ -3,6 +3,7 @@
 // media: "name.webp" for a still, { src: "name.webp", clip: true } for an animated clip.
 // Galleries always show clips before stills (site.js sorts them). client: true adds a "Freelance" label;
 // clientAssets: true adds a note that the client supplied the (AI-generated) art.
+// hidden: true keeps an entry here but leaves it off the site.
 window.PROJECTS = [
   {
     slug: "13-malam",
@@ -382,6 +383,7 @@ window.PROJECTS = [
   },
   {
     slug: "dnd-seraphim",
+    hidden: true,
     title: "Seraphim: DnD Character Commission",
     short: "My first Fiverr commission: a seraphim character for a Dungeons & Dragons campaign, from sketch to full render.",
     category: "art",
@@ -437,6 +439,7 @@ window.PROJECTS = [
   },
   {
     slug: "sit-and-stay",
+    hidden: true,
     title: "Sit and Stay",
     short: "A portable massage chair designed to tight size, material and budget limits.",
     category: "art",
