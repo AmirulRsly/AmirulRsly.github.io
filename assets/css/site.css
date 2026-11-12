@@ -233,6 +233,18 @@ p { margin: 0 0 1em; }
 .exp__head { display: flex; gap: 16px; align-items: center; margin-bottom: 22px; }
 .exp__logo { width: 52px; height: 52px; flex: none; border-radius: 14px; display: grid; place-items: center; background: var(--grad); color: #fff; font: 700 24px var(--display); }
 .exp__head h3 { font-size: 22px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.exp__logo--img { object-fit: cover; background: #fff; border: 1px solid var(--line); }
+.exp__photos { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: -6px 0 22px; }
+.exp__photo { position: relative; width: 64px; height: 64px; padding: 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); background: var(--bg-2); transition: transform .2s, border-color .2s; }
+.exp__photo:hover { transform: translateY(-2px); border-color: var(--accent); }
+.exp__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.exp__more { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(2, 22, 24, .6); color: #fff; font: 700 17px var(--display); }
+.exp__seemore { margin-left: 4px; padding: 6px 4px; border: 0; background: none; color: var(--accent); font: 600 13px var(--display); letter-spacing: .04em; }
+.exp__seemore:hover { text-decoration: underline; }
+.photobox { width: min(900px, calc(100vw - 32px)); }
+.photobox .viewer__frame { height: min(70vh, 680px); }
+.photobox .viewer__thumbs button { width: 64px; height: 64px; }
+.photobox__title { margin: 0; padding: 14px 20px 18px; font-size: 18px; }
 .exp__now { padding: 4px 8px; border-radius: 6px; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); font: 700 10px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; }
 .exp__meta { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
 .exp__roles { list-style: none; margin: 0; padding: 0 0 0 22px; position: relative; display: grid; gap: 22px; }

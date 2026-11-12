@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/site.css?v=34">
+  <link rel="stylesheet" href="assets/css/site.css?v=35">
   <script>
     try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
@@ -134,7 +134,7 @@
         <div class="section__head reveal">
           <div>
             <p class="kicker">02 · Experience</p>
-            <h2 class="h2">Where I've worked</h2>
+            <h2 class="h2">Where I've worked and studied</h2>
           </div>
         </div>
         <div class="exp" id="experienceList"></div>
@@ -235,10 +235,27 @@
     </div>
   </dialog>
 
+  <!-- Experience photos -->
+  <dialog class="viewer photobox" id="photobox" aria-labelledby="photoboxTitle">
+    <div class="viewer__inner">
+      <button class="viewer__close icon-btn" type="button" data-pclose aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="viewer__stage">
+        <div class="viewer__frame"><img id="photoboxImg" alt=""></div>
+        <button class="viewer__nav viewer__nav--prev" type="button" data-pstep="-1" aria-label="Previous photo">‹</button>
+        <button class="viewer__nav viewer__nav--next" type="button" data-pstep="1" aria-label="Next photo">›</button>
+        <span class="viewer__count" id="photoboxCount"></span>
+      </div>
+      <div class="viewer__thumbs" id="photoboxThumbs"></div>
+      <h2 class="photobox__title" id="photoboxTitle"></h2>
+    </div>
+  </dialog>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/projects.js?v=34"></script>
-  <script src="assets/js/site.js?v=34"></script>
+  <script src="assets/js/projects.js?v=35"></script>
+  <script src="assets/js/site.js?v=35"></script>
   <!-- GoatCounter analytics (no cookies). Dashboard: https://amirulrsly.goatcounter.com -->
   <script data-goatcounter="https://amirulrsly.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

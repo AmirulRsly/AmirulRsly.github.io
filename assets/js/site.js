@@ -287,20 +287,29 @@
     var m = (+b[0] - +a[0]) * 12 + (+b[1] - +a[1]) + 1, y = Math.floor(m / 12), r = m % 12;
     return [y ? y + (y > 1 ? " yrs" : " yr") : "", r ? r + (r > 1 ? " mos" : " mo") : ""].filter(Boolean).join(" ");
   }
+  var MEDIA_EXP = "assets/media/";
+  function thumbOf(src) { return src.replace(/^exp\//, "exp/thumbs/"); }
   function earliest(c) { return c.roles.reduce(function (x, r) { return r.start < x ? r.start : x; }, c.roles[0].start); }
   function latest(c) { return c.roles.some(function (r) { return !r.end; }) ? null : c.roles.reduce(function (x, r) { return r.end > x ? r.end : x; }, c.roles[0].end); }
   $("#experienceList").innerHTML = experience.map(function (c) {
-    var current = latest(c) === null;
+    var current = !c.education && latest(c) === null;
+    var ph = c.photos || [], SHOW = 3, ci = experience.indexOf(c);
     return '<article class="exp__co reveal">' +
       '<header class="exp__head">' +
-        '<span class="exp__logo" aria-hidden="true">' + esc(c.company.charAt(0)) + "</span>" +
+        (c.logo ? '<img class="exp__logo exp__logo--img" src="' + MEDIA_EXP + c.logo + '" alt="' + esc(c.company) + ' logo" width="52" height="52" loading="lazy">'
+                : '<span class="exp__logo" aria-hidden="true">' + esc(c.company.charAt(0)) + "</span>") +
         "<div><h3>" + esc(c.company) + (current ? ' <span class="exp__now">Current</span>' : "") + "</h3>" +
-        '<p class="exp__meta">' + esc(c.place) + " · " + span(earliest(c), latest(c)) + "</p></div>" +
+        '<p class="exp__meta">' + esc(c.place) + " · " + (c.years || span(earliest(c), latest(c))) + "</p></div>" +
       "</header>" +
+      (ph.length ? '<div class="exp__photos">' + ph.slice(0, SHOW).map(function (src, k) {
+        var more = k === SHOW - 1 && ph.length > SHOW ? ph.length - SHOW : 0;
+        return '<button type="button" class="exp__photo" data-co="' + ci + '" data-k="' + k + '" aria-label="Open photo ' + (k + 1) + " of " + ph.length + '">' +
+          '<img src="' + MEDIA_EXP + thumbOf(src) + '" alt="" width="64" height="64" loading="lazy">' + (more ? '<span class="exp__more">+' + more + "</span>" : "") + "</button>";
+      }).join("") + '<button type="button" class="exp__seemore" data-co="' + ci + '" data-k="0">See more →</button></div>' : "") +
       '<ol class="exp__roles">' + c.roles.map(function (r) {
         return '<li class="exp__role">' +
           "<h4>" + esc(r.title) + "</h4>" +
-          '<p class="exp__when"><b>' + esc(r.type) + "</b> · " + fmtDate(r.start) + " – " + (r.end ? fmtDate(r.end) : "Present") + " · " + span(r.start, r.end) + "</p>" +
+          '<p class="exp__when"><b>' + esc(r.type) + "</b> · " + (r.years ? esc(r.years) : fmtDate(r.start) + " – " + (r.end ? fmtDate(r.end) : "Present") + " · " + span(r.start, r.end)) + "</p>" +
           (r.text ? '<p class="exp__text">' + esc(r.text) + "</p>" : "") +
           '<ul class="chips">' + r.skills.map(function (k) { return "<li>" + esc(k) + "</li>"; }).join("") + "</ul>" +
         "</li>";
@@ -314,6 +323,35 @@
   $$(".exp__co").forEach(function (el) { revealer.observe(el); });
   $$(".exp__proj").forEach(function (b) { b.addEventListener("click", function () { openProject(+b.dataset.i, 0, true); }); });
 
+  /* ---------- Photo box (experience photos) ---------- */
+  var pbox = $("#photobox"), pboxImg = $("#photoboxImg"), pcur = { c: 0, k: 0 };
+  function showPhoto(k) {
+    var list = experience[pcur.c].photos;
+    pcur.k = (k + list.length) % list.length;
+    pboxImg.src = MEDIA_EXP + list[pcur.k];
+    pboxImg.alt = experience[pcur.c].company + " photo " + (pcur.k + 1);
+    $("#photoboxCount").textContent = (pcur.k + 1) + " / " + list.length;
+    $("#photoboxThumbs").innerHTML = list.map(function (src, k) {
+      return '<button type="button" data-k="' + k + '" aria-current="' + (k === pcur.k) + '" aria-label="Photo ' + (k + 1) + '"><img src="' + MEDIA_EXP + thumbOf(src) + '" alt=""></button>';
+    }).join("");
+  }
+  $$(".exp__photo, .exp__seemore").forEach(function (b) {
+    b.addEventListener("click", function () {
+      pcur.c = +b.dataset.co;
+      $("#photoboxTitle").textContent = experience[pcur.c].company;
+      showPhoto(+b.dataset.k);
+      pbox.showModal();
+    });
+  });
+  $("#photoboxThumbs").addEventListener("click", function (e) { var b = e.target.closest("button"); if (b) showPhoto(+b.dataset.k); });
+  $$("[data-pstep]", pbox).forEach(function (b) { b.addEventListener("click", function () { showPhoto(pcur.k + +b.dataset.pstep); }); });
+  $("[data-pclose]", pbox).addEventListener("click", function () { pbox.close(); });
+  pbox.addEventListener("click", function (e) { if (e.target === pbox) pbox.close(); });
+  pbox.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowLeft") showPhoto(pcur.k - 1);
+    if (e.key === "ArrowRight") showPhoto(pcur.k + 1);
+  });
+
   /* ---------- Timeline ---------- */
   var ICON_CAP = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg>';
   var edu = [
@@ -321,7 +359,7 @@
   ];
   var ICON_WORK = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg>';
   var work = [];
-  experience.forEach(function (c) { c.roles.forEach(function (r) { work.push({ c: c, r: r }); }); });
+  experience.forEach(function (c) { if (!c.education) c.roles.forEach(function (r) { work.push({ c: c, r: r }); }); });
   var events = edu.map(function (e) { return { type: "edu", date: e.date, html: '<div class="tl__card"><span class="tl__icon">' + ICON_CAP + '</span><span><span class="tl__date">' + e.date.slice(0, 4) + '</span><span class="tl__title">' + esc(e.title) + '</span><span class="tl__sub">' + esc(e.sub) + "</span></span></div>" }; })
     .concat(projects.map(function (p, i) {
       return { type: "proj", date: p.date, html: '<button class="tl__card" type="button" data-i="' + i + '"><img class="tl__thumb" src="' + MEDIA + p.cover + '" alt="" loading="lazy"><span><span class="tl__date">' + fmtDate(p.date) + '</span><span class="tl__title">' + esc(p.title) + '</span><span class="tl__sub">' + esc(p.kind) + " · " + esc(p.engine) + "</span></span></button>" };

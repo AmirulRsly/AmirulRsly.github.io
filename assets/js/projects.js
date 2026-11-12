@@ -572,6 +572,8 @@ window.PROJECTS = [
 window.EXPERIENCE = [
   {
     company: "CraveFX",
+    logo: "exp/cravefx-logo.png",
+    photos: ["exp/cravefx-1.jpg", "exp/cravefx-2.jpg", "exp/cravefx-3.jpg"],
     place: "Kuala Lumpur, Malaysia · Hybrid",
     roles: [
       { title: "Junior Interactive Media and Game Developer", type: "Full-time", start: "2025-02", end: null,
@@ -583,6 +585,8 @@ window.EXPERIENCE = [
   },
   {
     company: "NovaLearn.org",
+    logo: "exp/novalearn-logo.png",
+    photos: ["exp/novalearn-1.jpg", "exp/novalearn-2.jpg", "exp/novalearn-3.jpg"],
     place: "Kuala Lumpur, Malaysia · On-site",
     roles: [
       { title: "Junior Developer", type: "Full-time", start: "2024-01", end: "2024-03",
@@ -593,6 +597,21 @@ window.EXPERIENCE = [
         skills: ["Unity", "C#", "Game Design"] }
     ],
     projects: ["hotel-check-in", "grade-4-math"]
+  },
+  {
+    // Education: shown in the Experience section, kept out of the timeline's work entries.
+    company: "UiTM Shah Alam",
+    education: true,
+    logo: "exp/uitm-logo.png",
+    photos: ["exp/uitm-1.jpg", "exp/uitm-2.jpg", "exp/uitm-3.jpg", "exp/uitm-4.jpg"],
+    place: "Universiti Teknologi MARA · Selangor, Malaysia",
+    years: "2020 – 2023",
+    roles: [
+      { title: "BCS (Hons.) Multimedia Computing", type: "Degree", years: "2020 – 2023 · CGPA 3.64",
+        text: "Game development, animation and multimedia. My final year project was Kanamoji, an educational game with an intelligent enemy AI.",
+        skills: ["Unity", "C#", "Game AI", "2D Animation"] }
+    ],
+    projects: ["kanamoji", "rhythm-hero", "covid-busters", "flat-tire"]
   }
 ];
 
