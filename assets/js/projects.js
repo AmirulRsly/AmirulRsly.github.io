@@ -14,7 +14,7 @@ window.PROJECTS = [
     date: "2026-10",
     featured: true,
     cover: "cover-malam.webp",
-    coverLarge: "malam2.webp",
+    coverLarge: "malam5.webp",
     preview: "malamclip1.webp",
     tags: ["Unity", "C#", "WebGL", "Horror", "AI Navigation", "Day/Night Cycle", "Tripo", "Claude Code", "Codex"],
     links: [
@@ -26,7 +26,7 @@ window.PROJECTS = [
       "It was also an exercise in AI asset generation, using Tripo with ChatGPT helping on the prompts. The models looked decent, but their polycounts and triangles aren't game friendly, and asking the AI to lower the polycount made them look much worse because the base mesh was already rough. I found a sweet spot in the art style: in a PS1-style low-poly game, those defects add to the look.",
       "Mechanics include fishing, a day/night cycle, ghosts that stalk and navigate towards you, weather that affects the day, and multiple endings depending on how you play. It took me one week to build and polish it into a playable state, and I'm quite happy with how it turned out. Give it a try: the play guide link below helps with the playthrough."
     ],
-    media: ["malam1.webp", "malam2.webp", "malam3.webp", "malam4.webp",
+    media: ["malam5.webp", "malam1.webp", "malam2.webp", "malam3.webp", "malam4.webp",
       { src: "malamclip1.webp", clip: true }, { src: "malamclip2.webp", clip: true }, { src: "malamclip3.webp", clip: true }, { src: "malamclip4.webp", clip: true }]
   },
   {
