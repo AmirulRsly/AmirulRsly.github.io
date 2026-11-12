@@ -44,6 +44,14 @@
     else window.addEventListener("load", send, { once: true });
   }
 
+  // slug -> the other projects in its group (window.RELATED in projects.js)
+  var related = {};
+  (window.RELATED || []).forEach(function (group) {
+    group.forEach(function (slug) {
+      related[slug] = group.filter(function (o) { return o !== slug; });
+    });
+  });
+
   /* ---------- Theme ---------- */
   $("#themeToggle").addEventListener("click", function () {
     var root = document.documentElement;
@@ -353,6 +361,14 @@
     $("#viewerBody").innerHTML = p.body.map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("");
     if (p.clientAssets) $("#viewerBody").innerHTML += '<p class="viewer__note">The art assets were provided by the client and are AI-generated. I developed the game.</p>';
     $("#viewerTags").innerHTML = p.tags.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+    var rel = (related[p.slug] || []).map(function (slug) {
+      return projects.findIndex(function (q) { return q.slug === slug; });
+    }).filter(function (i) { return i > -1; });
+    $("#viewerRelated").hidden = !rel.length;
+    $("#viewerRelatedList").innerHTML = rel.map(function (i) {
+      var q = projects[i];
+      return '<button type="button" class="rel" data-rel="' + i + '"><img src="' + MEDIA + q.cover + '" alt=""><span><b>' + esc(q.title) + '</b><span>' + esc(q.kind) + "</span></span></button>";
+    }).join("");
     $("#viewerLinks").innerHTML = p.links.map(function (l, k) { return '<a class="btn' + (k ? " btn--ghost" : "") + '" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + " ↗</a>"; }).join("");
     thumbs.innerHTML = p.media.map(function (m, k) {
       var clip = typeof m !== "string";
@@ -389,6 +405,8 @@
   });
   dlg.addEventListener("click", function (e) {
     if (e.target === dlg) return closeViewer();
+    var r = e.target.closest("[data-rel]");
+    if (r) return openProject(+r.dataset.rel, 0, true);
     var t = e.target.closest("[data-close],[data-step],[data-k],[data-proj]");
     if (!t) return;
     if (t.hasAttribute("data-close")) closeViewer();

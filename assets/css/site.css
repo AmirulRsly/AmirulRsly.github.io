@@ -379,6 +379,14 @@ kbd.is-hit { background: var(--accent); color: var(--on-accent); border-color: v
 .viewer__note { padding: 10px 14px; border-left: 3px solid var(--accent-3); border-radius: 6px; background: var(--bg-2); font-size: 15px; }
 .viewer__info .chips { margin: 18px 0 22px; }
 .viewer__links { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 26px; }
+.viewer__related { margin-bottom: 24px; }
+.viewer__related .kicker { margin-bottom: 10px; }
+.viewer__related-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
+.rel { display: flex; gap: 12px; align-items: center; padding: 8px; text-align: left; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-2); transition: border-color .2s, transform .2s; }
+.rel:hover { border-color: var(--accent); transform: translateY(-2px); }
+.rel img { width: 72px; height: 45px; object-fit: cover; border-radius: 7px; flex: none; }
+.rel b { display: block; font: 700 14px/1.25 var(--display); }
+.rel span span { display: block; font-size: 12px; color: var(--muted); }
 .viewer__pager { display: flex; justify-content: space-between; gap: 12px; border-top: 1px solid var(--line); padding-top: 20px; }
 
 /* ---------- Toast & effects ---------- */

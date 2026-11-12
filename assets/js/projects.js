@@ -529,8 +529,25 @@ window.PROJECTS = [
       { src: "astralisclip1.webp", clip: true }, { src: "astralisclip2.webp", clip: true }, { src: "astralisclip3.webp", clip: true }]
   },
   {
+    slug: "flat-tire-storyboard",
+    title: "Flat Tire: Storyboard",
+    short: "The storyboard I drew for the Flat Tire animation: 11 pages of shots, plus the character line-up.",
+    category: "art",
+    kind: "Storyboard",
+    engine: "Clip Studio Paint",
+    date: "2021-06",
+    cover: "cover-storyboard.webp",
+    tags: ["Storyboarding", "Shot Planning", "Character Design", "Clip Studio Paint"],
+    links: [],
+    body: [
+      "The storyboard I drew for our 2D short animation assignment, Flat Tire: 11 pages planning every scene and shot, plus a character sheet.",
+      "It was my first time storyboarding, and it showed me how useful a storyboard is once you start animating. Everything went smoothly, and we could focus purely on the animation."
+    ],
+    media: ["sb1.webp", "sb2.webp", "sb3.webp", "sb4.webp", "sb5.webp", "sb6.webp", "sb7.webp", "sb8.webp", "sb9.webp", "sb10.webp", "sb11.webp", "sb12.webp"]
+  },
+  {
     slug: "flat-tire",
-    title: "Flat Tire",
+    title: "Flat Tire: 2D Animation",
     short: "A 2D short animation. I handled the animation, character design, backgrounds and storyboard.",
     category: "art",
     kind: "2D Animation",
@@ -574,4 +591,10 @@ window.EXPERIENCE = [
     ],
     projects: ["hotel-check-in", "grade-4-math"]
   }
+];
+
+// Projects that belong together. Each project page links to the others in its group.
+window.RELATED = [
+  ["covid-busters", "covid-busters-brawler", "covid-busters-swordmaster"],
+  ["flat-tire", "flat-tire-storyboard"]
 ];
