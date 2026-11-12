@@ -432,7 +432,7 @@ window.PROJECTS = [
       "I split the character into separate parts, added bones to the limbs and everything else I wanted to move, then weight-painted every part so it deforms nicely in motion. For better results I also added inverse kinematics to the limbs. The result came out better than expected.",
       "Unity is still missing one important feature for 2D rigging: mesh deformation, the technique that makes 2D art move as if it were 3D. My conclusion: Unity's built-in rigging is good enough for simple 2D animation, but Spine Pro takes the crown for polished results, at a much higher price."
     ],
-    media: ["rig1.webp",
+    media: ["rig1.webp", "rig2.webp",
       { src: "rigclip0.webp", clip: true }, { src: "rigclip1.webp", clip: true }, { src: "rigclip2.webp", clip: true }, { src: "rigclip3.webp", clip: true }]
   },
   {
