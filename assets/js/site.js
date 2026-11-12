@@ -20,7 +20,7 @@
   var CAT = { games: "Game", apps: "App", art: "Art & Design" };
 
   $("#year").textContent = new Date().getFullYear();
-  $("#projCount").dataset.count = projects.length;
+  $("#projCount").dataset.count = projects.filter(function (p) { return p.category !== "art"; }).length;
   // Whole years since the first role in EXPERIENCE (the NovaLearn internship).
   (function () {
     var starts = [];
@@ -238,7 +238,7 @@
         '<div class="proj__meta"><b>' + esc(p.kind) + "</b><span>" + fmtDate(p.date) + "</span>" + "</div>" +
         '<h3 class="proj__title">' + esc(p.title) + "</h3>" +
         '<p class="proj__short">' + esc(p.short) + "</p>" +
-        '<span class="proj__more">View project</span>' +
+        '<span class="proj__more">' + (p.category === "art" ? "View artwork" : "View project") + '</span>' +
       "</div></button>";
   }).join("");
 
