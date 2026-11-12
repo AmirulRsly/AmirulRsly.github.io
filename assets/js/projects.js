@@ -572,6 +572,7 @@ window.PROJECTS = [
 window.EXPERIENCE = [
   {
     company: "CraveFX",
+    url: "https://cravefx.com/",
     logo: "exp/cravefx-logo.png",
     photos: ["exp/cravefx-1.jpg", "exp/cravefx-2.jpg", "exp/cravefx-3.jpg"],
     place: "Kuala Lumpur, Malaysia · Hybrid",
@@ -585,6 +586,7 @@ window.EXPERIENCE = [
   },
   {
     company: "NovaLearn.org",
+    url: "https://www.novalearn.org/en",
     logo: "exp/novalearn-logo.png",
     photos: ["exp/novalearn-1.jpg", "exp/novalearn-2.jpg", "exp/novalearn-3.jpg"],
     place: "Kuala Lumpur, Malaysia · On-site",
@@ -601,6 +603,7 @@ window.EXPERIENCE = [
   {
     // Education: shown in the Experience section, kept out of the timeline's work entries.
     company: "UiTM Shah Alam",
+    url: "https://www.uitm.edu.my/en/",
     education: true,
     logo: "exp/uitm-logo.png",
     photos: ["exp/uitm-1.jpg", "exp/uitm-2.jpg", "exp/uitm-3.jpg", "exp/uitm-4.jpg"],

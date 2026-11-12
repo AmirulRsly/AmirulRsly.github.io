@@ -245,6 +245,9 @@ p { margin: 0 0 1em; }
 .photobox .viewer__frame { height: min(70vh, 680px); }
 .photobox .viewer__thumbs button { width: 64px; height: 64px; }
 .photobox__title { margin: 0; padding: 14px 20px 18px; font-size: 18px; }
+.exp__site { color: inherit; text-decoration: none; }
+.exp__site span { font-size: .7em; color: var(--accent); vertical-align: .2em; }
+.exp__site:hover { color: var(--accent); }
 .exp__now { padding: 4px 8px; border-radius: 6px; background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent); font: 700 10px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; }
 .exp__meta { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
 .exp__roles { list-style: none; margin: 0; padding: 0 0 0 22px; position: relative; display: grid; gap: 22px; }

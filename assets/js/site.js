@@ -298,7 +298,8 @@
       '<header class="exp__head">' +
         (c.logo ? '<img class="exp__logo exp__logo--img" src="' + MEDIA_EXP + c.logo + '" alt="' + esc(c.company) + ' logo" width="52" height="52" loading="lazy">'
                 : '<span class="exp__logo" aria-hidden="true">' + esc(c.company.charAt(0)) + "</span>") +
-        "<div><h3>" + esc(c.company) + (current ? ' <span class="exp__now">Current</span>' : "") + "</h3>" +
+        "<div><h3>" + (c.url ? '<a class="exp__site" href="' + esc(c.url) + '" target="_blank" rel="noopener">' + esc(c.company) + ' <span aria-hidden="true">↗</span></a>' : esc(c.company)) +
+          (current ? ' <span class="exp__now">Current</span>' : "") + "</h3>" +
         '<p class="exp__meta">' + esc(c.place) + " · " + (c.years || span(earliest(c), latest(c))) + "</p></div>" +
       "</header>" +
       (ph.length ? '<div class="exp__photos">' + ph.slice(0, SHOW).map(function (src, k) {
