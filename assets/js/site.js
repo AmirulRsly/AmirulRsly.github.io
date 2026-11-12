@@ -448,14 +448,21 @@
   /* ---------- Easter egg: the Konami code ---------- */
   (function () {
     var seq = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
-    var pos = 0, keys = $$(".footer__egg kbd");
+    var pos = 0, recent = [], keys = $$(".footer__egg kbd");
     function paint() { keys.forEach(function (k, i) { k.classList.toggle("is-hit", i < pos); }); }
     document.addEventListener("keydown", function (e) {
       if (dlg.open || /input|textarea/i.test(e.target.tagName)) return;
+      if (e.repeat) return; // holding a key down shouldn't count as extra presses
       var k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-      pos = k === seq[pos] ? pos + 1 : (k === seq[0] ? 1 : 0);
+      // Progress is the longest run of recent keys that matches the start of the code,
+      // so an extra arrow (up up up down ...) keeps you on track instead of starting over.
+      recent.push(k); recent = recent.slice(-seq.length);
+      pos = 0;
+      for (var n = recent.length; n > 0; n--) {
+        if (recent.slice(-n).join() === seq.slice(0, n).join()) { pos = n; break; }
+      }
       paint();
-      if (pos === seq.length) { pos = 0; setTimeout(paint, 900); combo(); }
+      if (pos === seq.length) { pos = 0; recent = []; setTimeout(paint, 900); combo(); }
     });
     function combo() {
       var el = document.createElement("div");
