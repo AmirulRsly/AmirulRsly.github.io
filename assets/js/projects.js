@@ -395,6 +395,26 @@ window.PROJECTS = [
     media: ["fujidojo01.webp", "fujidojo02.webp"]
   },
   {
+    slug: "2d-skeleton-rigging",
+    title: "2D Skeleton Rigging Test",
+    short: "One of my characters rigged with Unity's built-in 2D bones, weights and IK, to see how it compares with Spine Pro.",
+    category: "art",
+    kind: "2D Rigging & Animation",
+    engine: "Unity · 2D Animation",
+    date: "2023-07",
+    cover: "cover-rig.webp",
+    preview: "rigclip0.webp",
+    tags: ["Unity", "2D Animation", "Skeletal Rigging", "Inverse Kinematics", "Weight Painting"],
+    links: [{ label: "View on itch.io", url: "https://amirulrsly.itch.io/2d-skeleton-rigging-animation-test" }],
+    body: [
+      "A 2D skeleton rigging test on one of my own drawings, the player character, to see whether Unity's built-in 2D rigging is on par with Spine Pro by Esoteric Software.",
+      "I split the character into separate parts, added bones to the limbs and everything else I wanted to move, then weight-painted every part so it deforms nicely in motion. For better results I also added inverse kinematics to the limbs. The result came out better than expected.",
+      "Unity is still missing one important feature for 2D rigging: mesh deformation, the technique that makes 2D art move as if it were 3D. My conclusion: Unity's built-in rigging is good enough for simple 2D animation, but Spine Pro takes the crown for polished results, at a much higher price."
+    ],
+    media: ["rig1.webp",
+      { src: "rigclip0.webp", clip: true }, { src: "rigclip1.webp", clip: true }, { src: "rigclip2.webp", clip: true }, { src: "rigclip3.webp", clip: true }]
+  },
+  {
     slug: "sit-and-stay",
     title: "Sit and Stay",
     short: "A portable massage chair designed to tight size, material and budget limits.",
