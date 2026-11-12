@@ -214,15 +214,6 @@
     });
   }
 
-  // Skill group tabs
-  var segBtns = $$(".seg button");
-  segBtns.forEach(function (b) {
-    b.addEventListener("click", function () {
-      var g = b.dataset.group;
-      segBtns.forEach(function (x) { x.setAttribute("aria-selected", x === b ? "true" : "false"); });
-      $$("#statList li").forEach(function (li) { li.classList.toggle("is-dim", g !== "all" && li.dataset.group !== g); });
-    });
-  });
 
   /* ---------- Project grid ---------- */
   var grid = $("#grid");
