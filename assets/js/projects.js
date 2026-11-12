@@ -93,6 +93,27 @@ window.PROJECTS = [
       { src: "erclip1.webp", clip: true }]
   },
   {
+    slug: "rhythm-game",
+    title: "Rhythm Game",
+    short: "A Piano Tiles style rhythm game for a client, with songs and tile maps fetched from the server at runtime.",
+    category: "games",
+    kind: "Rhythm Game",
+    engine: "Unity · C# · WebGL",
+    date: "2025-12",
+    client: true,
+    clientAssets: true,
+    cover: "cover-rgm.webp",
+    preview: "rgmclip1.webp",
+    tags: ["Unity", "C#", "WebGL", "Rhythm", "Server-driven Content", "Freelance"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/rhythm-game" }],
+    body: [
+      "A simple rhythm game inspired by Piano Tiles, built for a client.",
+      "Each song and its tile sequence are fetched from the server at runtime, picked by a URL parameter, so songs can be added or adjusted from the backend without rebuilding the game.",
+      "The itch.io build is a standalone test version: it runs entirely from bundled songs and doesn't connect to the server, so it's for trying out the gameplay."
+    ],
+    media: ["rgm1.webp", "rgm2.webp", { src: "rgmclip1.webp", clip: true }]
+  },
+  {
     slug: "battle-quiz",
     title: "Battle Quiz",
     short: "A quiz battler for a client: answer right to attack, answer wrong and spin the roulette.",
@@ -218,6 +239,25 @@ window.PROJECTS = [
     ],
     media: ["mq1.webp", "mq2.webp", "mq3.webp", "mq4.webp", "mq5.webp",
       { src: "mqclip1.webp", clip: true }]
+  },
+  {
+    slug: "jumpchain",
+    title: "JumpChain",
+    short: "The one-week PlayCanvas platformer that got me hired at CraveFX: collect crystals, then chain jumps to climb higher.",
+    category: "games",
+    kind: "2D Platformer",
+    engine: "PlayCanvas · JavaScript · TypeScript",
+    date: "2024-02",
+    cover: "cover-jc.webp",
+    preview: "jcclip1.webp",
+    tags: ["PlayCanvas", "JavaScript", "TypeScript", "WebGL", "Platformer", "Hiring Test"],
+    links: [{ label: "Play in the browser", url: "https://playcanv.as/p/nDFdxlRG/" }],
+    body: [
+      "A 2D platformer about jumping past obstacles. Yes, very cliché, but with a twist: collect jump crystals, then time your jump as you land to chain jumps that go higher and higher. The more crystals you have, the longer and higher your chain.",
+      "It was the final test in CraveFX's hiring process, after two interviews: one week to make a platformer in PlayCanvas. I had never made a game in JavaScript or PlayCanvas before, so it was my first time with both. PlayCanvas turned out to be very accessible, but hard to work with because of browser limitations.",
+      "This game got me hired. Friends who played it loved the concept, and even asked me to make more levels."
+    ],
+    media: ["jc1.webp", "jc2.webp", { src: "jcclip1.webp", clip: true }, { src: "jcclip2.webp", clip: true }]
   },
   {
     slug: "hotel-check-in",
@@ -440,7 +480,7 @@ window.EXPERIENCE = [
       { title: "Junior Interactive Developer", type: "Contract", start: "2024-03", end: "2025-02",
         skills: ["Game Development", "Unity"] }
     ],
-    projects: []
+    projects: ["jumpchain"]
   },
   {
     company: "NovaLearn.org",
