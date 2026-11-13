@@ -210,6 +210,7 @@ window.PROJECTS = [
   },
   {
     slug: "infinite-run",
+    play: { type: "game", src: "https://itch.io/embed-upload/17597849?color=07080f", w: 540, h: 960 },
     title: "Infinite Run",
     short: "A Temple Run style runner for a client, controlled by swiping.",
     category: "games",

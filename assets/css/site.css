@@ -203,7 +203,7 @@ p { margin: 0 0 1em; }
 .about { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
 .about__text .h2 { margin-bottom: 24px; }
 .about__text p { color: var(--muted); }
-.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 32px; }
+.facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 32px; }
 .fact { padding: 18px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); }
 .fact b { display: block; font: 700 36px/1 var(--display); background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 6px; }
 .fact span { font-size: 13px; color: var(--muted); }

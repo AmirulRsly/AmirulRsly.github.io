@@ -31,9 +31,6 @@
     var months = (d.getFullYear() - +first[0]) * 12 + (d.getMonth() + 1 - +first[1]);
     $("#yearsCount").dataset.count = Math.floor(months / 12);
   })();
-  $("#itchCount").dataset.count = projects.filter(function (p) {
-    return p.category === "games" && p.links.some(function (l) { return /itch\.io/.test(l.url); });
-  }).length;
 
   /* ---------- Analytics ---------- */
   // GoatCounter counts the page itself; these record the extra things a single page can't show:
