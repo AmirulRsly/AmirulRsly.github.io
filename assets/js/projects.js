@@ -598,9 +598,11 @@ window.EXPERIENCE = [
     place: "Kuala Lumpur, Malaysia · Hybrid",
     roles: [
       { title: "Junior Interactive Media and Game Developer", type: "Full-time", start: "2025-02", end: null,
-        skills: ["Web Application Development", "Game Development"] },
+        text: "Own client projects end to end in Unity, Unreal Engine and PlayCanvas, including the WaterB boat guide, where boats share live GPS positions over Socket.IO and river snapping keeps them on course; the National Museum of Singapore's Glass Rotunda installation, with its companion AI, test builds and Open House mode; the gameplay front end of NHB's Timeline Temasek card game; and porting Combat Cars to WebGPU and Android.",
+        skills: ["Unity", "Unreal Engine", "PlayCanvas", "Game Development", "Web Application Development"] },
       { title: "Junior Interactive Developer", type: "Contract", start: "2024-03", end: "2025-02",
-        skills: ["Game Development", "Unity"] }
+        text: "Built the WaterB passenger web app in PlayCanvas and connected the Unity boat app to the backend over Socket.IO. Also built the museum companion's pathfinding and its navigation to live MQTT coordinates in Unreal Engine, and the NHB Kebaya game.",
+        skills: ["Game Development", "Unity", "Unreal Engine", "PlayCanvas"] }
     ],
     projects: ["jumpchain"]
   },
