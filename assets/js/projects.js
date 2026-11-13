@@ -556,7 +556,7 @@ window.PROJECTS = [
     kind: "2D Animation",
     engine: "Adobe Animate",
     date: "2021-06",
-    cover: "cover-flat.webp",
+    cover: "cover-flat-1.webp",
     tags: ["Adobe Animate", "Character Design", "Storyboarding", "Backgrounds"],
     links: [{ label: "Watch on YouTube", url: "https://youtu.be/7HZfgsFyH0E" }],
     body: [

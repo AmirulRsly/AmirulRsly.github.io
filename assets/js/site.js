@@ -78,7 +78,7 @@
   /* ---------- Typed roles ---------- */
   (function () {
     var el = $("#typed");
-    var roles = ["Game Developer", "Unity Developer", "Interactive Developer", "2D Artist", "Animator"];
+    var roles = ["Software Engineer", "Programmer", "Interactive Developer", "Game Developer", "Creative Coder"];
     if (reduceMotion) return;
     var r = 0, i = roles[0].length, deleting = true;
     function tick() {
