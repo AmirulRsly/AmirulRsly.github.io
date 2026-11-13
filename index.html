@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/site.css?v=48">
+  <link rel="stylesheet" href="assets/css/site.css?v=53">
   <script>
     try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
@@ -30,9 +30,9 @@
       <span class="nav__mark">AH</span><span class="nav__name">Amirul Hakim</span>
     </a>
     <nav class="nav__links" aria-label="Sections">
-      <a href="#about">About</a>
-      <a href="#experience">Experience</a>
       <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#about">About</a>
       <a href="#journey">Journey</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -48,6 +48,7 @@
   <main id="main">
     <!-- Hero -->
     <section class="hero" id="top">
+      <div class="hero__wall" id="heroWall" aria-hidden="true"></div>
       <canvas class="hero__fx" id="heroFx" aria-hidden="true"></canvas>
       <div class="hero__inner">
         <div class="hero__copy">
@@ -80,51 +81,27 @@
           </div>
         </aside>
       </div>
-      <a class="hero__scroll" href="#about" aria-label="Scroll to About"><span></span></a>
+      <a class="hero__scroll" href="#work" aria-label="Scroll to my work"><span></span></a>
     </section>
 
-    <!-- About & stats -->
-    <section class="section" id="about">
-      <div class="wrap about">
-        <div class="about__text reveal">
-          <p class="kicker">01 · About</p>
-          <h2 class="h2">I program because <em>I love making things</em>.</h2>
-          <p>I'm a Junior Interactive Media and Game Developer at CraveFX in Kuala Lumpur. Since 2024 my work has mainly been games, interactive experiences and web apps, built in Unity, Unreal Engine and PlayCanvas: from an Unreal Engine museum installation whose companion navigates using live MQTT coordinates, to optimising a game for WebGPU and mobile, to the front end of a multiplayer card game. Alongside that, I've been freelancing since 2024, building web and mobile games for clients. Before CraveFX I made educational games at NovaLearn, and I hold a BCS (Hons.) in Multimedia Computing from UiTM (CGPA 3.64).</p>
-          <p>On my own games I focus on programming the systems, like turn-based combat, rhythm spawners and an enemy AI that uses fuzzy logic. Now and then I also draw and animate some of my own art, which helps me work smoothly with the artists on a team.</p>
-          <div class="facts">
-            <div class="fact"><b data-count="0" id="yearsCount">0</b><span>years in the industry</span></div>
-            <div class="fact"><b data-count="0" id="itchCount">0</b><span>games on itch.io</span></div>
-            <div class="fact"><b data-count="0" id="projCount">0</b><span>games &amp; apps</span></div>
+    <!-- Work -->
+    <section class="section" id="work">
+      <div class="wrap">
+        <div class="section__head reveal">
+          <div>
+            <p class="kicker">01 · Work</p>
+            <h2 class="h2">Selected work</h2>
+          </div>
+          <div class="filters" role="tablist" aria-label="Filter work" id="filters">
+            <button role="tab" aria-selected="true" data-filter="all">All <sup></sup></button>
+            <button role="tab" aria-selected="false" data-filter="games">Games <sup></sup></button>
+            <button role="tab" aria-selected="false" data-filter="apps">Apps <sup></sup></button>
+            <button role="tab" aria-selected="false" data-filter="art">Art &amp; Design <sup></sup></button>
           </div>
         </div>
-
-        <div class="stats reveal" aria-label="Skills">
-          <p class="kicker">Skills</p>
-          <div class="skill-group">
-            <h3>Engines</h3>
-            <ul class="chips"><li>Unity</li><li>PlayCanvas</li><li>Unreal Engine (Blueprints)</li></ul>
-          </div>
-          <div class="skill-group">
-            <h3>Languages</h3>
-            <ul class="chips"><li>C#</li><li>JavaScript</li><li>TypeScript</li><li>PHP</li><li>SQL</li></ul>
-          </div>
-          <div class="skill-group">
-            <h3>Gameplay &amp; systems</h3>
-            <ul class="chips"><li>Turn-based combat</li><li>Enemy AI: FSM, fuzzy logic, NavMesh</li><li>Spawners &amp; object pooling</li><li>Procedural runner tracks</li><li>Rhythm sync</li><li>Multiplayer card systems</li><li>Server-driven levels (JSON)</li><li>Gyroscope &amp; swipe controls</li><li>Day/night &amp; weather</li><li>Educational game design</li></ul>
-          </div>
-          <div class="skill-group">
-            <h3>Graphics &amp; platforms</h3>
-            <ul class="chips"><li>Shaders: curved-world, water</li><li>WebGL &amp; WebGPU</li><li>Performance optimisation</li><li>MQTT</li><li>Android &amp; macOS builds</li><li>HTML5</li><li>Git</li></ul>
-          </div>
-          <div class="skill-group">
-            <h3>Art &amp; animation</h3>
-            <ul class="chips"><li>Character design</li><li>Frame-by-frame animation</li><li>Sprite art</li><li>2D rigging &amp; IK</li><li>Storyboarding</li><li>Illustration &amp; webtoon</li></ul>
-          </div>
-          <div class="skill-group">
-            <h3>Tools</h3>
-            <ul class="chips"><li>Clip Studio Paint</li><li>Photoshop</li><li>Adobe Animate</li><li>Tripo</li><li>Claude Code</li><li>Codex</li></ul>
-          </div>
-        </div>
+        <p class="hint reveal">Hover a card to preview it, click for the full gallery. Cards marked ▶ can be played or watched right here.</p>
+        <div class="grid" id="grid"></div>
+        <div class="grid-more"><button class="btn btn--ghost" type="button" id="gridMore" hidden></button></div>
       </div>
     </section>
 
@@ -141,23 +118,52 @@
       </div>
     </section>
 
-    <!-- Work -->
-    <section class="section" id="work">
-      <div class="wrap">
-        <div class="section__head reveal">
-          <div>
-            <p class="kicker">03 · Work</p>
-            <h2 class="h2">Selected work</h2>
-          </div>
-          <div class="filters" role="tablist" aria-label="Filter work" id="filters">
-            <button role="tab" aria-selected="true" data-filter="all">All <sup></sup></button>
-            <button role="tab" aria-selected="false" data-filter="games">Games <sup></sup></button>
-            <button role="tab" aria-selected="false" data-filter="apps">Apps <sup></sup></button>
-            <button role="tab" aria-selected="false" data-filter="art">Art &amp; Design <sup></sup></button>
+    <!-- About & stats -->
+    <section class="section" id="about">
+      <div class="wrap about">
+        <div class="about__text reveal">
+          <p class="kicker">03 · About</p>
+          <h2 class="h2">I program because <em>I love making things</em>.</h2>
+          <p>I'm a Junior Interactive Media and Game Developer at CraveFX in Kuala Lumpur. Since 2024 my work has mainly been games, interactive experiences and web apps, built in Unity, Unreal Engine and PlayCanvas.</p>
+          <details class="about__more">
+            <summary>More about me</summary>
+            <p>Highlights include an Unreal Engine museum installation whose companion navigates using live MQTT coordinates, optimising a game for WebGPU and mobile, and the front end of a multiplayer card game. I've also been freelancing since 2024, building web and mobile games for clients. Before CraveFX I made educational games at NovaLearn, and I hold a BCS (Hons.) in Multimedia Computing from UiTM (CGPA 3.64).</p>
+            <p>On my own games I focus on programming the systems, like turn-based combat, rhythm spawners and an enemy AI that uses fuzzy logic. Now and then I also draw and animate some of my own art, which helps me work smoothly with the artists on a team.</p>
+          </details>
+          <div class="facts">
+            <div class="fact"><b data-count="0" id="yearsCount">0</b><span>years in the industry</span></div>
+            <div class="fact"><b data-count="0" id="itchCount">0</b><span>games on itch.io</span></div>
+            <div class="fact"><b data-count="0" id="projCount">0</b><span>games &amp; apps</span></div>
           </div>
         </div>
-        <p class="hint reveal">Hover a game to watch it play. Click any card for the full gallery.</p>
-        <div class="grid" id="grid"></div>
+
+        <div class="stats reveal" aria-label="Skills">
+          <p class="kicker">Skills</p>
+          <div class="skill-group">
+            <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l9 5v10l-9 5-9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg>Engines</h3>
+            <ul class="chips"><li>Unity</li><li>PlayCanvas</li><li>Unreal Engine (Blueprints)</li></ul>
+          </div>
+          <div class="skill-group">
+            <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6M14 4l-4 16"/></svg>Languages</h3>
+            <ul class="chips"><li>C#</li><li>JavaScript</li><li>TypeScript</li><li>PHP</li><li>SQL</li></ul>
+          </div>
+          <div class="skill-group">
+            <h3><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="7" width="20" height="11" rx="5"/><path d="M7 10v5M4.5 12.5h5M15 11h.01M18 14h.01"/></svg>Gameplay &amp; systems</h3>
+            <ul class="chips"><li>Turn-based combat</li><li>Enemy AI: FSM, fuzzy logic, NavMesh</li><li>Spawners &amp; object pooling</li><li>Procedural runner tracks</li><li>Rhythm sync</li><li>Multiplayer card systems</li><li>Server-driven levels (JSON)</li><li>Gyroscope &amp; swipe controls</li><li>Day/night &amp; weather</li><li>Educational game design</li></ul>
+          </div>
+          <div class="skill-group">
+            <h3><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Graphics &amp; platforms</h3>
+            <ul class="chips"><li>Shaders: curved-world, water</li><li>WebGL &amp; WebGPU</li><li>Performance optimisation</li><li>MQTT</li><li>Android &amp; macOS builds</li><li>HTML5</li><li>Git</li></ul>
+          </div>
+          <div class="skill-group">
+            <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 3l3 3-11 11H7v-3z"/><path d="M4 21c0-2 1-3 3-3"/></svg>Art &amp; animation</h3>
+            <ul class="chips"><li>Character design</li><li>Frame-by-frame animation</li><li>Sprite art</li><li>2D rigging &amp; IK</li><li>Storyboarding</li><li>Illustration &amp; webtoon</li></ul>
+          </div>
+          <div class="skill-group">
+            <h3><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.5-.5-.5-2.5z"/></svg>Tools</h3>
+            <ul class="chips"><li>Clip Studio Paint</li><li>Photoshop</li><li>Adobe Animate</li><li>Tripo</li><li>Claude Code</li><li>Codex</li></ul>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -178,7 +184,7 @@
             <button role="tab" aria-selected="false" data-filter="art">Art &amp; Design <sup></sup></button>
           </div>
         </div>
-        <ol class="timeline" id="timeline"></ol>
+        <div class="tl-years" id="timeline"></div>
       </div>
     </section>
 
@@ -211,13 +217,19 @@
   <!-- Project viewer -->
   <dialog class="viewer" id="viewer" aria-labelledby="viewerTitle">
     <div class="viewer__inner">
-      <button class="viewer__close icon-btn" type="button" data-close aria-label="Close">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
+      <div class="viewer__bar">
+        <button class="viewer__step" type="button" data-proj="-1" id="viewerPrev"><span class="viewer__step-label">← Previous</span><span class="viewer__step-title"></span></button>
+        <button class="viewer__step viewer__step--next" type="button" data-proj="1" id="viewerNext"><span class="viewer__step-label">Next →</span><span class="viewer__step-title"></span></button>
+        <button class="viewer__close icon-btn" type="button" data-close aria-label="Close">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
       <div class="viewer__stage">
         <div class="viewer__frame">
           <img id="viewerImg" alt="">
           <span class="viewer__clip" id="viewerClip" hidden>Clip</span>
+          <button class="viewer__playbtn" type="button" id="viewerPlay" hidden><span class="viewer__playicon" aria-hidden="true"></span><span id="viewerPlayLabel">Play</span></button>
+          <div class="viewer__embed" id="viewerEmbed" hidden></div>
         </div>
         <button class="viewer__nav viewer__nav--prev" type="button" data-step="-1" aria-label="Previous image">‹</button>
         <button class="viewer__nav viewer__nav--next" type="button" data-step="1" aria-label="Next image">›</button>
@@ -233,10 +245,6 @@
         <div class="viewer__related" id="viewerRelated" hidden>
           <p class="kicker">Related work</p>
           <div class="viewer__related-list" id="viewerRelatedList"></div>
-        </div>
-        <div class="viewer__pager">
-          <button class="btn btn--ghost btn--small" type="button" data-proj="-1">← Previous</button>
-          <button class="btn btn--ghost btn--small" type="button" data-proj="1">Next →</button>
         </div>
       </div>
     </div>
@@ -261,8 +269,8 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/projects.js?v=48"></script>
-  <script src="assets/js/site.js?v=48"></script>
+  <script src="assets/js/projects.js?v=53"></script>
+  <script src="assets/js/site.js?v=53"></script>
   <!-- GoatCounter analytics (no cookies). Dashboard: https://amirulrsly.goatcounter.com -->
   <script data-goatcounter="https://amirulrsly.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

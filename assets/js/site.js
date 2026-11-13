@@ -7,6 +7,7 @@
   projects.forEach(function (p) {
     var isClip = function (m) { return typeof m !== "string"; };
     p.media = p.media.filter(isClip).concat(p.media.filter(function (m) { return !isClip(m); }));
+    if (p.play) p.media.unshift({ play: true });
   });
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -17,6 +18,7 @@
   function fmtDate(d) { var p = d.split("-"); return MONTHS[+p[1] - 1] + " " + p[0]; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function src(m) { return typeof m === "string" ? m : m.src; }
+  function playLabel(p) { return p.play.type === "video" ? "Watch here" : "Play here"; }
   var CAT = { games: "Game", apps: "App", art: "Art & Design" };
 
   $("#year").textContent = new Date().getFullYear();
@@ -177,6 +179,33 @@
     window.__burst = function (x, y, n) { var b = canvas.getBoundingClientRect(); for (var k = 0; k < (n || 60); k++) sparks.push(make(x - b.left, y - b.top, true)); start(); };
   })();
 
+  /* ---------- Hero wall: my work playing behind the intro ---------- */
+  // Small 220px-tall versions of the card clips (assets/media/hero/), loaded after the page so they
+  // never hold up the first paint. Rows drift sideways and pause while the hero is off screen.
+  (function () {
+    var wall = $("#heroWall"); if (!wall) return;
+    var items = projects.filter(function (p) { return p.preview; });
+    var small = window.matchMedia("(max-width: 760px)").matches;
+    var ROWS = small ? 2 : 3, PER = small ? 5 : 99;
+    function build() {
+      var rows = [];
+      for (var r = 0; r < ROWS; r++) rows.push([]);
+      items.forEach(function (p, k) { var row = rows[k % ROWS]; if (row.length < PER) row.push(p); });
+      wall.innerHTML = rows.map(function (row, r) {
+        var tiles = row.map(function (p) {
+          var file = reduceMotion ? MEDIA + p.cover : MEDIA + "hero/" + p.preview;
+          return '<img src="' + file + '" alt="" decoding="async">';
+        }).join("");
+        // Two copies back to back so the row loops without a seam.
+        return '<div class="wall__row' + (r % 2 ? " wall__row--rev" : "") + '"><div class="wall__track" style="animation-duration:' + (70 + r * 15) + 's">' + tiles + tiles + "</div></div>";
+      }).join("");
+      requestAnimationFrame(function () { wall.classList.add("is-on"); });
+    }
+    if (document.readyState === "complete") setTimeout(build, 200);
+    else window.addEventListener("load", function () { setTimeout(build, 200); }, { once: true });
+    new IntersectionObserver(function (en) { wall.classList.toggle("is-paused", !en[0].isIntersecting); }).observe(wall);
+  })();
+
   /* ---------- Tilt ---------- */
   function tilt(el, max) {
     if (!finePointer || reduceMotion) return;
@@ -220,9 +249,10 @@
   grid.innerHTML = projects.map(function (p, i) {
     return '<button class="proj tilt-soft' + (p.featured ? " proj--featured" : "") + '" type="button" data-cat="' + p.category + '" data-i="' + i + '" aria-label="Open ' + esc(p.title) + '">' +
       '<div class="proj__media">' +
-        '<img src="' + MEDIA + (p.featured && p.coverLarge ? p.coverLarge : p.cover) + '" alt="" loading="lazy" width="800" height="500">' +
+        '<img src="' + MEDIA + (p.featured && p.coverLarge ? p.coverLarge : p.cover) + '" alt="" loading="lazy" decoding="async" width="800" height="500">' +
         (p.preview ? '<img class="proj__preview" data-src="' + MEDIA + p.preview + '" alt="">' : "") +
         (p.preview ? '<span class="proj__play">' + (finePointer ? "Hover to play" : (p.category === "games" ? "Gameplay" : "Preview")) + "</span>" : "") +
+        (p.play ? '<span class="proj__playable">▶ ' + playLabel(p) + "</span>" : "") +
         (p.featured ? '<span class="proj__ribbon badge">Featured</span>' : (p.client ? '<span class="proj__ribbon proj__client">Freelance</span>' : "")) +
       "</div>" +
       '<div class="proj__body">' +
@@ -260,23 +290,39 @@
     });
   });
 
-  // Filters
-  var filterBtns = $$("#filters button");
+  // Filters, plus a "Show all" button so the page doesn't start with every card.
+  var filterBtns = $$("#filters button"), moreBtn = $("#gridMore");
+  var LIMIT = 9, gridState = { f: "all", all: false };
+  function applyGrid(animate) {
+    var f = gridState.f, n = 0, total = 0;
+    $$(".proj", grid).forEach(function (card, idx) {
+      var match = f === "all" || card.dataset.cat === f;
+      if (match) total++;
+      var show = match && (gridState.all || n < LIMIT);
+      if (show) n++;
+      var wasHidden = card.classList.contains("is-hidden");
+      card.classList.toggle("is-hidden", !show);
+      // Only the featured card spans two columns when everything is shown.
+      card.classList.toggle("proj--featured", show && f === "all" && !!projects[idx].featured);
+      if (show && (animate === "all" || (animate === "new" && wasHidden))) {
+        card.classList.remove("is-entering"); void card.offsetWidth;
+        card.style.animationDelay = (animate === "new" ? 0 : Math.min(n * 40, 400)) + "ms"; card.classList.add("is-entering");
+      }
+    });
+    moreBtn.hidden = gridState.all || total <= LIMIT;
+    moreBtn.textContent = "Show all " + total + " →";
+  }
   filterBtns.forEach(function (b) {
     var f = b.dataset.filter;
     $("sup", b).textContent = f === "all" ? projects.length : projects.filter(function (p) { return p.category === f; }).length;
     b.addEventListener("click", function () {
       filterBtns.forEach(function (x) { x.setAttribute("aria-selected", x === b ? "true" : "false"); });
-      $$(".proj", grid).forEach(function (card, idx) {
-        var show = f === "all" || card.dataset.cat === f;
-        card.classList.toggle("is-hidden", !show);
-        card.classList.remove("is-entering");
-        // Only the featured card spans two columns when everything is shown.
-        card.classList.toggle("proj--featured", show && f === "all" && !!projects[idx].featured);
-        if (show) { void card.offsetWidth; card.style.animationDelay = (idx * 40) + "ms"; card.classList.add("is-entering"); }
-      });
+      gridState.f = f; gridState.all = false;
+      applyGrid("all");
     });
   });
+  moreBtn.addEventListener("click", function () { gridState.all = true; applyGrid("new"); });
+  applyGrid(false);
 
   /* ---------- Experience ---------- */
   var experience = window.EXPERIENCE || [];
@@ -366,23 +412,39 @@
   var work = [];
   experience.forEach(function (c) { if (!c.education) c.roles.forEach(function (r) { work.push({ c: c, r: r }); }); });
   // cat matches a Journey filter button: work, edu, or the project category.
-  var events = edu.map(function (e) { return { type: "edu", cat: "edu", date: e.date, html: '<button class="tl__card" type="button" data-exp>' + tlBadge(school, ICON_CAP) + '<span><span class="tl__date">' + e.date.slice(0, 4) + '</span><span class="tl__title">' + esc(e.title) + '</span><span class="tl__sub">' + esc(e.sub) + "</span></span></button>" }; })
+  var events = edu.map(function (e) { return { type: "edu", cat: "edu", date: e.date, pic: school && school.logo ? MEDIA_EXP + school.logo : "", html: '<button class="tl__card" type="button" data-exp>' + tlBadge(school, ICON_CAP) + '<span><span class="tl__date">' + e.date.slice(0, 4) + '</span><span class="tl__title">' + esc(e.title) + '</span><span class="tl__sub">' + esc(e.sub) + "</span></span></button>" }; })
     .concat(projects.map(function (p, i) {
-      return { type: "proj", cat: p.category, date: p.date, html: '<button class="tl__card" type="button" data-i="' + i + '"><img class="tl__thumb" src="' + MEDIA + p.cover + '" alt="" loading="lazy"><span><span class="tl__date">' + fmtDate(p.date) + '</span><span class="tl__title">' + esc(p.title) + '</span><span class="tl__sub">' + esc(p.kind) + " · " + esc(p.engine) + "</span></span></button>" };
+      return { type: "proj", cat: p.category, date: p.date, pic: MEDIA + p.cover, html: '<button class="tl__card" type="button" data-i="' + i + '"><img class="tl__thumb" src="' + MEDIA + p.cover + '" alt="" loading="lazy"><span><span class="tl__date">' + fmtDate(p.date) + '</span><span class="tl__title">' + esc(p.title) + '</span><span class="tl__sub">' + esc(p.kind) + " · " + esc(p.engine) + "</span></span></button>" };
     }))
     .concat(work.map(function (w) {
-      return { type: "work", cat: "work", date: w.r.start, html: '<button class="tl__card" type="button" data-exp>' + tlBadge(w.c, ICON_WORK) + '<span><span class="tl__date">' + fmtDate(w.r.start) + " – " + (w.r.end ? fmtDate(w.r.end) : "Present") + '</span><span class="tl__title">' + esc(w.r.title) + '</span><span class="tl__sub">' + esc(w.c.company) + " · " + esc(w.r.type) + "</span></span></button>" };
+      return { type: "work", cat: "work", date: w.r.start, pic: w.c.logo ? MEDIA_EXP + w.c.logo : "", html: '<button class="tl__card" type="button" data-exp>' + tlBadge(w.c, ICON_WORK) + '<span><span class="tl__date">' + fmtDate(w.r.start) + " – " + (w.r.end ? fmtDate(w.r.end) : "Present") + '</span><span class="tl__title">' + esc(w.r.title) + '</span><span class="tl__sub">' + esc(w.c.company) + " · " + esc(w.r.type) + "</span></span></button>" };
     }))
     .sort(function (a, b) { return a.date < b.date ? 1 : -1; });
   var tlEl = $("#timeline");
-  // Rebuild the list for each filter so the cards keep alternating left and right with no gaps.
+  // One collapsible group per year, newest open, so the section stays short until someone digs in.
+  // Rebuilt for each filter so the cards keep alternating left and right with no gaps.
   function renderTimeline(f, animate) {
     var shown = events.filter(function (e) { return f === "all" || e.cat === f; });
-    tlEl.innerHTML = shown.map(function (e, k) {
-      return '<li class="tl ' + (animate ? "tl--enter" : "reveal") + (e.type === "edu" ? " tl--edu" : e.type === "work" ? " tl--work" : "") + '"' +
-        (animate ? ' style="animation-delay:' + Math.min(k * 50, 600) + 'ms"' : "") + ">" + e.html + "</li>";
+    var years = [];
+    shown.forEach(function (e) {
+      var y = e.date.slice(0, 4), g = years[years.length - 1];
+      if (!g || g.y !== y) years.push(g = { y: y, items: [] });
+      g.items.push(e);
+    });
+    tlEl.innerHTML = years.map(function (g, gi) {
+      // Summary line like "1 role · 3 games · 1 artwork", plus a few thumbnails.
+      var n = {};
+      g.items.forEach(function (e) { n[e.cat] = (n[e.cat] || 0) + 1; });
+      var WORDS = { work: ["role", "roles"], edu: ["degree started", "degrees started"], games: ["game", "games"], apps: ["app", "apps"], art: ["artwork", "artworks"] };
+      var bits = ["work", "edu", "games", "apps", "art"].filter(function (k) { return n[k]; }).map(function (k) { return k === "edu" ? "Started degree" : n[k] + " " + WORDS[k][n[k] > 1 ? 1 : 0]; });
+      var pics = g.items.slice(0, 5).map(function (e) { return e.pic ? '<img src="' + e.pic + '" alt="" loading="lazy">' : ""; }).join("");
+      return '<details class="tl-year' + (animate ? " tl--enter" : " reveal") + '"' + (gi === 0 ? " open" : "") + (animate ? ' style="animation-delay:' + Math.min(gi * 60, 400) + 'ms"' : "") + ">" +
+        '<summary><span class="tl-year__y">' + g.y + '</span><span class="tl-year__n">' + bits.join(" · ") + '</span><span class="tl-year__pics" aria-hidden="true">' + pics + '</span><span class="tl-year__chev" aria-hidden="true"></span></summary>' +
+        '<ul class="tl-list">' + g.items.map(function (e) {
+          return '<li class="tl' + (e.type === "edu" ? " tl--edu" : e.type === "work" ? " tl--work" : "") + '">' + e.html + "</li>";
+        }).join("") + "</ul></details>";
     }).join("");
-    if (!animate) $$(".tl", tlEl).forEach(function (li) { revealer.observe(li); });
+    if (!animate) $$(".tl-year", tlEl).forEach(function (d) { revealer.observe(d); });
     $$("button.tl__card", tlEl).forEach(function (b) {
       b.addEventListener("click", function () {
         if (b.hasAttribute("data-exp")) document.getElementById("experience").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
@@ -412,8 +474,18 @@
     cur.p = pi;
     $("#viewerTitle").textContent = p.title;
     $("#viewerMeta").innerHTML = "<b>" + esc(p.kind) + "</b><span>" + esc(p.engine) + "</span><span>" + fmtDate(p.date) + "</span><span>" + CAT[p.category] + "</span>" + (p.client ? "<span>Freelance</span>" : "");
-    $("#viewerBody").innerHTML = p.body.map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("");
-    if (p.clientAssets) $("#viewerBody").innerHTML += '<p class="viewer__note">The art assets were provided by the client and are AI-generated. I developed the game.</p>';
+    // First paragraph up front, the rest behind "See more".
+    $("#viewerBody").innerHTML = "<p>" + esc(p.body[0]) + "</p>" +
+      (p.body.length > 1 ? '<div class="viewer__rest" id="viewerRest" hidden>' + p.body.slice(1).map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("") + "</div>" +
+        '<button type="button" class="viewer__morebtn" id="viewerMore" aria-expanded="false">See more</button>' : "") +
+      (p.clientAssets ? '<p class="viewer__note">The art assets were provided by the client and are AI-generated. I developed the game.</p>' : "");
+    [["#viewerPrev", -1, "Previous"], ["#viewerNext", 1, "Next"]].forEach(function (d) {
+      var q = projects[(pi + d[1] + projects.length) % projects.length];
+      // "project" / "artwork" drops away on narrow screens to keep the bar on one line.
+      var label = d[2] + '<span class="viewer__step-kind">' + (q.category === "art" ? " artwork" : " project") + "</span>";
+      $(".viewer__step-label", $(d[0])).innerHTML = d[1] < 0 ? "← " + label : label + " →";
+      $(".viewer__step-title", $(d[0])).textContent = q.title;
+    });
     $("#viewerTags").innerHTML = p.tags.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
     var rel = (related[p.slug] || []).map(function (slug) {
       return projects.findIndex(function (q) { return q.slug === slug; });
@@ -425,23 +497,28 @@
     }).join("");
     $("#viewerLinks").innerHTML = p.links.map(function (l, k) { return '<a class="btn' + (k ? " btn--ghost" : "") + '" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + " ↗</a>"; }).join("");
     thumbs.innerHTML = p.media.map(function (m, k) {
+      if (m.play) return '<button type="button" data-k="' + k + '" class="is-play" aria-label="' + playLabel(p) + '"><img src="' + MEDIA + p.cover + '" alt=""></button>';
       var clip = typeof m !== "string";
-      return '<button type="button" data-k="' + k + '" class="' + (clip ? "is-clip" : "") + '" aria-label="' + (clip ? "Clip " : "Image ") + (k + 1) + '"><img src="' + MEDIA + "thumbs/" + src(m) + '" alt=""></button>';
+      return '<button type="button" data-k="' + k + '" class="' + (clip ? "is-clip" : "") + '" aria-label="' + (clip ? "Clip " : "Image ") + (k + 1) + '"><img src="' + MEDIA + "thumbs/" + src(m) + '" alt="" loading="lazy"></button>';
     }).join("");
     showMedia(mi || 0);
     if (!dlg.open) { lastFocus = document.activeElement; dlg.showModal(); document.body.style.overflow = "hidden"; }
     dlg.scrollTop = 0;
+    var rest = $("#viewerRest"); if (rest) rest.hidden = true;
     if (push) history.replaceState(null, "", "#work/" + p.slug);
     track({ path: "/work/" + p.slug, title: p.title });
   }
   function showMedia(k) {
     var list = projects[cur.p].media, n = list.length;
     cur.m = (k + n) % n;
-    var m = list[cur.m];
-    img.src = MEDIA + src(m);
-    img.alt = projects[cur.p].title + ", " + (typeof m === "string" ? "image " : "clip ") + (cur.m + 1);
+    var m = list[cur.m], p = projects[cur.p];
+    stopEmbed();
+    img.src = MEDIA + (m.play ? p.cover : src(m));
+    img.alt = p.title + ", " + (m.play ? "cover" : (typeof m === "string" ? "image " : "clip ") + (cur.m + 1));
     img.style.animation = "none"; void img.offsetWidth; img.style.animation = "";
-    $("#viewerClip").hidden = typeof m === "string";
+    $("#viewerClip").hidden = typeof m === "string" || !!m.play;
+    $("#viewerPlay").hidden = !m.play;
+    if (m.play) $("#viewerPlayLabel").textContent = p.play.type === "video" ? "Watch the video here" : "Play in your browser";
     $("#viewerCount").textContent = (cur.m + 1) + " / " + n;
     $$("button", thumbs).forEach(function (b, i) { b.setAttribute("aria-current", i === cur.m ? "true" : "false"); });
     var active = thumbs.children[cur.m];
@@ -449,16 +526,32 @@
     // Warm the next image so arrowing through feels instant.
     var nx = list[(cur.m + 1) % n]; if (typeof nx === "string") (new Image()).src = MEDIA + nx;
   }
+  // The game or video only loads when someone presses play, and is torn down when they move on.
+  var embed = $("#viewerEmbed");
+  function startEmbed() {
+    var p = projects[cur.p];
+    embed.innerHTML = '<iframe src="' + esc(p.play.src) + '" title="' + esc(p.title) + '" allow="autoplay; fullscreen; gamepad; accelerometer; gyroscope" allowfullscreen></iframe>';
+    embed.hidden = false; $("#viewerPlay").hidden = true;
+    track({ path: (p.play.type === "video" ? "watch: " : "play: ") + p.title, event: true });
+  }
+  function stopEmbed() { embed.innerHTML = ""; embed.hidden = true; }
+  $("#viewerPlay").addEventListener("click", startEmbed);
   function closeViewer() { if (dlg.open) dlg.close(); }
   dlg.addEventListener("close", function () {
     if (dlg.open) return; // reopened before this queued event ran
     document.body.style.overflow = "";
     img.removeAttribute("src");
+    stopEmbed();
     if (location.hash.indexOf("#work/") === 0) history.replaceState(null, "", "#work");
     if (lastFocus) lastFocus.focus();
   });
   dlg.addEventListener("click", function (e) {
     if (e.target === dlg) return closeViewer();
+    if (e.target.closest("#viewerMore")) {
+      var rest = $("#viewerRest"), btn = $("#viewerMore"), open = rest.hidden;
+      rest.hidden = !open; btn.textContent = open ? "See less" : "See more"; btn.setAttribute("aria-expanded", open);
+      return;
+    }
     var r = e.target.closest("[data-rel]");
     if (r) return openProject(+r.dataset.rel, 0, true);
     var t = e.target.closest("[data-close],[data-step],[data-k],[data-proj]");
@@ -474,6 +567,7 @@
     track({ path: "link: " + projects[cur.p].title + " – " + a.textContent.replace(" ↗", "").replace(/\s*\(.*\)/, ""), title: a.href, event: true });
   });
   dlg.addEventListener("keydown", function (e) {
+    if (!embed.hidden) return;
     if (e.key === "ArrowRight") { e.preventDefault(); showMedia(cur.m + 1); }
     if (e.key === "ArrowLeft") { e.preventDefault(); showMedia(cur.m - 1); }
   });
@@ -482,7 +576,7 @@
     var x0 = null, stage = $(".viewer__stage");
     stage.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
     stage.addEventListener("touchend", function (e) {
-      if (x0 === null) return;
+      if (x0 === null || !embed.hidden) return;
       var dx = e.changedTouches[0].clientX - x0; x0 = null;
       if (Math.abs(dx) > 40) showMedia(cur.m + (dx < 0 ? 1 : -1));
     });

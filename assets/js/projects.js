@@ -4,6 +4,7 @@
 // Galleries always show clips before stills (site.js sorts them). client: true adds a "Freelance" label;
 // clientAssets: true adds a note that the client supplied the (AI-generated) art.
 // hidden: true keeps an entry here but leaves it off the site.
+// play: { type: "game" | "video", src } adds a slide that plays the game or video inside the page.
 window.PROJECTS = [
   {
     slug: "13-malam",
@@ -32,6 +33,7 @@ window.PROJECTS = [
   },
   {
     slug: "keycombowombo",
+    play: { type: "game", src: "https://itch.io/embed-upload/19545682?color=07080f" },
     title: "KeyComboWombo",
     short: "A roguelike typing game inspired by Slay the Spire: every attack, parry and combo is a word you type.",
     category: "games",
@@ -283,6 +285,7 @@ window.PROJECTS = [
   },
   {
     slug: "hotel-check-in",
+    play: { type: "game", src: "https://itch.io/embed-upload/9199117?color=07080f" },
     title: "Cozy Cottage: Hotel Check-In",
     short: "A Papers, Please style minigame prototype from my Novalearn internship: spot fake tickets and hand out the right keys.",
     category: "games",
@@ -302,6 +305,7 @@ window.PROJECTS = [
   },
   {
     slug: "grade-4-math",
+    play: { type: "game", src: "https://itch.io/embed-upload/8537321?color=07080f" },
     title: "Grade 4 Math Activities",
     short: "The gamified math quiz I built as Novalearn's hiring test. It got me the internship.",
     category: "games",
@@ -342,6 +346,7 @@ window.PROJECTS = [
   },
   {
     slug: "rhythm-hero",
+    play: { type: "game", src: "https://itch.io/embed-upload/13486171?color=07080f" },
     title: "Rhythm Hero",
     short: "A rhythm game: hit the right button as each monster arrives, in time with the music.",
     category: "games",
@@ -494,6 +499,7 @@ window.PROJECTS = [
   },
   {
     slug: "jawi-nft",
+    play: { type: "video", src: "https://www.youtube-nocookie.com/embed/2gbniv4gCBc?autoplay=1&rel=0&start=37&end=122" },
     title: "Jawi NFT Intro Sequence",
     short: "A commissioned intro sequence for the first episode of an animation studio's series.",
     category: "art",
@@ -550,6 +556,7 @@ window.PROJECTS = [
   },
   {
     slug: "flat-tire",
+    play: { type: "video", src: "https://www.youtube-nocookie.com/embed/7HZfgsFyH0E?autoplay=1&rel=0" },
     title: "Flat Tire: 2D Animation",
     short: "A 2D short animation. I handled the animation, character design, backgrounds and storyboard.",
     category: "art",
