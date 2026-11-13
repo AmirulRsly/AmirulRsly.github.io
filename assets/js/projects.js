@@ -55,6 +55,89 @@ window.PROJECTS = [
       { src: "kcwclip1.webp", clip: true }, { src: "kcwclip2.webp", clip: true }, { src: "kcwclip6.webp", clip: true }]
   },
   {
+    slug: "kanamoji",
+    title: "Kanamoji: Final Year Project",
+    short: "A turn-based battle game where you learn Japanese kana by racing an AI to answer quiz questions.",
+    category: "games",
+    kind: "Educational Game",
+    engine: "Unity · C#",
+    date: "2023-06",
+    cover: "cover-fyp.webp",
+    preview: "fypgif3.webp",
+    tags: ["Unity", "C#", "Finite State Machine", "Fuzzy Logic", "2D Art"],
+    links: [{ label: "Play the demo on itch.io", url: "https://amirulrsly.itch.io/amirulrsly-fyp-demo" }],
+    body: [
+      "My degree final year project, titled “Intelligent Enemy in Turn-Based Battle System to Learn Kanamoji”. It is an educational game about learning the Japanese alphabet, built around a mechanic I designed: a turn-based combat system fused with a quiz game, so every attack is a question.",
+      "I built the enemy AI with a finite state machine and fuzzy logic. The AI learns Kanamoji alongside the player and competes with them on who can answer correctly and fastest.",
+      "The project was still in development when I wrote this, but a playable demo is available on itch.io."
+    ],
+    media: ["fyp1.webp", "fyp2.webp", "fyp3.webp", "fyp4.webp", "fyp5.webp", "fyp6.webp", "fyp7.webp", "fyp8.webp",
+      { src: "fypgif1.webp", clip: true }, { src: "fypgif2.webp", clip: true }, { src: "fypgif3.webp", clip: true },
+      { src: "fypgif4.webp", clip: true }, { src: "fypgif5.webp", clip: true }]
+  },
+  {
+    slug: "rhythm-hero",
+    play: { type: "game", src: "https://itch.io/embed-upload/13486171?color=07080f" },
+    title: "Rhythm Hero",
+    short: "A rhythm game: hit the right button as each monster arrives, in time with the music.",
+    category: "games",
+    kind: "Rhythm Game",
+    engine: "Unity · C#",
+    date: "2023-02",
+    cover: "cover-rhythm.webp",
+    preview: "rhygif2.webp",
+    tags: ["Unity", "C#", "Spawner Systems", "2D Art", "Story Art"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/rhythm-hero" }],
+    body: [
+      "My second Unity project, a rhythm game set to music from Undertale. The player presses the button matching each approaching monster, on the beat.",
+      "The hardest part was keeping the spawns in sync with the music. I solved it by splitting the song into waves of pre-arranged monster groups that follow its rhythm, then spawning each wave as the previous one finished, until the song ends.",
+      "I designed and drew the player character, the monsters and the story art in Clip Studio Paint."
+    ],
+    media: ["rhythm1.webp", "rhythm2.webp", "rhythm3.webp", "rhythm4.webp", "rhythm5.webp", "rhythm6.webp",
+      { src: "rhygif2.webp", clip: true }, { src: "rhygif3.webp", clip: true }, { src: "rhygif4.webp", clip: true }, { src: "rhygif1.webp", clip: true }]
+  },
+  {
+    slug: "covid-busters",
+    title: "Covid Busters",
+    short: "My first Unity game: a turn-based battler with hand-drawn, frame-by-frame animated heroes.",
+    category: "games",
+    kind: "Turn-Based Combat Game",
+    engine: "Unity · C#",
+    date: "2022-06",
+    cover: "cover-covid.webp",
+    preview: "covgif2.webp",
+    tags: ["Unity", "C#", "Coroutines", "Singletons", "Frame-by-frame Animation"],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/covid-busters" }],
+    body: [
+      "My first Unity project, built with what I learned from a Udemy Unity programming course and YouTube tutorials. After a month of development, the turn-based combat system worked as intended.",
+      "It taught me how useful the singleton pattern is, and how to use coroutines with IEnumerators to sequence turns and animations.",
+      "I designed and drew the player characters and monsters in Clip Studio Paint, and animated both heroes' attacks frame by frame."
+    ],
+    media: ["covid1.webp", "covid2.webp", "covid3.webp", "covid4.webp", "covid5.webp", "covid6.webp",
+      { src: "covgif2.webp", clip: true }, { src: "covgif3.webp", clip: true }, { src: "covgif4.webp", clip: true },
+      { src: "covgif5.webp", clip: true }, { src: "covgif6.webp", clip: true }, { src: "covgif1.webp", clip: true }]
+  },
+  {
+    slug: "2d-skeleton-rigging",
+    title: "2D Skeleton Rigging Test",
+    short: "One of my characters rigged with Unity's built-in 2D bones, weights and IK, to see how it compares with Spine Pro.",
+    category: "art",
+    kind: "2D Rigging & Animation",
+    engine: "Unity · 2D Animation",
+    date: "2023-07",
+    cover: "cover-rig.webp",
+    preview: "rigclip0.webp",
+    tags: ["Unity", "2D Animation", "Skeletal Rigging", "Inverse Kinematics", "Weight Painting"],
+    links: [{ label: "View on itch.io", url: "https://amirulrsly.itch.io/2d-skeleton-rigging-animation-test" }],
+    body: [
+      "A 2D skeleton rigging test on one of my own drawings, the player character, to see whether Unity's built-in 2D rigging is on par with Spine Pro by Esoteric Software.",
+      "I split the character into separate parts, added bones to the limbs and everything else I wanted to move, then weight-painted every part so it deforms nicely in motion. For better results I also added inverse kinematics to the limbs. The result came out better than expected.",
+      "Unity is still missing one important feature for 2D rigging: mesh deformation, the technique that makes 2D art move as if it were 3D. My conclusion: Unity's built-in rigging is good enough for simple 2D animation, but Spine Pro takes the crown for polished results, at a much higher price."
+    ],
+    media: ["rig1.webp", "rig2.webp",
+      { src: "rigclip0.webp", clip: true }, { src: "rigclip1.webp", clip: true }, { src: "rigclip2.webp", clip: true }, { src: "rigclip3.webp", clip: true }]
+  },
+  {
     slug: "jump-game",
     play: { type: "game", src: "https://itch.io/embed-upload/16752877?color=07080f", w: 720, h: 1280 },
     title: "Jump Game",
@@ -335,69 +418,6 @@ window.PROJECTS = [
       { src: "mathclip1.webp", clip: true }, { src: "mathclip2.webp", clip: true }]
   },
   {
-    slug: "kanamoji",
-    title: "Kanamoji: Final Year Project",
-    short: "A turn-based battle game where you learn Japanese kana by racing an AI to answer quiz questions.",
-    category: "games",
-    kind: "Educational Game",
-    engine: "Unity · C#",
-    date: "2023-06",
-    cover: "cover-fyp.webp",
-    preview: "fypgif3.webp",
-    tags: ["Unity", "C#", "Finite State Machine", "Fuzzy Logic", "2D Art"],
-    links: [{ label: "Play the demo on itch.io", url: "https://amirulrsly.itch.io/amirulrsly-fyp-demo" }],
-    body: [
-      "My degree final year project, titled “Intelligent Enemy in Turn-Based Battle System to Learn Kanamoji”. It is an educational game about learning the Japanese alphabet, built around a mechanic I designed: a turn-based combat system fused with a quiz game, so every attack is a question.",
-      "I built the enemy AI with a finite state machine and fuzzy logic. The AI learns Kanamoji alongside the player and competes with them on who can answer correctly and fastest.",
-      "The project was still in development when I wrote this, but a playable demo is available on itch.io."
-    ],
-    media: ["fyp1.webp", "fyp2.webp", "fyp3.webp", "fyp4.webp", "fyp5.webp", "fyp6.webp", "fyp7.webp", "fyp8.webp",
-      { src: "fypgif1.webp", clip: true }, { src: "fypgif2.webp", clip: true }, { src: "fypgif3.webp", clip: true },
-      { src: "fypgif4.webp", clip: true }, { src: "fypgif5.webp", clip: true }]
-  },
-  {
-    slug: "rhythm-hero",
-    play: { type: "game", src: "https://itch.io/embed-upload/13486171?color=07080f" },
-    title: "Rhythm Hero",
-    short: "A rhythm game: hit the right button as each monster arrives, in time with the music.",
-    category: "games",
-    kind: "Rhythm Game",
-    engine: "Unity · C#",
-    date: "2023-02",
-    cover: "cover-rhythm.webp",
-    preview: "rhygif2.webp",
-    tags: ["Unity", "C#", "Spawner Systems", "2D Art", "Story Art"],
-    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/rhythm-hero" }],
-    body: [
-      "My second Unity project, a rhythm game set to music from Undertale. The player presses the button matching each approaching monster, on the beat.",
-      "The hardest part was keeping the spawns in sync with the music. I solved it by splitting the song into waves of pre-arranged monster groups that follow its rhythm, then spawning each wave as the previous one finished, until the song ends.",
-      "I designed and drew the player character, the monsters and the story art in Clip Studio Paint."
-    ],
-    media: ["rhythm1.webp", "rhythm2.webp", "rhythm3.webp", "rhythm4.webp", "rhythm5.webp", "rhythm6.webp",
-      { src: "rhygif2.webp", clip: true }, { src: "rhygif3.webp", clip: true }, { src: "rhygif4.webp", clip: true }, { src: "rhygif1.webp", clip: true }]
-  },
-  {
-    slug: "covid-busters",
-    title: "Covid Busters",
-    short: "My first Unity game: a turn-based battler with hand-drawn, frame-by-frame animated heroes.",
-    category: "games",
-    kind: "Turn-Based Combat Game",
-    engine: "Unity · C#",
-    date: "2022-06",
-    cover: "cover-covid.webp",
-    preview: "covgif2.webp",
-    tags: ["Unity", "C#", "Coroutines", "Singletons", "Frame-by-frame Animation"],
-    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/covid-busters" }],
-    body: [
-      "My first Unity project, built with what I learned from a Udemy Unity programming course and YouTube tutorials. After a month of development, the turn-based combat system worked as intended.",
-      "It taught me how useful the singleton pattern is, and how to use coroutines with IEnumerators to sequence turns and animations.",
-      "I designed and drew the player characters and monsters in Clip Studio Paint, and animated both heroes' attacks frame by frame."
-    ],
-    media: ["covid1.webp", "covid2.webp", "covid3.webp", "covid4.webp", "covid5.webp", "covid6.webp",
-      { src: "covgif2.webp", clip: true }, { src: "covgif3.webp", clip: true }, { src: "covgif4.webp", clip: true },
-      { src: "covgif5.webp", clip: true }, { src: "covgif6.webp", clip: true }, { src: "covgif1.webp", clip: true }]
-  },
-  {
     slug: "dnd-seraphim",
     hidden: true,
     title: "Seraphim: DnD Character Commission",
@@ -432,26 +452,6 @@ window.PROJECTS = [
       "The finished app takes orders, edits them, keeps a running total and prints a receipt with the order list and total price."
     ],
     media: ["fujidojo01.webp", "fujidojo02.webp"]
-  },
-  {
-    slug: "2d-skeleton-rigging",
-    title: "2D Skeleton Rigging Test",
-    short: "One of my characters rigged with Unity's built-in 2D bones, weights and IK, to see how it compares with Spine Pro.",
-    category: "art",
-    kind: "2D Rigging & Animation",
-    engine: "Unity · 2D Animation",
-    date: "2023-07",
-    cover: "cover-rig.webp",
-    preview: "rigclip0.webp",
-    tags: ["Unity", "2D Animation", "Skeletal Rigging", "Inverse Kinematics", "Weight Painting"],
-    links: [{ label: "View on itch.io", url: "https://amirulrsly.itch.io/2d-skeleton-rigging-animation-test" }],
-    body: [
-      "A 2D skeleton rigging test on one of my own drawings, the player character, to see whether Unity's built-in 2D rigging is on par with Spine Pro by Esoteric Software.",
-      "I split the character into separate parts, added bones to the limbs and everything else I wanted to move, then weight-painted every part so it deforms nicely in motion. For better results I also added inverse kinematics to the limbs. The result came out better than expected.",
-      "Unity is still missing one important feature for 2D rigging: mesh deformation, the technique that makes 2D art move as if it were 3D. My conclusion: Unity's built-in rigging is good enough for simple 2D animation, but Spine Pro takes the crown for polished results, at a much higher price."
-    ],
-    media: ["rig1.webp", "rig2.webp",
-      { src: "rigclip0.webp", clip: true }, { src: "rigclip1.webp", clip: true }, { src: "rigclip2.webp", clip: true }, { src: "rigclip3.webp", clip: true }]
   },
   {
     slug: "sit-and-stay",
