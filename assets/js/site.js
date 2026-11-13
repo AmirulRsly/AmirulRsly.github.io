@@ -7,7 +7,6 @@
   projects.forEach(function (p) {
     var isClip = function (m) { return typeof m !== "string"; };
     p.media = p.media.filter(isClip).concat(p.media.filter(function (m) { return !isClip(m); }));
-    if (p.play) p.media.unshift({ play: true });
   });
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -531,7 +530,6 @@
     }).join("");
     $("#viewerLinks").innerHTML = p.links.map(function (l, k) { return '<a class="btn' + (k ? " btn--ghost" : "") + '" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + " ↗</a>"; }).join("");
     thumbs.innerHTML = p.media.map(function (m, k) {
-      if (m.play) return '<button type="button" data-k="' + k + '" class="is-play" aria-label="' + playLabel(p) + '"><img src="' + MEDIA + p.cover + '" alt=""></button>';
       var clip = typeof m !== "string";
       return '<button type="button" data-k="' + k + '" class="' + (clip ? "is-clip" : "") + '" aria-label="' + (clip ? "Clip " : "Image ") + (k + 1) + '"><img src="' + MEDIA + "thumbs/" + src(m) + '" alt="" loading="lazy"></button>';
     }).join("");
@@ -547,12 +545,11 @@
     cur.m = (k + n) % n;
     var m = list[cur.m], p = projects[cur.p];
     stopEmbed();
-    img.src = MEDIA + (m.play ? p.cover : src(m));
-    img.alt = p.title + ", " + (m.play ? "cover" : (typeof m === "string" ? "image " : "clip ") + (cur.m + 1));
+    img.src = MEDIA + src(m);
+    img.alt = p.title + ", " + (typeof m === "string" ? "image " : "clip ") + (cur.m + 1);
     img.style.animation = "none"; void img.offsetWidth; img.style.animation = "";
-    $("#viewerClip").hidden = typeof m === "string" || !!m.play;
-    $("#viewerPlay").hidden = !m.play;
-    if (m.play) $("#viewerPlayLabel").textContent = p.play.type === "video" ? "Watch the video here" : "Play in your browser";
+    $("#viewerClip").hidden = typeof m === "string";
+    $("#viewerPlay").hidden = !p.play && !outLink(p);
     $("#viewerCount").textContent = (cur.m + 1) + " / " + n;
     $$("button", thumbs).forEach(function (b, i) { b.setAttribute("aria-current", i === cur.m ? "true" : "false"); });
     var active = thumbs.children[cur.m];
@@ -560,16 +557,41 @@
     // Warm the next image so arrowing through feels instant.
     var nx = list[(cur.m + 1) % n]; if (typeof nx === "string") (new Image()).src = MEDIA + nx;
   }
-  // The game or video only loads when someone presses play, and is torn down when they move on.
-  var embed = $("#viewerEmbed");
+  // A small pill in the corner of the gallery starts the game or video in place of the GIFs;
+  // pressing it again (or moving to another slide) closes it and brings the gallery back.
+  var embed = $("#viewerEmbed"), playBtn = $("#viewerPlay");
+  // Work that can't run inside the page: its first "Play / View / Watch" link, opened in a new tab.
+  function outLink(p) { return p.links.filter(function (l) { return /^(play|view|watch)/i.test(l.label); })[0]; }
+  function setPlayLabel() {
+    var p = projects[cur.p], out = !p.play && outLink(p);
+    playBtn.classList.toggle("is-on", !embed.hidden);
+    playBtn.classList.toggle("is-out", !!out);
+    if (out) {
+      // "Play on itch.io (password: malam13)" -> label plus the note on a second line
+      var m = out.label.match(/^(.*?)\s*\((.*)\)$/);
+      $("#viewerPlayLabel").innerHTML = esc(m ? m[1] : out.label) + " ↗" + (m ? "<small>" + esc(m[2]) + "</small>" : "");
+      return;
+    }
+    $("#viewerPlayLabel").textContent = !embed.hidden ? "Back to gallery" : p.play && p.play.type === "video" ? "Watch here" : "Play here";
+  }
   function startEmbed() {
     var p = projects[cur.p];
-    embed.innerHTML = '<iframe src="' + esc(p.play.src) + '" title="' + esc(p.title) + '" allow="autoplay; fullscreen; gamepad; accelerometer; gyroscope" allowfullscreen></iframe>';
-    embed.hidden = false; $("#viewerPlay").hidden = true;
+    // Portrait (phone) games get a frame of their own shape instead of being stretched wide.
+    var shape = p.play.w ? ' style="aspect-ratio:' + p.play.w + " / " + p.play.h + '"' : "";
+    embed.innerHTML = '<iframe src="' + esc(p.play.src) + '" title="' + esc(p.title) + '"' + shape + ' allow="autoplay; fullscreen; gamepad; accelerometer; gyroscope" allowfullscreen></iframe>';
+    embed.hidden = false; setPlayLabel();
     track({ path: (p.play.type === "video" ? "watch: " : "play: ") + p.title, event: true });
   }
-  function stopEmbed() { embed.innerHTML = ""; embed.hidden = true; }
-  $("#viewerPlay").addEventListener("click", startEmbed);
+  function stopEmbed() { embed.innerHTML = ""; embed.hidden = true; if (projects[cur.p]) setPlayLabel(); }
+  playBtn.addEventListener("click", function () {
+    var p = projects[cur.p], out = !p.play && outLink(p);
+    if (out) {
+      window.open(out.url, "_blank", "noopener");
+      track({ path: "link: " + p.title + " – " + out.label.replace(/\s*\(.*\)/, "") + " (gallery button)", title: out.url, event: true });
+      return;
+    }
+    if (embed.hidden) startEmbed(); else stopEmbed();
+  });
   function closeViewer() { if (dlg.open) dlg.close(); }
   dlg.addEventListener("close", function () {
     if (dlg.open) return; // reopened before this queued event ran

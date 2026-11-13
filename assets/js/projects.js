@@ -4,10 +4,11 @@
 // Galleries always show clips before stills (site.js sorts them). client: true adds a "Freelance" label;
 // clientAssets: true adds a note that the client supplied the (AI-generated) art.
 // hidden: true keeps an entry here but leaves it off the site.
-// play: { type: "game" | "video", src } adds a slide that plays the game or video inside the page.
+// play: { type: "game" | "video", src, w, h } lets the game or video run inside the gallery (w/h: its shape).
 window.PROJECTS = [
   {
     slug: "13-malam",
+    play: { type: "game", src: "https://itch.io/embed-upload/19944067?color=07080f", w: 1280, h: 720 },
     title: "13 Malam",
     short: "A PS1-style horror fishing game set in a Malaysian kampung, with local fish, local ghosts and multiple endings.",
     category: "games",
@@ -20,7 +21,7 @@ window.PROJECTS = [
     preview: "malamclip1.webp",
     tags: ["Unity", "C#", "WebGL", "Horror", "AI Navigation", "Day/Night Cycle", "Tripo", "Claude Code", "Codex"],
     links: [
-      { label: "Play on itch.io (password: malam13)", url: "https://amirulrsly.itch.io/13-malam" },
+      { label: "Play on itch.io", url: "https://amirulrsly.itch.io/13-malam" },
       { label: "Play guide", url: "https://amirulrsly.github.io/13-Malam-Guide/" }
     ],
     body: [
@@ -55,6 +56,7 @@ window.PROJECTS = [
   },
   {
     slug: "jump-game",
+    play: { type: "game", src: "https://itch.io/embed-upload/16752877?color=07080f", w: 720, h: 1280 },
     title: "Jump Game",
     short: "A Doodle Jump style climber for a client, steered by tilting your phone.",
     category: "games",
@@ -76,6 +78,7 @@ window.PROJECTS = [
   },
   {
     slug: "endless-runner",
+    play: { type: "game", src: "https://itch.io/embed-upload/19058869?color=07080f", w: 1080, h: 1920 },
     title: "Endless Runner",
     short: "A Subway Surfers style runner for a client, with the curved-world shader that makes the track bend.",
     category: "games",
@@ -97,6 +100,7 @@ window.PROJECTS = [
   },
   {
     slug: "rhythm-game",
+    play: { type: "game", src: "https://itch.io/embed-upload/20458345?color=07080f", w: 720, h: 1280 },
     title: "Rhythm Game",
     short: "A Piano Tiles style rhythm game for a client, with songs and tile maps fetched from the server at runtime.",
     category: "games",
@@ -118,6 +122,7 @@ window.PROJECTS = [
   },
   {
     slug: "battle-quiz",
+    play: { type: "game", src: "https://itch.io/embed-upload/14465574?color=07080f", w: 1280, h: 720 },
     title: "Battle Quiz",
     short: "A quiz battler for a client: answer right to attack, answer wrong and spin the roulette.",
     category: "games",
@@ -139,6 +144,7 @@ window.PROJECTS = [
   },
   {
     slug: "inflation-game",
+    play: { type: "game", src: "https://itch.io/embed-upload/14001143?color=07080f", w: 720, h: 1280 },
     title: "Inflation Game",
     short: "An educational game about addition and inflation: tap jewels until they add up to the target.",
     category: "games",
@@ -160,6 +166,7 @@ window.PROJECTS = [
   },
   {
     slug: "land-mine-panic",
+    play: { type: "game", src: "https://itch.io/embed-upload/13627542?color=07080f", w: 720, h: 1280 },
     title: "Land Mine Panic",
     short: "A memory game for a client: remember where the keys are hidden, or get blown up.",
     category: "games",
@@ -181,6 +188,7 @@ window.PROJECTS = [
   },
   {
     slug: "speed-reading",
+    play: { type: "game", src: "https://itch.io/embed-upload/13579519?color=07080f", w: 720, h: 1280 },
     title: "Speed Reading",
     short: "A reading game for kids that tests speed and comprehension, with three answers to choose from.",
     category: "games",
@@ -223,6 +231,7 @@ window.PROJECTS = [
   },
   {
     slug: "maze-quiz",
+    play: { type: "game", src: "https://itch.io/embed-upload/13531782?color=07080f", w: 720, h: 1280 },
     title: "Maze Quiz",
     short: "A maze memory game for a client: memorise it from above, then guide a fox through it in the dark.",
     category: "games",
@@ -245,6 +254,7 @@ window.PROJECTS = [
   },
   {
     slug: "net-the-numbers",
+    play: { type: "game", src: "https://itch.io/embed-upload/20460941?color=07080f", w: 590, h: 960 },
     title: "Net The Numbers",
     short: "My first freelance game: a maths puzzle where you drag a net over a grid to catch the highest possible total.",
     category: "games",
@@ -508,13 +518,14 @@ window.PROJECTS = [
     date: "2021-11",
     client: true,
     cover: "cover-jawi.webp",
+    preview: "jawiclip1.webp",
     tags: ["Illustration", "Backgrounds", "Commission"],
     links: [{ label: "Watch the episode on YouTube (00:37 to 02:02)", url: "https://www.youtube.com/watch?v=2gbniv4gCBc" }],
     body: [
       "My first art commission, for an NFT animation studio. The client asked me to draw the introduction sequence for the first episode of their animation.",
       "It pushed me, because the job was mostly backgrounds, which were not my strong suit. I finished the commission and the client was happy with it. My part of the video runs from 00:37 to 02:02."
     ],
-    media: ["jawi1.webp", "jawi2.webp", "jawi3.webp", "jawi4.webp", "jawi5.webp"]
+    media: [{ src: "jawiclip1.webp", clip: true }, "jawi1.webp", "jawi2.webp", "jawi3.webp", "jawi4.webp", "jawi5.webp"]
   },
   {
     slug: "astralis",
@@ -564,13 +575,14 @@ window.PROJECTS = [
     engine: "Adobe Animate",
     date: "2021-06",
     cover: "cover-flat-1.webp",
+    preview: "flatclip1.webp",
     tags: ["Adobe Animate", "Character Design", "Storyboarding", "Backgrounds"],
     links: [{ label: "Watch on YouTube", url: "https://youtu.be/7HZfgsFyH0E" }],
     body: [
       "A 2D short story animation made in Adobe Animate for a group project on multimedia elements.",
       "As the only digital artist in the group, I handled most of the art: the animation, character design, background art and storyboarding, while juggling other commissions and assignments."
     ],
-    media: ["flat1.webp", "flat2.webp", "flat3.webp", "flat4.webp", "flat5.webp"]
+    media: [{ src: "flatclip1.webp", clip: true }, "flat1.webp", "flat2.webp", "flat3.webp", "flat4.webp", "flat5.webp"]
   }
 ];
 
