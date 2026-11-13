@@ -126,8 +126,8 @@ window.PROJECTS = [
     date: "2025-07",
     client: true,
     clientAssets: true,
-    cover: "cover-bq.webp",
-    preview: "bqclip1.webp",
+    cover: "cover-bq-2.webp",
+    preview: "bqclip2.webp",
     tags: ["Unity", "C#", "WebGL", "Quiz", "Freelance"],
     links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/battlequiz" }],
     body: [
@@ -135,7 +135,7 @@ window.PROJECTS = [
       "Answer correctly and you attack the enemy: the damage depends on how many times you tap the prompt button before time runs out. Answer wrong and a roulette spins, and whatever it lands on changes your HP."
     ],
     media: ["bq1.webp", "bq2.webp", "bq3.webp", "bq4.webp", "bq5.webp",
-      { src: "bqclip1.webp", clip: true }, { src: "bqclip2.webp", clip: true }, { src: "bqclip3.webp", clip: true }]
+      { src: "bqclip2.webp", clip: true }, { src: "bqclip1.webp", clip: true }, { src: "bqclip3.webp", clip: true }]
   },
   {
     slug: "inflation-game",
@@ -624,6 +624,10 @@ window.EXPERIENCE = [
     projects: ["kanamoji", "rhythm-hero", "covid-busters", "flat-tire"]
   }
 ];
+
+// Clips left off the hero wall because they look almost the same as another clip of that project.
+window.HERO_SKIP = ["bqclip1.webp", "bqclip3.webp", "covgif1.webp", "covgif3.webp", "covgif4.webp", "covgif5.webp",
+  "fypgif2.webp", "fypgif4.webp", "jcclip2.webp", "nnclip2.webp", "nnclip3.webp", "rhygif3.webp", "rigclip2.webp", "srclip2.webp"];
 
 // Projects that belong together. Each project page links to the others in its group.
 window.RELATED = [

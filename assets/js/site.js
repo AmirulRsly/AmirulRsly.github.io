@@ -186,18 +186,20 @@
     var wall = $("#heroWall"); if (!wall) return;
     // Every clip of every project, dealt out round-robin (each project's 1st clip, then each one's 2nd...)
     // so clips from the same project don't sit side by side.
+    var skipHero = window.HERO_SKIP || [];
     var lists = projects.map(function (p) {
       var seen = {}, out = [];
       [p.preview].concat(p.media.map(function (m) { return m.clip ? m.src : null; })).forEach(function (f) {
-        if (f && !seen[f]) { seen[f] = 1; out.push(reduceMotion ? p.cover : "hero/" + f); }
+        if (f && !seen[f] && skipHero.indexOf(f) < 0) { seen[f] = 1; out.push(reduceMotion ? p.cover : "hero/" + f); }
       });
-      return reduceMotion ? out.slice(0, 1) : out;
+      // At most two per project, so no game fills the wall with near-identical footage.
+      return out.slice(0, reduceMotion ? 1 : 2);
     });
     var items = [];
     for (var round = 0; lists.some(function (l) { return l.length > round; }); round++)
       lists.forEach(function (l) { if (l[round]) items.push(l[round]); });
     var small = window.matchMedia("(max-width: 760px)").matches;
-    var ROWS = small ? 2 : 3, PER = small ? 8 : 99;
+    var ROWS = small ? 4 : 3, PER = small ? 6 : 99;
     function build() {
       var rows = [];
       for (var r = 0; r < ROWS; r++) rows.push([]);
@@ -260,7 +262,7 @@
       '<div class="proj__media">' +
         '<img src="' + MEDIA + (p.featured && p.coverLarge ? p.coverLarge : p.cover) + '" alt="" loading="lazy" decoding="async" width="800" height="500">' +
         (p.preview ? '<img class="proj__preview" data-src="' + MEDIA + p.preview + '" alt="">' : "") +
-        (p.preview ? '<span class="proj__play">' + (finePointer ? "Hover to play" : (p.category === "games" ? "Gameplay" : "Preview")) + "</span>" : "") +
+        (p.preview ? '<span class="proj__play">' + (finePointer ? "Hover to preview" : "Preview") + "</span>" : "") +
         (p.play ? '<span class="proj__playable">▶ ' + playLabel(p) + "</span>" : "") +
         (p.featured ? '<span class="proj__ribbon badge">Featured</span>' : (p.client ? '<span class="proj__ribbon proj__client">Freelance</span>' : "")) +
       "</div>" +
@@ -291,11 +293,11 @@
     card.addEventListener("pointerenter", function () {
       if (!pv.src) pv.src = pv.dataset.src;
       card.classList.add("is-playing");
-      $(".proj__play", card).textContent = "Playing";
+      $(".proj__play", card).textContent = "Previewing";
     });
     card.addEventListener("pointerleave", function () {
       card.classList.remove("is-playing");
-      $(".proj__play", card).textContent = "Hover to play";
+      $(".proj__play", card).textContent = "Hover to preview";
     });
   });
 
@@ -449,11 +451,21 @@
       var pics = g.items.slice(0, 5).map(function (e) { return e.pic ? '<img src="' + e.pic + '" alt="" loading="lazy">' : ""; }).join("");
       return '<details class="tl-year' + (animate ? " tl--enter" : " reveal") + '"' + (gi === 0 ? " open" : "") + (animate ? ' style="animation-delay:' + Math.min(gi * 60, 400) + 'ms"' : "") + ">" +
         '<summary><span class="tl-year__y">' + g.y + '</span><span class="tl-year__n">' + bits.join(" · ") + '</span><span class="tl-year__pics" aria-hidden="true">' + pics + '</span><span class="tl-year__chev" aria-hidden="true"></span></summary>' +
-        '<ul class="tl-list">' + g.items.map(function (e) {
+        '<ol class="timeline">' + g.items.map(function (e) {
           return '<li class="tl' + (e.type === "edu" ? " tl--edu" : e.type === "work" ? " tl--work" : "") + '">' + e.html + "</li>";
-        }).join("") + "</ul></details>";
+        }).join("") + "</ol>" +
+        '<button type="button" class="tl-year__collapse">Collapse ' + g.y + " ↑</button></details>";
     }).join("");
     if (!animate) $$(".tl-year", tlEl).forEach(function (d) { revealer.observe(d); });
+    $$(".tl-year", tlEl).forEach(function (d) {
+      d.addEventListener("toggle", syncToggleAll);
+      // Closing from the bottom of a long year: bring its header back into view.
+      $(".tl-year__collapse", d).addEventListener("click", function () {
+        d.open = false;
+        if (d.getBoundingClientRect().top < 70) window.scrollTo({ top: d.getBoundingClientRect().top + window.scrollY - 90, behavior: reduceMotion ? "auto" : "smooth" });
+      });
+    });
+    syncToggleAll();
     $$("button.tl__card", tlEl).forEach(function (b) {
       b.addEventListener("click", function () {
         if (b.hasAttribute("data-exp")) document.getElementById("experience").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
@@ -461,6 +473,19 @@
       });
     });
   }
+  // One button to open or close every year at once.
+  var toggleAll = $("#tlToggleAll");
+  function syncToggleAll() {
+    var ds = $$(".tl-year", tlEl), allOpen = ds.length && ds.every(function (d) { return d.open; });
+    toggleAll.textContent = allOpen ? "Collapse all ↑" : "Expand all ↓";
+    toggleAll.dataset.open = allOpen ? "1" : "";
+  }
+  toggleAll.addEventListener("click", function () {
+    var open = !toggleAll.dataset.open;
+    $$(".tl-year", tlEl).forEach(function (d) { d.open = open; });
+    if (!open) { var j = document.getElementById("journey"); if (j.getBoundingClientRect().top < 0) j.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }); }
+    syncToggleAll();
+  });
   renderTimeline("all", false);
   var tlBtns = $$("#tlFilters button");
   tlBtns.forEach(function (b) {

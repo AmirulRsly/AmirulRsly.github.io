@@ -313,7 +313,7 @@ p { margin: 0 0 1em; }
   padding: 6px 10px; border-radius: 8px; background: var(--overlay); color: #fff; backdrop-filter: blur(6px);
   font: 600 11px/1 var(--display); letter-spacing: .12em; text-transform: uppercase;
 }
-.proj__play::before { content: ""; width: 0; height: 0; border-left: 7px solid var(--accent); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.proj__play::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
 .proj.is-playing .proj__play::before { width: 7px; height: 7px; border: 0; border-radius: 50%; background: #ff4b4b; animation: blink 1s steps(2) infinite; }
 .proj__body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; }
 .proj__meta { display: flex; gap: 10px; align-items: center; font: 600 12px var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
@@ -401,7 +401,7 @@ kbd.is-hit { background: var(--accent); color: var(--on-accent); border-color: v
 .viewer__thumbs button:hover { opacity: .9; }
 .viewer__thumbs button[aria-current="true"] { border-color: var(--accent); opacity: 1; }
 .viewer__thumbs img { width: 100%; height: 100%; object-fit: cover; }
-.viewer__thumbs .is-clip::after { content: "▶"; position: absolute; inset: auto 4px 3px auto; font-size: 10px; color: #fff; text-shadow: 0 0 4px #000; }
+.viewer__thumbs .is-clip::after { content: "GIF"; position: absolute; inset: auto 3px 3px auto; padding: 2px 4px; border-radius: 4px; background: rgba(0, 0, 0, .6); font: 700 8px/1 var(--display); letter-spacing: .08em; color: #fff; }
 .viewer__info { padding: 28px 32px 32px; }
 .viewer__meta { display: flex; flex-wrap: wrap; gap: 8px 16px; font: 600 12px var(--display); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
 .viewer__meta b { color: var(--accent); font-weight: 600; }
@@ -452,10 +452,10 @@ kbd.is-hit { background: var(--accent); color: var(--on-accent); border-color: v
 .tl-year__pics { display: flex; }
 .tl-year__pics img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; border: 2px solid var(--surface); background: #fff; margin-left: -10px; }
 .tl-year[open] .tl-year__pics { opacity: 0; }
-.tl-list { list-style: none; margin: 4px 22px 22px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
-.tl-list .tl { width: auto; margin: 0; padding: 0; }
-.tl-list .tl::before { display: none; }
-.tl-list .tl__card { height: 100%; }
+.tl-year .timeline { margin: 18px 22px 4px; }
+.tl-year__collapse { display: block; margin: 0 auto 18px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-2); color: var(--accent); font: 600 13px var(--display); letter-spacing: .04em; }
+.tl-year__collapse:hover { border-color: var(--accent); }
+.tl-tools { display: flex; justify-content: flex-end; margin: 24px 0 -20px; }
 /* About: the longer story sits behind "More about me". */
 .about__more { margin: 0 0 8px; }
 .about__more > summary { cursor: pointer; width: max-content; color: var(--accent); font: 600 14px var(--display); letter-spacing: .04em; margin-bottom: 12px; }
@@ -510,14 +510,19 @@ kbd.is-hit { background: var(--accent); color: var(--on-accent); border-color: v
   .tl::before, .tl:nth-child(even)::before { left: 0; right: auto; }
   .tl__thumb { width: 72px; height: 54px; }
   .tl-year__pics { display: none; }
-  .hero__wall { inset: -6% -30%; }
-  .hero__wall::after { background: color-mix(in srgb, var(--bg) 84%, transparent); }
-  .wall__track img { height: 150px; }
+  /* Phones: the clips show through more, and a soft halo keeps the text readable on top of them. */
+  .hero__wall { inset: 60px -30% auto; justify-content: flex-start; gap: 12px; }
+  .hero__wall::after { background: color-mix(in srgb, var(--bg) 58%, transparent); }
+  .wall__track img { height: 170px; }
+  .hero__copy .eyebrow, .hero__title, .hero__role, .hero__lede { text-shadow: 0 0 14px var(--bg), 0 0 4px var(--bg); }
+  .hero__title .grad { text-shadow: none; }
+  .hero__cta .btn--ghost, .hero .eyebrow { background: color-mix(in srgb, var(--bg) 85%, transparent); }
+  .hero__lede { color: var(--text); font-weight: 500; }
   .viewer__step-kind { display: none; }
   .viewer__step { padding: 7px 10px; }
   .viewer__bar { padding: 8px; gap: 6px; }
   .tl-year > summary { padding: 14px 16px; }
-  .tl-list { margin: 4px 12px 14px; grid-template-columns: 1fr; }
+  .tl-year .timeline { margin: 14px 14px 4px; }
   .facts { gap: 10px; }
   .fact { padding: 14px; }
   .fact b { font-size: 28px; }
