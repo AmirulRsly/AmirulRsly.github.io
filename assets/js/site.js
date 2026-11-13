@@ -184,20 +184,29 @@
   // never hold up the first paint. Rows drift sideways and pause while the hero is off screen.
   (function () {
     var wall = $("#heroWall"); if (!wall) return;
-    var items = projects.filter(function (p) { return p.preview; });
+    // Every clip of every project, dealt out round-robin (each project's 1st clip, then each one's 2nd...)
+    // so clips from the same project don't sit side by side.
+    var lists = projects.map(function (p) {
+      var seen = {}, out = [];
+      [p.preview].concat(p.media.map(function (m) { return m.clip ? m.src : null; })).forEach(function (f) {
+        if (f && !seen[f]) { seen[f] = 1; out.push(reduceMotion ? p.cover : "hero/" + f); }
+      });
+      return reduceMotion ? out.slice(0, 1) : out;
+    });
+    var items = [];
+    for (var round = 0; lists.some(function (l) { return l.length > round; }); round++)
+      lists.forEach(function (l) { if (l[round]) items.push(l[round]); });
     var small = window.matchMedia("(max-width: 760px)").matches;
-    var ROWS = small ? 2 : 3, PER = small ? 5 : 99;
+    var ROWS = small ? 2 : 3, PER = small ? 8 : 99;
     function build() {
       var rows = [];
       for (var r = 0; r < ROWS; r++) rows.push([]);
-      items.forEach(function (p, k) { var row = rows[k % ROWS]; if (row.length < PER) row.push(p); });
+      items.forEach(function (f, k) { var row = rows[k % ROWS]; if (row.length < PER) row.push(f); });
       wall.innerHTML = rows.map(function (row, r) {
-        var tiles = row.map(function (p) {
-          var file = reduceMotion ? MEDIA + p.cover : MEDIA + "hero/" + p.preview;
-          return '<img src="' + file + '" alt="" decoding="async">';
-        }).join("");
+        // Lazy, so only the clips near the screen load; the rest arrive as the rows drift.
+        var tiles = row.map(function (f) { return '<img src="' + MEDIA + f + '" alt="" loading="lazy" decoding="async">'; }).join("");
         // Two copies back to back so the row loops without a seam.
-        return '<div class="wall__row' + (r % 2 ? " wall__row--rev" : "") + '"><div class="wall__track" style="animation-duration:' + (70 + r * 15) + 's">' + tiles + tiles + "</div></div>";
+        return '<div class="wall__row' + (r % 2 ? " wall__row--rev" : "") + '"><div class="wall__track" style="animation-duration:' + Math.round(row.length * 10 + r * 15) + 's">' + tiles + tiles + "</div></div>";
       }).join("");
       requestAnimationFrame(function () { wall.classList.add("is-on"); });
     }
