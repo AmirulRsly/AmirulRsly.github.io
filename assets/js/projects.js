@@ -608,7 +608,7 @@ window.EXPERIENCE = [
     company: "NovaLearn.org",
     url: "https://www.novalearn.org/en",
     logo: "exp/novalearn-logo.png",
-    photos: ["exp/novalearn-1.jpg", "exp/novalearn-2.jpg", "exp/novalearn-3.jpg"],
+    photos: ["exp/novalearn-1.jpg", "exp/novalearn-2.jpg"],
     place: "Kuala Lumpur, Malaysia · On-site",
     roles: [
       { title: "Junior Developer", type: "Full-time", start: "2024-01", end: "2024-03",
