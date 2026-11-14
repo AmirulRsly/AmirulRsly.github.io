@@ -46,7 +46,8 @@
   var related = {};
   (window.RELATED || []).forEach(function (group) {
     group.forEach(function (slug) {
-      related[slug] = group.filter(function (o) { return o !== slug; });
+      // A project can sit in several groups: it links to everyone it shares a group with.
+      related[slug] = (related[slug] || []).concat(group.filter(function (o) { return o !== slug && (related[slug] || []).indexOf(o) < 0; }));
     });
   });
 

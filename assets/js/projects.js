@@ -69,6 +69,7 @@ window.PROJECTS = [
     body: [
       "My degree final year project, titled “Intelligent Enemy in Turn-Based Battle System to Learn Kanamoji”. It is an educational game about learning the Japanese alphabet, built around a mechanic I designed: a turn-based combat system fused with a quiz game, so every attack is a question.",
       "I built the enemy AI with a finite state machine and fuzzy logic. The AI learns Kanamoji alongside the player and competes with them on who can answer correctly and fastest.",
+      "The characters were supposed to be 2D-rigged with skeletal animations, which is what my 2D Skeleton Rigging Test was for. With limited time, I had to use the sprites I drew for Covid Busters instead.",
       "The project was still in development when I wrote this, but a playable demo is available on itch.io."
     ],
     media: ["fyp1.webp", "fyp2.webp", "fyp3.webp", "fyp4.webp", "fyp5.webp", "fyp6.webp", "fyp7.webp", "fyp8.webp",
@@ -124,13 +125,14 @@ window.PROJECTS = [
     category: "art",
     kind: "2D Rigging & Animation",
     engine: "Unity · 2D Animation",
-    date: "2023-07",
+    date: "2023-06",
     cover: "cover-rig.webp",
     preview: "rigclip0.webp",
     tags: ["Unity", "2D Animation", "Skeletal Rigging", "Inverse Kinematics", "Weight Painting"],
     links: [{ label: "View on itch.io", url: "https://amirulrsly.itch.io/2d-skeleton-rigging-animation-test" }],
     body: [
       "A 2D skeleton rigging test on one of my own drawings, the player character, to see whether Unity's built-in 2D rigging is on par with Spine Pro by Esoteric Software.",
+      "I made it for Kanamoji, my final year project: its characters were supposed to be 2D-rigged with skeletal animations. With limited time, I had to use my Covid Busters sprites in the game instead.",
       "I split the character into separate parts, added bones to the limbs and everything else I wanted to move, then weight-painted every part so it deforms nicely in motion. For better results I also added inverse kinematics to the limbs. The result came out better than expected.",
       "Unity is still missing one important feature for 2D rigging: mesh deformation, the technique that makes 2D art move as if it were 3D. My conclusion: Unity's built-in rigging is good enough for simple 2D animation, but Spine Pro takes the crown for polished results, at a much higher price."
     ],
@@ -220,7 +222,8 @@ window.PROJECTS = [
     links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/battlequiz" }],
     body: [
       "Another gamified quiz for a client, this time set in a battle.",
-      "Answer correctly and you attack the enemy: the damage depends on how many times you tap the prompt button before time runs out. Answer wrong and a roulette spins, and whatever it lands on changes your HP."
+      "Answer correctly and you attack the enemy: the damage depends on how many times you tap the prompt button before time runs out. Answer wrong and a roulette spins, and whatever it lands on changes your HP.",
+      "The questions and their answers aren't built into the game: each set is pulled from the client's backend, so new quizzes can be added without a new build."
     ],
     media: ["bq1.webp", "bq2.webp", "bq3.webp", "bq4.webp", "bq5.webp",
       { src: "bqclip2.webp", clip: true }, { src: "bqclip1.webp", clip: true }, { src: "bqclip3.webp", clip: true }]
@@ -484,6 +487,7 @@ window.PROJECTS = [
     links: [],
     body: [
       "A 2D sprite brawler character I drew and animated for my UiTM game assignment, Covid Busters.",
+      "At the time I was very passionate about fighting game poses and animation, and I was heavily inspired by Street Fighter 6, which had just been revealed, and by the hand-drawn 2D animation in Indivisible.",
       "It has nine static battle poses and one frame-by-frame attack animation (8 frames). With limited time, the attack was the only move I could fully animate, because I also had to build the game's mechanics myself. I'm still really happy with how it turned out.",
       "The pose sheet shows every pose on one page: idle, ready, ready weapon, dash, defend, hurt, return, victory and dead, plus the peak frame of the attack."
     ],
@@ -503,6 +507,7 @@ window.PROJECTS = [
     links: [],
     body: [
       "A 2D sprite swordmaster character I drew and animated for my UiTM game assignment, Covid Busters.",
+      "At the time I was very passionate about fighting game poses and animation, and I was heavily inspired by Street Fighter 6, which had just been revealed, and by the hand-drawn 2D animation in Indivisible.",
       "It has nine static battle poses and one frame-by-frame attack animation (10 frames). With limited time, the attack was the only move I could fully animate, because I also had to build the game's mechanics myself. I'm still really happy with how it turned out.",
       "The pose sheet shows every pose on one page: idle, ready, ready weapon, dash, defend, hurt, return, victory and dead, plus the peak frame of the attack."
     ],
@@ -644,8 +649,10 @@ window.EXPERIENCE = [
 window.HERO_SKIP = ["bqclip1.webp", "bqclip3.webp", "covgif1.webp", "covgif3.webp", "covgif4.webp", "covgif5.webp",
   "fypgif2.webp", "fypgif4.webp", "jcclip2.webp", "nnclip2.webp", "nnclip3.webp", "rhygif3.webp", "rigclip2.webp", "srclip2.webp"];
 
-// Projects that belong together. Each project page links to the others in its group.
+// Projects that belong together. Each project page links to the others in its group(s).
 window.RELATED = [
   ["covid-busters", "covid-busters-brawler", "covid-busters-swordmaster"],
-  ["flat-tire", "flat-tire-storyboard"]
+  ["flat-tire", "flat-tire-storyboard"],
+  ["kanamoji", "2d-skeleton-rigging"],
+  ["kanamoji", "covid-busters-brawler", "covid-busters-swordmaster"]
 ];
