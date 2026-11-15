@@ -94,7 +94,8 @@
       '<button class="pack-dlg__close" type="button" aria-label="Close">×</button>' +
       '<div class="pack-stage">' +
         '<div class="pack" tabindex="0" aria-label="Amirul&#39;s Work booster pack. Press Enter to tear it open.">' +
-          '<div class="pack__seal is-top pack__top">' + '<div class="pack__sealface"><span class="pack__cut"></span><span class="pack__hint">Slide to open →</span></div>' + '<div class="pack__sealface is-rear"></div>' + "</div>" +
+          '<div class="pack__seal is-top pack__top">' + '<div class="pack__sealface"><span class="pack__cut"></span><span class="pack__hint">Slide to open →</span></div>' + '<div class="pack__sealface is-rear"></div>' +
+            '<span class="pack__swipe" aria-hidden="true"><i class="pack__swipe-trail"></i><i class="pack__swipe-hand"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10m0-.5V4.5a1.5 1.5 0 0 1 3 0V10m0-1a1.5 1.5 0 0 1 3 0v4.5c0 4-2.5 7-6.5 7h-.5c-2.6 0-4.2-1.3-5.6-3.4L3.6 14a1.5 1.5 0 0 1 2.5-1.6L9 15.5"/></svg></i></span>' + "</div>" +
           '<div class="pack__shoulder is-top is-front"></div><div class="pack__shoulder is-top is-rear"></div>' +
           '<div class="pack__face pack__front">' +
             '<div class="pack__body">' +
@@ -154,19 +155,40 @@
   function facingFront() { var a = ((ry % 360) + 360) % 360; return a < 50 || a > 310; }
 
   pack.addEventListener("pointerdown", function (e) {
-    if (state !== "pack" || e.target.closest(".pack__top")) return;
+    if (state !== "pack") return;
     pack.classList.remove("is-entering");
-    drag = { x: e.clientX, y: e.clientY, rx: rx, ry: ry, id: e.pointerId };
+    var r = pack.getBoundingClientRect();
     try { pack.setPointerCapture(e.pointerId); } catch (err) {}
+    // Top third of the front: tear. Starting anywhere there and dragging sideways about half the width is enough.
+    if (facingFront() && e.clientY < r.top + r.height * 0.33) {
+      tear = { x: e.clientX, width: r.width, id: e.pointerId, max: 0 };
+      top.classList.add("is-tearing");
+      return;
+    }
+    drag = { x: e.clientX, y: e.clientY, rx: rx, ry: ry, id: e.pointerId };
     pack.classList.add("is-dragging");
   });
   pack.addEventListener("pointermove", function (e) {
+    if (tear && e.pointerId === tear.id) {
+      var p = Math.min(1, Math.abs(e.clientX - tear.x) / (tear.width * 0.5));
+      tear.max = Math.max(tear.max, p); // the cut only grows
+      cut.style.width = tear.max * 100 + "%";
+      if (tear.max >= 1) { tear = null; rip(); }
+      return;
+    }
     if (!drag || e.pointerId !== drag.id) return;
     ry = drag.ry + (e.clientX - drag.x) * 0.6;
     rx = Math.max(-28, Math.min(28, drag.rx - (e.clientY - drag.y) * 0.3));
     setRot(false);
   });
   function endDrag(e) {
+    if (tear && e.pointerId === tear.id) {
+      // let go most of the way across: count it
+      if (tear.max > 0.7 && e.type === "pointerup") { tear = null; cut.style.width = "100%"; rip(); return; }
+      tear = null;
+      top.classList.remove("is-tearing");
+      return;
+    }
     if (!drag || e.pointerId !== drag.id) return;
     drag = null;
     pack.classList.remove("is-dragging");
@@ -178,31 +200,6 @@
   pack.addEventListener("pointercancel", endDrag);
 
   /* ---------- Pack: tear it ---------- */
-  top.addEventListener("pointerdown", function (e) {
-    if (state !== "pack") return;
-    e.stopPropagation();
-    if (!facingFront()) { ry = Math.round(ry / 360) * 360; rx = 0; setRot(true); return; }
-    var r = top.getBoundingClientRect();
-    tear = { left: r.left, width: r.width, id: e.pointerId, max: 0 };
-    try { top.setPointerCapture(e.pointerId); } catch (err) {}
-    top.classList.add("is-tearing");
-    moveTear(e);
-  });
-  function moveTear(e) {
-    if (!tear || e.pointerId !== tear.id) return;
-    var p = Math.max(0, Math.min(1, (e.clientX - tear.left) / tear.width));
-    tear.max = Math.max(tear.max, p); // the cut only grows
-    cut.style.width = tear.max * 100 + "%";
-    if (tear.max > 0.92) { tear = null; rip(); }
-  }
-  top.addEventListener("pointermove", moveTear);
-  function stopTear(e) {
-    if (!tear || e.pointerId !== tear.id) return;
-    tear = null;
-    top.classList.remove("is-tearing");
-  }
-  top.addEventListener("pointerup", stopTear);
-  top.addEventListener("pointercancel", stopTear);
   pack.addEventListener("keydown", function (e) {
     if ((e.key === "Enter" || e.key === " ") && state === "pack") { e.preventDefault(); ry = 0; rx = 0; setRot(true); cut.style.width = "100%"; rip(); }
   });

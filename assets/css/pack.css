@@ -95,13 +95,13 @@
 .pack__back small { font-size: 12px; opacity: .8; }
 
 /* shoulders: slope from the thick body down to the thin seal */
-.pack__shoulder { left: 0; width: 100%; height: var(--sl); backface-visibility: hidden; background: linear-gradient(180deg, #0a4f52, #0f766e); }
-.pack__shoulder.is-top { top: calc(var(--s) + var(--sh) - var(--sl)); transform-origin: 50% 100%; background: linear-gradient(180deg, #0b5d5f, #0f766e); }
-.pack__shoulder.is-bottom { top: calc(var(--ph) - var(--s) - var(--sh)); transform-origin: 50% 0; background: linear-gradient(180deg, #0f766e, #063b3d); }
-.pack__shoulder.is-top.is-front { transform: translateZ(var(--t)) rotateX(calc(var(--sa) * -1)); }
-.pack__shoulder.is-top.is-rear { transform: rotateY(180deg) translateZ(var(--t)) rotateX(calc(var(--sa) * -1)); }
-.pack__shoulder.is-bottom.is-front { transform: translateZ(var(--t)) rotateX(var(--sa)); }
-.pack__shoulder.is-bottom.is-rear { transform: rotateY(180deg) translateZ(var(--t)) rotateX(var(--sa)); }
+.pack__shoulder { left: 0; width: 100%; height: var(--sl); backface-visibility: hidden; background: linear-gradient(100deg, #063b3d 0%, #0f766e 45%, #0891b2 75%, #14b8a6 100%); }
+.pack__shoulder.is-top { top: calc(var(--s) + var(--sh) - var(--sl)); transform-origin: 50% 100%; background: linear-gradient(180deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 70%), linear-gradient(100deg, #063b3d 0%, #0f766e 45%, #0891b2 75%, #14b8a6 100%); }
+.pack__shoulder.is-bottom { top: calc(var(--ph) - var(--s) - var(--sh)); transform-origin: 50% 0; background: linear-gradient(0deg, rgba(0, 0, 0, .35), rgba(0, 0, 0, .08)), linear-gradient(100deg, #063b3d 0%, #0f766e 45%, #0891b2 75%, #14b8a6 100%); }
+.pack__shoulder.is-top.is-front { transform: translateZ(var(--t)) rotateX(var(--sa)); }
+.pack__shoulder.is-top.is-rear { transform: rotateY(180deg) translateZ(var(--t)) rotateX(var(--sa)); }
+.pack__shoulder.is-bottom.is-front { transform: translateZ(var(--t)) rotateX(calc(var(--sa) * -1)); }
+.pack__shoulder.is-bottom.is-rear { transform: rotateY(180deg) translateZ(var(--t)) rotateX(calc(var(--sa) * -1)); }
 
 /* edges of the body */
 .pack__side {
@@ -113,14 +113,31 @@
 
 /* thin crimped seals that stick out above and below the body */
 .pack__seal { left: 0; width: 100%; height: var(--s); }
-.pack__seal.is-top { top: 0; cursor: ew-resize; touch-action: none; transform-origin: 100% 100%; transition: transform .7s cubic-bezier(.25, .7, .3, 1), opacity .5s .25s; }
+.pack__seal.is-top { top: 0; touch-action: none; transform-origin: 100% 100%; transition: transform .7s cubic-bezier(.25, .7, .3, 1), opacity .5s .25s; }
 .pack__seal.is-bottom { bottom: 0; pointer-events: none; }
 .pack__sealface {
+  --z: 5px; /* zigzag tooth height */
   position: absolute; inset: 0; backface-visibility: hidden; transform: translateZ(.5px);
-  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .32) 0 2px, rgba(0, 0, 0, .16) 2px 6px), linear-gradient(180deg, #0a4f52, #0f766e);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .14) 0 1px, rgba(0, 0, 0, .14) 1px 2px, transparent 2px 4px),
+    linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(0, 0, 0, .12)),
+    linear-gradient(100deg, #063b3d 0%, #0f766e 45%, #0891b2 75%, #14b8a6 100%);
 }
-.pack__seal.is-top .pack__sealface { border-radius: 6px 6px 0 0; box-shadow: inset 0 -2px 0 rgba(255, 255, 255, .45); }
-.pack__seal.is-bottom .pack__sealface { border-radius: 0 0 6px 6px; background: repeating-linear-gradient(90deg, rgba(255, 255, 255, .32) 0 2px, rgba(0, 0, 0, .16) 2px 6px), linear-gradient(0deg, #063b3d, #0f766e); }
+/* zigzag cut along the outer edge, a pressed line where the seal meets the body */
+.pack__seal.is-top .pack__sealface {
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .35), inset 0 -3px 0 rgba(255, 255, 255, .18);
+  -webkit-mask: linear-gradient(#000 0 0) 0 var(--z) / 100% calc(100% - var(--z)) no-repeat, conic-gradient(from 135deg at 50% 0, #000 90deg, #0000 0) 0 0 / calc(var(--z) * 2) var(--z) repeat-x;
+          mask: linear-gradient(#000 0 0) 0 var(--z) / 100% calc(100% - var(--z)) no-repeat, conic-gradient(from 135deg at 50% 0, #000 90deg, #0000 0) 0 0 / calc(var(--z) * 2) var(--z) repeat-x;
+}
+.pack__seal.is-bottom .pack__sealface {
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, .35), inset 0 3px 0 rgba(255, 255, 255, .12);
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .12) 0 1px, rgba(0, 0, 0, .16) 1px 2px, transparent 2px 4px),
+    linear-gradient(180deg, rgba(0, 0, 0, .1), rgba(0, 0, 0, .3)),
+    linear-gradient(100deg, #063b3d 0%, #0f766e 45%, #0891b2 75%, #14b8a6 100%);
+  -webkit-mask: linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--z)) no-repeat, conic-gradient(from -45deg at 50% 100%, #000 90deg, #0000 0) 0 100% / calc(var(--z) * 2) var(--z) repeat-x;
+          mask: linear-gradient(#000 0 0) 0 0 / 100% calc(100% - var(--z)) no-repeat, conic-gradient(from -45deg at 50% 100%, #000 90deg, #0000 0) 0 100% / calc(var(--z) * 2) var(--z) repeat-x;
+}
 .pack__sealface.is-rear { transform: rotateY(180deg) translateZ(.5px); }
 .pack__cut { position: absolute; left: 0; bottom: -1px; height: 3px; width: 0; background: #fff; box-shadow: 0 0 10px #5eead4, 0 0 2px #fff; }
 .pack__hint {
@@ -309,3 +326,30 @@
   background: var(--accent); color: var(--on-accent); font: 700 11px/1 var(--display); letter-spacing: .12em; text-transform: uppercase;
 }
 .mcard-open:hover { filter: brightness(1.1); }
+
+/* Swipe hint: a light streaks along the tear line with a hand dragging it, left to right, on a loop */
+.pack__swipe {
+  position: absolute; left: 8%; right: 8%; top: 100%; height: 34px; pointer-events: none; transform: translateZ(9px); backface-visibility: hidden;
+}
+.pack__swipe-trail {
+  position: absolute; left: 0; top: -2px; height: 3px; width: 100%; border-radius: 3px; transform-origin: 0 50%; transform: scaleX(0);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), #fff 80%, #5eead4); box-shadow: 0 0 10px #5eead4;
+  animation: swipeTrail 2.2s cubic-bezier(.45, 0, .3, 1) .9s infinite;
+}
+.pack__swipe-hand {
+  position: absolute; left: 0; top: 2px; width: 26px; height: 26px; margin-left: -8px; opacity: 0;
+  animation: swipeHand 2.2s cubic-bezier(.45, 0, .3, 1) .9s infinite;
+}
+.pack__swipe-hand svg { width: 100%; height: 100%; fill: #fff; stroke: #063b3d; stroke-width: 1.4; stroke-linejoin: round; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .5)); }
+@keyframes swipeTrail { 0%, 12% { transform: scaleX(0); opacity: 1; } 70% { transform: scaleX(1); opacity: 1; } 85%, 100% { transform: scaleX(1); opacity: 0; } }
+@keyframes swipeHand {
+  0% { left: 0; opacity: 0; transform: scale(1.15); } 12% { left: 0; opacity: 1; transform: scale(1); }
+  70% { left: 100%; opacity: 1; transform: scale(1); } 85%, 100% { left: 100%; opacity: 0; transform: scale(1.1); }
+}
+.pack__seal.is-tearing .pack__swipe, .pack.is-ripped .pack__swipe, .pack.is-dragging .pack__swipe { opacity: 0; }
+.pack__swipe { transition: opacity .2s; }
+.pack { cursor: grab; }
+@media (prefers-reduced-motion: reduce) {
+  .pack__swipe-trail { animation: none; transform: scaleX(1); opacity: .6; }
+  .pack__swipe-hand { animation: none; left: 50%; opacity: 1; }
+}
