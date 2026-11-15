@@ -152,6 +152,7 @@
 
   pack.addEventListener("pointerdown", function (e) {
     if (state !== "pack" || e.target.closest(".pack__top")) return;
+    pack.classList.remove("is-entering");
     drag = { x: e.clientX, y: e.clientY, rx: rx, ry: ry, id: e.pointerId };
     try { pack.setPointerCapture(e.pointerId); } catch (err) {}
     pack.classList.add("is-dragging");
@@ -427,6 +428,8 @@
     void pack.offsetWidth;
     pack.classList.add("is-entering");
   }
+  // Once the pack has arrived, drop the entrance so pausing and resuming the float (dragging) can't replay it.
+  pack.addEventListener("animationend", function (e) { if (e.animationName === "packEnter") pack.classList.remove("is-entering"); });
   function openPack() {
     reset();
     dlg.classList.remove("is-closing");
