@@ -73,7 +73,10 @@
         }).join("") + '</span><span class="tcard__no">' + info.label + " · " + String(n).padStart(2, "0") + "/" + String(all.length).padStart(2, "0") + "</span></div>" +
       "</div>" +
       '<i class="tcard__shine" aria-hidden="true"></i>' +
-      (isNew ? '<span class="tcard__new">New</span>' : "") +
+      (isNew ? '<span class="tcard__new">New</span><span class="tcard__spark" aria-hidden="true">' +
+        [[-2.2, -1.6], [1.4, -2.4], [2.4, -.4], [-1, -2.8], [2.2, 1.2], [-2.6, .4]].map(function (v) {
+          return '<i style="--sx:' + v[0] + "em;--sy:" + v[1] + 'em"></i>';
+        }).join("") + "</span>" : "") +
     "</div>";
   }
 
@@ -214,13 +217,14 @@
   }
 
   /* ---------- Cards ---------- */
-  var pulled = [], at = 0, deck = null;
+  var pulled = [], at = 0, deck = null, fresh = [];
   function dealCards() {
     state = "cards";
     pulled = rollPack();
     at = 0;
-    var fresh = pulled.map(function (p) { return !has(p.slug); });
-    cardsBox.innerHTML = '<div class="pack-deck">' + pulled.map(function (p, i) { return cardHTML(p, all.indexOf(p) + 1, fresh[i]); }).join("") + "</div>";
+    fresh = pulled.map(function (p) { return !has(p.slug); });
+    cardsBox.innerHTML = '<div class="pack-deck">' + pulled.map(function (p, i) { return cardHTML(p, all.indexOf(p) + 1, fresh[i]); }).join("") + "</div>" +
+      '<div class="pack-progress" aria-live="polite">Collection&nbsp;<b>' + owned() + "</b>/" + all.length + '<span class="pack-progress__plus">+1</span></div>';
     deck = cardsBox.firstChild;
     var cards = [].slice.call(deck.children);
     cards.forEach(function (c, i) {
@@ -232,7 +236,24 @@
     pack.classList.add("is-gone");
     cardsBox.classList.add("is-in");
     cards[0].focus({ preventScroll: true });
-    collect(pulled[0]); // a card counts once it has been seen
+    reveal(0, reduceMotion ? 0 : 620); // after the cards have risen out of the pack
+  }
+  // The card on top has been seen: it joins the collection, and a new one gets its NEW stamp and a tick on the counter.
+  function reveal(i, delay) {
+    setTimeout(function () {
+      var c = deck && deck.children[i];
+      if (!c || c.revealed) return; // idempotent: a quick tap may reveal it before the timer does
+      c.revealed = true;
+      c.classList.add("is-top");
+      collect(pulled[i]);
+      if (fresh[i]) {
+        var prog = cardsBox.querySelector(".pack-progress");
+        if (prog) {
+          prog.querySelector("b").textContent = owned();
+          prog.classList.remove("is-bump"); void prog.offsetWidth; prog.classList.add("is-bump");
+        }
+      }
+    }, delay);
   }
 
   // Holo shine follows the pointer; the top card can be flicked away.
@@ -301,13 +322,14 @@
   function next(dir) {
     var c = deck && deck.children[at];
     if (!c) return;
+    if (!c.revealed) { c.revealed = true; collect(pulled[at]); } // tapped away before its reveal fired
     c.style.animation = "none";
     c.style.setProperty("--out", dir);
     c.classList.add("is-out");
     at++;
     if (at < pulled.length) {
       deck.children[at].focus({ preventScroll: true });
-      collect(pulled[at]);
+      reveal(at, 0);
       if (tier(pulled[at]) === "legendary") setTimeout(function () { celebrate(deck.children[at]); }, 120);
     }
     else setTimeout(showDone, reduceMotion ? 50 : 380);

@@ -98,10 +98,10 @@
 .pack__shoulder { left: 0; width: 100%; height: var(--sl); backface-visibility: hidden; background: linear-gradient(180deg, #0a4f52, #0f766e); }
 .pack__shoulder.is-top { top: calc(var(--s) + var(--sh) - var(--sl)); transform-origin: 50% 100%; background: linear-gradient(180deg, #0b5d5f, #0f766e); }
 .pack__shoulder.is-bottom { top: calc(var(--ph) - var(--s) - var(--sh)); transform-origin: 50% 0; background: linear-gradient(180deg, #0f766e, #063b3d); }
-.pack__shoulder.is-top.is-front { transform: translateZ(var(--t)) rotateX(var(--sa)); }
-.pack__shoulder.is-top.is-rear { transform: rotateY(180deg) translateZ(var(--t)) rotateX(var(--sa)); }
-.pack__shoulder.is-bottom.is-front { transform: translateZ(var(--t)) rotateX(calc(var(--sa) * -1)); }
-.pack__shoulder.is-bottom.is-rear { transform: rotateY(180deg) translateZ(var(--t)) rotateX(calc(var(--sa) * -1)); }
+.pack__shoulder.is-top.is-front { transform: translateZ(var(--t)) rotateX(calc(var(--sa) * -1)); }
+.pack__shoulder.is-top.is-rear { transform: rotateY(180deg) translateZ(var(--t)) rotateX(calc(var(--sa) * -1)); }
+.pack__shoulder.is-bottom.is-front { transform: translateZ(var(--t)) rotateX(var(--sa)); }
+.pack__shoulder.is-bottom.is-rear { transform: rotateY(180deg) translateZ(var(--t)) rotateX(var(--sa)); }
 
 /* edges of the body */
 .pack__side {
@@ -220,6 +220,8 @@
 .tcard:hover .tcard__shine, .pack-deck.is-tilting .tcard__shine { opacity: var(--on); }
 
 @media (prefers-reduced-motion: reduce) {
+  .pack-deck .tcard.is-top .tcard__new { animation: none; transform: rotate(10deg); opacity: 1; }
+  .pack-deck .tcard.is-top .tcard__new::after, .pack-deck .tcard.is-top .tcard__spark i, .pack-progress.is-bump, .pack-progress.is-bump .pack-progress__plus { animation: none; }
   .pack-dlg[open], .pack-dlg[open]::backdrop, .pack-dlg.is-closing, .pack.is-entering { animation: none; }
   .pack, .pack-fab__mini, .pack-fab__mini::after, .pack__hint { animation: none; }
   .pack-deck .tcard { animation: none; }
@@ -235,12 +237,50 @@
   100% { filter: drop-shadow(0 0 0 rgba(250, 204, 21, 0)); }
 }
 
-/* NEW tag on cards you didn't have yet */
+/* NEW tag on cards you didn't have yet: hidden in the stack, stamped on when the card reaches the top */
 .tcard__new {
-  position: absolute; top: -.7em; right: -.5em; z-index: 3; padding: .3em .6em; border-radius: .5em; transform: rotate(8deg);
-  background: linear-gradient(135deg, #f43f5e, #f59e0b); color: #fff; font: 700 .7em/1 var(--display); letter-spacing: .14em; text-transform: uppercase;
-  box-shadow: 0 .3em .8em rgba(0, 0, 0, .35);
+  position: absolute; top: -.8em; right: -.7em; z-index: 3; padding: .38em .7em; border-radius: .55em; overflow: hidden;
+  background: linear-gradient(135deg, #f43f5e, #f59e0b); color: #fff; font: 700 .78em/1 var(--display); letter-spacing: .16em; text-transform: uppercase;
+  box-shadow: 0 .3em .9em rgba(244, 63, 94, .45), inset 0 0 0 1px rgba(255, 255, 255, .35);
+  transform: rotate(10deg); opacity: 1;
 }
+.pack-deck .tcard__new { transform: rotate(10deg) scale(0); opacity: 0; }
+.pack-deck .tcard.is-top .tcard__new { animation: newStamp .6s cubic-bezier(.34, 1.7, .5, 1) .15s forwards, newBob 1.8s ease-in-out .9s infinite; }
+.tcard__new::after { /* light glinting across the tag */
+  content: ""; position: absolute; inset: 0; transform: translateX(-120%);
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, .85) 50%, transparent 70%);
+}
+.pack-deck .tcard.is-top .tcard__new::after { animation: newGlint 2.2s ease-in-out .7s infinite; }
+.tcard__spark { position: absolute; top: -.2em; right: .4em; z-index: 4; width: .5em; height: .5em; pointer-events: none; }
+.tcard__spark i {
+  position: absolute; left: 0; top: 0; width: .5em; height: .5em; border-radius: 50%; background: #fde68a; box-shadow: 0 0 .5em #f59e0b; opacity: 0;
+}
+.pack-deck .tcard.is-top .tcard__spark i { animation: newSpark .7s ease-out .3s forwards; }
+@keyframes newStamp {
+  0% { transform: rotate(-25deg) scale(2.6); opacity: 0; }
+  55% { transform: rotate(14deg) scale(.88); opacity: 1; }
+  100% { transform: rotate(10deg) scale(1); opacity: 1; }
+}
+@keyframes newBob { 0%, 100% { transform: rotate(10deg) scale(1); } 50% { transform: rotate(6deg) scale(1.08); } }
+@keyframes newGlint { 0% { transform: translateX(-120%); } 45%, 100% { transform: translateX(120%); } }
+@keyframes newSpark {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--sx), var(--sy)) scale(.2); opacity: 0; }
+}
+
+/* collection counter under the deck */
+.pack-progress {
+  position: absolute; left: 50%; bottom: 0; translate: -50% 0; display: inline-flex; align-items: baseline; gap: 0; padding: 7px 14px;
+  border-radius: 999px; background: rgba(0, 0, 0, .35); border: 1px solid rgba(255, 255, 255, .18); color: #e9fbfa;
+  font: 700 11px/1 var(--display); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; opacity: 0; transition: opacity .4s;
+}
+.pack-cards.is-in .pack-progress { opacity: 1; }
+.pack-progress b { color: #5eead4; font-size: 13px; }
+.pack-progress.is-bump { animation: progBump .55s cubic-bezier(.34, 1.7, .5, 1); }
+.pack-progress__plus { position: absolute; right: 10px; top: -4px; color: #fbbf24; font-size: 13px; opacity: 0; pointer-events: none; }
+.pack-progress.is-bump .pack-progress__plus { animation: plusRise .9s ease-out; }
+@keyframes progBump { 40% { scale: 1.18; border-color: #fbbf24; } }
+@keyframes plusRise { 0% { opacity: 0; transform: translateY(6px); } 25% { opacity: 1; } 100% { opacity: 0; transform: translateY(-22px); } }
 
 /* Card slot on the project page */
 .viewer__card {
