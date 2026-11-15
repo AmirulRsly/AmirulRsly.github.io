@@ -90,13 +90,13 @@
     '<dialog class="pack-dlg" aria-label="Booster pack">' +
       '<button class="pack-dlg__close" type="button" aria-label="Close">×</button>' +
       '<div class="pack-stage">' +
-        '<div class="pack" tabindex="0" aria-label="Booster pack. Press Enter to tear it open.">' +
+        '<div class="pack" tabindex="0" aria-label="Amirul&#39;s Work booster pack. Press Enter to tear it open.">' +
           '<div class="pack__seal is-top pack__top">' + '<div class="pack__sealface"><span class="pack__cut"></span><span class="pack__hint">Slide to open →</span></div>' + '<div class="pack__sealface is-rear"></div>' + "</div>" +
           '<div class="pack__shoulder is-top is-front"></div><div class="pack__shoulder is-top is-rear"></div>' +
           '<div class="pack__face pack__front">' +
             '<div class="pack__body">' +
-              '<span class="pack__series">Series 1 · Selected Work</span>' +
-              '<span class="pack__logo"><b>Amirul</b> Hakim</span>' +
+              '<span class="pack__series">Series 1 · ' + all.length + " cards to collect</span>" +
+              '<span class="pack__logo"><b>Amirul&#39;s</b> Work</span>' +
               '<span class="pack__sub">Booster Pack</span>' +
               '<span class="pack__count">5 cards · 1 rare or better</span>' +
             "</div>" +
