@@ -61,7 +61,8 @@
   /* geometry: --pw wide, --ph tall; --s = flat seal strip, --sh = shoulder where the body pinches into the seal, --t = half the thickness */
   --rx: 0deg; --ry: 0deg; --sheen: 50%;
   --pw: min(250px, 62vw); --ph: calc(var(--pw) * 1.62); --s: calc(var(--pw) * .13); --sh: calc(var(--pw) * .06); --t: calc(var(--pw) * .028);
-  --sl: hypot(var(--sh), var(--t)); --sa: atan2(var(--t), var(--sh));
+  /* slope length and angle for --sh = .06 and --t = .028 (worked out here, not with hypot()/atan2(), which older browsers lack) */
+  --sl: calc(var(--pw) * 0.0662); --sa: 25.02deg;
   position: relative; width: var(--pw); height: var(--ph); transform-style: preserve-3d; cursor: grab; touch-action: none; user-select: none;
   transform: rotateX(var(--rx)) rotateY(var(--ry)); animation: packFloat 4s ease-in-out infinite;
   transition: opacity .5s, translate .6s cubic-bezier(.5, 0, .75, 0);
