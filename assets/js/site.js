@@ -253,6 +253,16 @@
 
 
   /* ---------- Project grid ---------- */
+  // Tool logos on the card thumbnail, read from the project's engine line ("Unity · C# · WebGL").
+  var LOGOS = { "Unity": "unity", "Unreal Engine": "unreal", "PlayCanvas": "playcanvas", "C#": "csharp", "C++": "cpp",
+    "JavaScript": "javascript", "Clip Studio Paint": "clipstudio", "Adobe Animate": "animate", "Java": "java", "NetBeans": "netbeans" };
+  function toolLogos(p) {
+    var tools = String(p.engine || "").split(/\s*·\s*/).filter(function (t) { return LOGOS[t]; });
+    if (!tools.length) return "";
+    return '<span class="proj__tools">' + tools.map(function (t) {
+      return '<img src="' + MEDIA + "logos/" + LOGOS[t] + '.png" alt="' + esc(t) + '" title="' + esc(t) + '" width="26" height="26" loading="lazy">';
+    }).join("") + "</span>";
+  }
   var grid = $("#grid");
   grid.innerHTML = projects.map(function (p, i) {
     return '<button class="proj tilt-soft' + (p.featured ? " proj--featured" : "") + '" type="button" data-cat="' + p.category + '" data-i="' + i + '" aria-label="Open ' + esc(p.title) + '">' +
@@ -261,6 +271,7 @@
         (p.preview ? '<img class="proj__preview" data-src="' + MEDIA + p.preview + '" alt="">' : "") +
         (p.preview ? '<span class="proj__play">' + (finePointer ? "Hover to preview" : "Preview") + "</span>" : "") +
         (p.play ? '<span class="proj__playable">▶ ' + playLabel(p) + "</span>" : "") +
+        toolLogos(p) +
         (p.featured ? '<span class="proj__ribbon badge">Featured</span>' : (p.client ? '<span class="proj__ribbon proj__client">Freelance</span>' : "")) +
       "</div>" +
       '<div class="proj__body">' +

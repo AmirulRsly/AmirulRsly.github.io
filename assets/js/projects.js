@@ -124,7 +124,7 @@ window.PROJECTS = [
     short: "One of my characters rigged with Unity's built-in 2D bones, weights and IK, to see how it compares with Spine Pro.",
     category: "art",
     kind: "2D Rigging & Animation",
-    engine: "Unity · 2D Animation",
+    engine: "Unity · Clip Studio Paint · 2D Animation",
     date: "2023-06",
     cover: "cover-rig.webp",
     preview: "rigclip0.webp",

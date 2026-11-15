@@ -315,6 +315,9 @@ p { margin: 0 0 1em; }
 }
 .proj__play::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
 .proj.is-playing .proj__play::before { width: 7px; height: 7px; border: 0; border-radius: 50%; background: #ff4b4b; animation: blink 1s steps(2) infinite; }
+.proj__tools { position: absolute; right: 12px; bottom: 12px; z-index: 2; display: flex; gap: 5px; pointer-events: none; }
+.proj__media .proj__tools img { position: static; width: 26px; height: 26px; padding: 3px; border-radius: 7px; background: #fff; object-fit: contain; box-shadow: 0 2px 8px rgba(0, 0, 0, .35); transform: none; opacity: 1; }
+.proj:hover .proj__media .proj__tools img { transform: none; }
 .proj__body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; }
 .proj__meta { display: flex; gap: 10px; align-items: center; font: 600 12px var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .proj__meta b { color: var(--accent); font-weight: 600; }
