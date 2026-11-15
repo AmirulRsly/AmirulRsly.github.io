@@ -47,7 +47,19 @@
     return rest.sort(function (a, b) { return TIERS[tier(a)].rank - TIERS[tier(b)].rank; }).concat([hit]);
   }
 
-  function cardHTML(p, n) {
+  /* ---------- Collection (saved in this browser) ---------- */
+  var SAVE = "packCollection";
+  function loadColl() { try { return JSON.parse(localStorage.getItem(SAVE)) || {}; } catch (e) { return {}; } }
+  var coll = loadColl(); // slug -> times pulled
+  function has(slug) { return !!coll[slug]; }
+  function owned() { return all.filter(function (p) { return coll[p.slug]; }).length; }
+  function collect(p) {
+    coll[p.slug] = (coll[p.slug] || 0) + 1;
+    try { localStorage.setItem(SAVE, JSON.stringify(coll)); } catch (e) {}
+    renderSlot();
+  }
+
+  function cardHTML(p, n, isNew) {
     var t = tier(p), info = TIERS[t];
     var tools = String(p.engine || "").split(/\s*·\s*/).filter(function (x) { return LOGOS[x]; });
     return '<div class="tcard r-' + t + '" data-slug="' + esc(p.slug) + '" tabindex="0" role="button" aria-label="' + esc(p.title) + ", " + info.label + ' card">' +
@@ -61,6 +73,7 @@
         }).join("") + '</span><span class="tcard__no">' + info.label + " · " + String(n).padStart(2, "0") + "/" + String(all.length).padStart(2, "0") + "</span></div>" +
       "</div>" +
       '<i class="tcard__shine" aria-hidden="true"></i>' +
+      (isNew ? '<span class="tcard__new">New</span>' : "") +
     "</div>";
   }
 
@@ -205,7 +218,8 @@
     state = "cards";
     pulled = rollPack();
     at = 0;
-    cardsBox.innerHTML = '<div class="pack-deck">' + pulled.map(function (p, i) { return cardHTML(p, all.indexOf(p) + 1); }).join("") + "</div>";
+    var fresh = pulled.map(function (p) { return !has(p.slug); });
+    cardsBox.innerHTML = '<div class="pack-deck">' + pulled.map(function (p, i) { return cardHTML(p, all.indexOf(p) + 1, fresh[i]); }).join("") + "</div>";
     deck = cardsBox.firstChild;
     var cards = [].slice.call(deck.children);
     cards.forEach(function (c, i) {
@@ -217,6 +231,7 @@
     pack.classList.add("is-gone");
     cardsBox.classList.add("is-in");
     cards[0].focus({ preventScroll: true });
+    collect(pulled[0]); // a card counts once it has been seen
   }
 
   // Holo shine follows the pointer; the top card can be flicked away.
@@ -248,6 +263,11 @@
     function tilt(x, y) {
       deck.style.setProperty("--dry", x.toFixed(1) + "deg");
       deck.style.setProperty("--drx", y.toFixed(1) + "deg");
+      // light slides across the foil as the deck turns
+      [].forEach.call(deck.children, function (c) {
+        c.style.setProperty("--mx", (50 + x * 1.1).toFixed(1) + "%");
+        c.style.setProperty("--my", (50 - y * 1.1).toFixed(1) + "%");
+      });
     }
     deck.addEventListener("pointerdown", function (e) {
       g = { x: e.clientX, y: e.clientY, id: e.pointerId, moved: false, hist: [[e.clientX, performance.now()]] };
@@ -286,6 +306,7 @@
     at++;
     if (at < pulled.length) {
       deck.children[at].focus({ preventScroll: true });
+      collect(pulled[at]);
       if (tier(pulled[at]) === "legendary") setTimeout(function () { celebrate(deck.children[at]); }, 120);
     }
     else setTimeout(showDone, reduceMotion ? 50 : 380);
@@ -352,27 +373,87 @@
   }
   function goTo(slug) {
     track("card " + slug);
-    dlg.close();
-    location.hash = "#work/" + slug;
+    closeDlg(function () { location.hash = "#work/" + slug; });
   }
+
+  /* ---------- Card slot on the project page ---------- */
+  var slotSlug = null;
+  function renderSlot() {
+    var box = document.getElementById("viewerCard");
+    var p = slotSlug && all.filter(function (q) { return q.slug === slotSlug; })[0];
+    if (!box) return;
+    if (!p) { box.hidden = true; return; }
+    var t = tier(p), info = TIERS[t], n = String(all.indexOf(p) + 1).padStart(2, "0"), total = String(all.length).padStart(2, "0");
+    var count = '<span class="mcard-count">Collection ' + owned() + "/" + all.length + "</span>";
+    box.hidden = false;
+    box.classList.toggle("is-missing", !has(p.slug));
+    if (has(p.slug)) {
+      var times = coll[p.slug];
+      box.innerHTML = '<div class="mcard r-' + t + '" aria-hidden="true"><img src="' + MEDIA + esc(p.cover) + '" alt="" loading="lazy"><span class="mcard__mark">' + info.mark + "</span></div>" +
+        '<div class="mcard-info"><b>Card collected</b><span>' + info.label + " · No. " + n + "/" + total + (times > 1 ? " · pulled " + times + "×" : "") + "</span>" + count + "</div>";
+    } else {
+      box.innerHTML = '<div class="mcard is-empty" aria-hidden="true"><span>?</span></div>' +
+        '<div class="mcard-info"><b>Missing card</b><span>No. ' + n + "/" + total + " · pull it from a booster pack</span>" + count +
+        '<button type="button" class="mcard-open">Open a pack →</button></div>';
+      box.querySelector(".mcard-open").addEventListener("click", function () { openPack(); track("opened from project page"); });
+    }
+  }
+  document.addEventListener("project:open", function (e) { slotSlug = e.detail.slug; renderSlot(); });
+  // the project may have opened (from a #work/ link) before this script loaded
+  var m0 = location.hash.match(/^#work\/([\w-]+)/);
+  if (m0) { slotSlug = m0[1]; renderSlot(); }
 
   /* ---------- Open / close ---------- */
   function reset() {
+    // snap everything back with transitions off, so the old seal doesn't fly back onto the new pack
+    pack.classList.add("no-anim");
     state = "pack"; rx = 0; ry = 0; setRot(false);
-    pack.classList.remove("is-ripped", "is-gone", "is-dragging");
+    pack.classList.remove("is-ripped", "is-gone", "is-dragging", "is-entering");
+    top.classList.remove("is-tearing");
     cut.style.width = "0";
     cardsBox.innerHTML = ""; cardsBox.classList.remove("is-in");
     done.hidden = true;
     tip.hidden = false;
     tip.textContent = "Drag the pack to turn it · slide along the top to tear it open";
+    void pack.offsetWidth;
+    pack.classList.remove("no-anim");
+  }
+  // from: [x, y] offset (px) the pack starts at, relative to its resting place
+  function enter(from, small) {
+    pack.style.setProperty("--fx", from[0] + "px");
+    pack.style.setProperty("--fy", from[1] + "px");
+    pack.style.setProperty("--fs", small ? ".12" : "1");
+    pack.classList.remove("is-entering");
+    void pack.offsetWidth;
+    pack.classList.add("is-entering");
   }
   function openPack() {
     reset();
+    dlg.classList.remove("is-closing");
     if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
     pack.focus({ preventScroll: true });
+    // the pack grows out of the corner button
+    var b = fabWrap.querySelector(".pack-fab__mini").getBoundingClientRect(), r = pack.getBoundingClientRect();
+    if (b.width) enter([b.left + b.width / 2 - (r.left + r.width / 2), b.top + b.height / 2 - (r.top + r.height / 2)], true);
+    else enter([0, innerHeight * 0.6], false);
   }
-  dlg.querySelector(".pack-dlg__close").addEventListener("click", function () { dlg.close(); });
-  dlg.querySelector(".pack-shut").addEventListener("click", function () { dlg.close(); });
-  dlg.querySelector(".pack-again").addEventListener("click", function () { reset(); pack.focus({ preventScroll: true }); track("opened again"); });
-  dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+  function closeDlg(after) {
+    if (!dlg.open || dlg.classList.contains("is-closing")) return;
+    dlg.classList.add("is-closing");
+    setTimeout(function () {
+      dlg.close();
+      dlg.classList.remove("is-closing");
+      if (after) after();
+    }, reduceMotion ? 0 : 260);
+  }
+  dlg.addEventListener("cancel", function (e) { e.preventDefault(); closeDlg(); }); // Esc
+  dlg.querySelector(".pack-dlg__close").addEventListener("click", function () { closeDlg(); });
+  dlg.querySelector(".pack-shut").addEventListener("click", function () { closeDlg(); });
+  dlg.querySelector(".pack-again").addEventListener("click", function () {
+    reset();
+    enter([0, innerHeight * 0.6], false); // a fresh pack slides up from the bottom
+    pack.focus({ preventScroll: true });
+    track("opened again");
+  });
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) closeDlg(); });
 })();

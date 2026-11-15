@@ -548,6 +548,7 @@
     var rest = $("#viewerRest"); if (rest) rest.hidden = true;
     if (push) history.replaceState(null, "", "#work/" + p.slug);
     track({ path: "/work/" + p.slug, title: p.title });
+    document.dispatchEvent(new CustomEvent("project:open", { detail: { slug: p.slug } })); // pack.js shows the card slot
   }
   function showMedia(k) {
     var list = projects[cur.p].media, n = list.length;
