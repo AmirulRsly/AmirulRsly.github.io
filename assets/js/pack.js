@@ -159,8 +159,16 @@
   }
   function facingFront() { var a = ((ry % 360) + 360) % 360; return a < 50 || a > 310; }
 
+  // The browser's own drag-and-drop (a ghost image of selected text) would steal the drag from the pack.
+  function noNativeDrag(el) {
+    el.addEventListener("dragstart", function (e) { e.preventDefault(); });
+    el.addEventListener("mousedown", function (e) { e.preventDefault(); }); // no text selection to drag either
+  }
+  noNativeDrag(pack);
+  function clearSelection() { try { window.getSelection().removeAllRanges(); } catch (err) {} }
   pack.addEventListener("pointerdown", function (e) {
     if (state !== "pack") return;
+    clearSelection();
     pack.classList.remove("is-entering");
     var r = pack.getBoundingClientRect();
     try { pack.setPointerCapture(e.pointerId); } catch (err) {}
@@ -235,6 +243,7 @@
       bindCard(c, true);
     });
     bindDeck();
+    noNativeDrag(deck);
     pack.classList.add("is-gone");
     cardsBox.classList.add("is-in");
     cards[0].focus({ preventScroll: true });
@@ -430,6 +439,7 @@
 
   /* ---------- Open / close ---------- */
   function reset() {
+    clearSelection();
     // snap everything back with transitions off, so the old seal doesn't fly back onto the new pack
     pack.classList.add("no-anim");
     state = "pack"; rx = 0; ry = 0; setRot(false);
