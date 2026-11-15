@@ -516,7 +516,7 @@
     var p = projects[pi]; if (!p) return;
     cur.p = pi;
     $("#viewerTitle").textContent = p.title;
-    $("#viewerMeta").innerHTML = "<b>" + esc(p.kind) + "</b><span>" + esc(p.engine) + "</span><span>" + fmtDate(p.date) + "</span><span>" + CAT[p.category] + "</span>" + (p.client ? "<span>Freelance</span>" : "");
+    $("#viewerMeta").innerHTML = "<b>" + esc(p.kind) + "</b><span>" + fmtDate(p.date) + "</span><span>" + CAT[p.category] + "</span>" + (p.client ? "<span>Freelance</span>" : "");
     // First paragraph up front, the rest behind "See more".
     $("#viewerBody").innerHTML = "<p>" + esc(p.body[0]) + "</p>" +
       (p.body.length > 1 ? '<div class="viewer__rest" id="viewerRest" hidden>' + p.body.slice(1).map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("") + "</div>" +

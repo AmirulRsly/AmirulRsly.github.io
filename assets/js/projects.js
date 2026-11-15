@@ -43,7 +43,7 @@ window.PROJECTS = [
     date: "2026-09",
     cover: "cover-kcw.webp",
     preview: "kcwclip3.webp",
-    tags: ["Unity", "C#", "Roguelike", "Typing", "Claude Code", "AI-assisted Art"],
+    tags: ["Unity", "C#", "Roguelike", "Typing", "Claude Code", "AI-assisted Art", "WebGL"],
     links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/keycombowombo" }],
     body: [
       "A roguelike typing game inspired by Slay the Spire. I couldn't find a game that had really tried this mix, and I thought typing and roguelike progression could make a great core mechanic together.",
@@ -128,7 +128,7 @@ window.PROJECTS = [
     date: "2023-06",
     cover: "cover-rig.webp",
     preview: "rigclip0.webp",
-    tags: ["Unity", "2D Animation", "Skeletal Rigging", "Inverse Kinematics", "Weight Painting"],
+    tags: ["Unity", "2D Animation", "Skeletal Rigging", "Inverse Kinematics", "Weight Painting", "Clip Studio Paint"],
     links: [{ label: "View on itch.io", url: "https://amirulrsly.itch.io/2d-skeleton-rigging-animation-test" }],
     body: [
       "A 2D skeleton rigging test on one of my own drawings, the player character, to see whether Unity's built-in 2D rigging is on par with Spine Pro by Esoteric Software.",
@@ -525,7 +525,7 @@ window.PROJECTS = [
     client: true,
     cover: "cover-jawi.webp",
     preview: "jawiclip1.webp",
-    tags: ["Illustration", "Backgrounds", "Commission"],
+    tags: ["Illustration", "Backgrounds", "Commission", "Clip Studio Paint"],
     links: [{ label: "Watch the episode on YouTube (00:37 to 02:02)", url: "https://www.youtube.com/watch?v=2gbniv4gCBc" }],
     body: [
       "My first art commission, for an NFT animation studio. The client asked me to draw the introduction sequence for the first episode of their animation.",
@@ -543,7 +543,7 @@ window.PROJECTS = [
     date: "2020-10",
     cover: "cover-astralis.webp",
     preview: "astralisclip2.webp",
-    tags: ["Comics", "Storytelling", "Character Design", "Paneling"],
+    tags: ["Comics", "Storytelling", "Character Design", "Paneling", "Clip Studio Paint"],
     links: [],
     body: [
       "A test of how my art reads on a webtoon site, in a desktop browser and on a phone. It was a passion project: my own webtoon series in a medieval fantasy setting.",
