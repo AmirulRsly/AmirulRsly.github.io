@@ -329,6 +329,7 @@
       }
     });
     moreBtn.hidden = gridState.all || total <= LIMIT;
+    $("#artInsta").hidden = f !== "art"; // Instagram link for the art filter
     moreBtn.textContent = "Show all " + total + " →";
   }
   filterBtns.forEach(function (b) {

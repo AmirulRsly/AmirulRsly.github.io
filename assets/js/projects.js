@@ -63,7 +63,7 @@ window.PROJECTS = [
     engine: "Unity · C#",
     date: "2023-06",
     cover: "cover-fyp.webp",
-    preview: "fypgif3.webp",
+    preview: "fypgif2.webp",
     tags: ["Unity", "C#", "Finite State Machine", "Fuzzy Logic", "2D Art"],
     links: [{ label: "Play the demo on itch.io", url: "https://amirulrsly.itch.io/amirulrsly-fyp-demo" }],
     body: [
@@ -73,7 +73,7 @@ window.PROJECTS = [
       "The project was still in development when I wrote this, but a playable demo is available on itch.io."
     ],
     media: ["fyp1.webp", "fyp2.webp", "fyp3.webp", "fyp4.webp", "fyp5.webp", "fyp6.webp", "fyp7.webp", "fyp8.webp",
-      { src: "fypgif1.webp", clip: true }, { src: "fypgif2.webp", clip: true }, { src: "fypgif3.webp", clip: true },
+      { src: "fypgif2.webp", clip: true }, { src: "fypgif1.webp", clip: true }, { src: "fypgif3.webp", clip: true },
       { src: "fypgif4.webp", clip: true }, { src: "fypgif5.webp", clip: true }]
   },
   {

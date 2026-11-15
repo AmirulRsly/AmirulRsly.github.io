@@ -142,6 +142,11 @@
     track("hidden");
   });
   fabWrap.querySelector(".pack-fab__open").addEventListener("click", function () { openPack(); track("opened prompt"); });
+  // Step aside while the footer is on screen, so the button doesn't cover the combo hint.
+  var foot = document.querySelector("footer");
+  if (foot && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) { fabWrap.classList.toggle("is-tucked", es[0].isIntersecting); }).observe(foot);
+  }
 
   /* ---------- Pack: turn it ---------- */
   var rx = 0, ry = 0, state = "pack", drag = null, tear = null;
