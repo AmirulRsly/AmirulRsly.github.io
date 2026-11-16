@@ -19,7 +19,7 @@ window.PROJECTS = [
     cover: "cover-malam.webp",
     coverLarge: "malam5.webp",
     preview: "malamclip1.webp",
-    tags: ["Unity", "C#", "WebGL", "Horror", "AI Navigation", "Day/Night Cycle", "Tripo", "Claude Code", "Codex"],
+    tags: ["Unity", "C#", "WebGL", "Horror", "AI Navigation", "Day/Night Cycle", "Tripo", "Claude Code", "Codex", "ChatGPT"],
     links: [
       { label: "Play on itch.io", url: "https://amirulrsly.itch.io/13-malam" },
       { label: "Play guide", url: "https://amirulrsly.github.io/13-Malam-Guide/" }
@@ -43,7 +43,7 @@ window.PROJECTS = [
     date: "2026-09",
     cover: "cover-kcw.webp",
     preview: "kcwclip3.webp",
-    tags: ["Unity", "C#", "Roguelike", "Typing", "Claude Code", "AI-assisted Art", "WebGL"],
+    tags: ["Unity", "C#", "Roguelike", "Typing", "Claude Code", "ChatGPT", "AI-assisted Art", "WebGL"],
     links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/keycombowombo" }],
     body: [
       "A roguelike typing game inspired by Slay the Spire. I couldn't find a game that had really tried this mix, and I thought typing and roguelike progression could make a great core mechanic together.",
@@ -138,6 +138,126 @@ window.PROJECTS = [
     ],
     media: ["rig1.webp", "rig2.webp",
       { src: "rigclip0.webp", clip: true }, { src: "rigclip1.webp", clip: true }, { src: "rigclip2.webp", clip: true }, { src: "rigclip3.webp", clip: true }]
+  },
+  {
+    slug: "singapore-odyssea",
+    title: "Singapore Odyssea: Glass Rotunda Installation",
+    short: "An interactive installation at the National Museum of Singapore. I programmed the companion creature that follows visitors along the ramp.",
+    category: "apps",
+    kind: "Interactive Installation",
+    engine: "Unreal Engine · C++ · Blueprints",
+    date: "2026-01",
+    cover: "cover-nms.webp",
+    preview: "nmsclip1.webp",
+    tags: ["Unreal Engine", "C++", "Blueprints", "Pathfinding", "Game AI", "MQTT", "TCP", "Perforce"],
+    links: [],
+    body: [
+      "Singapore Odyssea: A Journey Through Time is an immersive installation for the Glass Rotunda and Globe Ramp at the National Museum of Singapore, built at CraveFX in Unreal Engine. Across its four episodes, a companion creature, the familiar, moves along the ramp with visitors.",
+      "I worked on the familiar's behaviour: its pathfinding, then navigation to dynamic endpoints driven by live visitor coordinates sent over MQTT, so it always knows where to go next. I later wrote custom obstacle avoidance that replaced the old pathfinder in all the Blueprints, built the animation state control rigs and a skin manager for the companion, and optimised its MQTT-driven movement.",
+      "I packaged and shipped the ramp test builds for all four episodes, each with a changelog, adding debug and stress-test indicators, collider visibility, field-of-view tuning and a fix for the familiar moonwalking. I also made the forked and rolled-back builds.",
+      "With a teammate, I built an Open House mode controlled by TCP messages, shipped its builds for all four episodes with two fallback versions, and tested on site after the exhibit closed each evening. We set up Perforce for the project, and I shipped the final production build and helped prepare the source handover to the client."
+    ],
+    media: ["nms1.webp", "nms2.webp", "nms3.webp", "nms4.webp",
+      { src: "nmsclip1.webp", clip: true }, { src: "nmsclip2.webp", clip: true }, { src: "nmsclip3.webp", clip: true }]
+  },
+  {
+    slug: "waterb-boat-app",
+    title: "WaterB Boat Guide: Boat Display App",
+    short: "The app on the TVs of WaterB's river boats: a live map of the ride, fed by GPS, shared with every boat and passenger.",
+    category: "apps",
+    kind: "Kiosk App",
+    engine: "Unity · C# · Socket.IO",
+    date: "2024-03",
+    cover: "cover-wbboat.webp",
+    preview: "wbboatclip1.webp",
+    tags: ["Unity", "C#", "Socket.IO", "GPS", "Python", "macOS", "Android", "Stream Deck", "Git"],
+    links: [],
+    body: [
+      "The display app on the TVs of WaterB's river boats in Singapore, built at CraveFX. I have full ownership of it, along with its passenger web app; a teammate handles the backend.",
+      "It connects to the boat's GPS and sends its position to the backend over Socket.IO, so every boat's live position shows on all the display apps and web apps. Passengers scan its QR code to open the web app. I built the QR code generator, a Tour Guide Mode (unlocked with five taps on the QR code), the video and music playback, and Stream Deck and keyboard shortcuts for the crew, and I ship the builds, first for Android and now for macOS.",
+      "The boats used to zigzag and drift off the river, so I wrote river snapping that clamps the raw GPS point onto the river, compared ride data from phones and GPS receivers, and picked a sub-metre GNSS receiver that fixed the zigzag. I also wrote a Python bridge that reads the serial GPS, sends it over a socket, and reconnects by itself when the GPS drops.",
+      "For reliability on the Mac kiosks I measured performance, stress-tested a Mac mini for heat, and added a docked mode and video failsafes. I also made the river masking, three water shaders, Stream Deck profiles with a script that generates them, and a documented setup bundle for the kiosk Macs."
+    ],
+    media: ["wbboat1.webp", "wbboat2.webp",
+      { src: "wbboatclip1.webp", clip: true }, { src: "wbboatclip2.webp", clip: true }]
+  },
+  {
+    slug: "waterb-web-app",
+    title: "WaterB Boat Guide: Passenger Web App",
+    short: "The phone app passengers open from the boat's QR code: a live map of the ride, landmarks, bookmarks and sharing.",
+    category: "apps",
+    kind: "Web App",
+    engine: "PlayCanvas · JavaScript · HTML5",
+    date: "2024-03",
+    cover: "cover-wbweb.webp",
+    preview: "wbwebclip1.webp",
+    tags: ["PlayCanvas", "JavaScript", "HTML5", "Socket.IO", "Mobile Web", "UI"],
+    links: [],
+    body: [
+      "The passenger web app for WaterB's river boats, built at CraveFX. Passengers open it by scanning the QR code on the boat's display, which signs them in with a token.",
+      "I built it from the wireframes in PlayCanvas: a live map of the ride with the boat and its trail, camera pan and follow, points of interest with their stories, bookmarks for saved locations, screenshots and share-your-ride, all with a UI that adapts to any phone.",
+      "The boat moves on the map from live server updates, the same position data the boat's display app sends. Later I rebuilt the app in HTML5 to remove the PlayCanvas dependency."
+    ],
+    media: ["wbweb1.webp", "wbweb2.webp", "wbweb3.webp", "wbweb4.webp", "wbweb5.webp", "wbweb6.webp",
+      { src: "wbwebclip1.webp", clip: true }, { src: "wbwebclip2.webp", clip: true }, { src: "wbwebclip3.webp", clip: true }, { src: "wbwebclip4.webp", clip: true }]
+  },
+  {
+    slug: "kebaya-quest",
+    title: "Kebaya Quest",
+    short: "A web game about the kebaya for the National Heritage Board: I built the kebaya showcase, the screenshot feature and the embroidery minigame.",
+    category: "games",
+    kind: "Web Game",
+    engine: "PlayCanvas · JavaScript",
+    date: "2024-07",
+    cover: "cover-keb.webp",
+    preview: "kebclip1.webp",
+    tags: ["PlayCanvas", "JavaScript", "Minigames", "UI", "Animation"],
+    links: [],
+    body: [
+      "Kebaya Quest: A Thread through Tradition is a web game for Singapore's National Heritage Board, built at CraveFX. Players explore a town, meet characters and learn about the kebaya through minigames.",
+      "My main parts were the kebaya showcase page, the screenshot feature and the embroidery stitching minigame. I also worked on the UI layering for the first minigame, the kebaya reveal animations and the retry feature, and fixed a screenshot asset and a reveal bug.",
+      "For a follow-up tender, I wrote the advanced interactive section of the proposal, covering touchpoints, user flow, tech stack, platform, hosting, DevOps and security."
+    ],
+    media: ["keb1.webp", "keb2.webp", "keb3.webp", "keb4.webp", "keb5.webp", "keb6.webp",
+      { src: "kebclip1.webp", clip: true }, { src: "kebclip2.webp", clip: true }]
+  },
+  {
+    slug: "unreleased-action-game",
+    title: "Unreleased 3D Action Game",
+    short: "A 3D action game I'm building at CraveFX. Under wraps until it launches, but here's what I do on it.",
+    category: "games",
+    kind: "3D Action Game",
+    engine: "Unity · C# · WebGPU · Android",
+    date: "2026-05",
+    confidential: true,
+    cover: "cover-confidential-1.webp",
+    tags: ["Unity", "C#", "WebGPU", "Android", "Performance Optimisation", "Object Pooling", "Confidential"],
+    links: [],
+    body: [
+      "An unreleased 3D action game at CraveFX. The game and client stay confidential until it launches, so there are no screenshots yet, but here's my part in it.",
+      "It started as an R&D task: porting the game from PC to WebGPU and Android. Fixing file I/O, MeshCollider seam collisions and static batching roughly doubled the frame rate on desktop WebGPU, and I added touch controls for mobile. I also wrote the game design document.",
+      "I now own the project day to day: the enemy spawner, an object pooling system, enemy logic, UI, and rigging fixes."
+    ],
+    media: ["confidential-1.webp"]
+  },
+  {
+    slug: "unreleased-card-game",
+    title: "Unreleased Card Game",
+    short: "A card game for the web, built at CraveFX. Under wraps until it launches; I built its gameplay front end.",
+    category: "games",
+    kind: "Card Game",
+    engine: "PlayCanvas · JavaScript",
+    date: "2026-01",
+    confidential: true,
+    cover: "cover-confidential-2.webp",
+    tags: ["PlayCanvas", "JavaScript", "Multiplayer", "Card Game", "Front end", "Confidential"],
+    links: [],
+    body: [
+      "An unreleased web card game built at CraveFX. The game and client stay confidential until it launches, so there are no screenshots yet, but here's my part in it.",
+      "I built the whole gameplay front end in PlayCanvas, for both single player and multiplayer: the card movement, the animations and the game flow. A teammate handles the backend.",
+      "I also run the staging and production releases, fixing issues like multiplayer card ordering and overlapping cards along the way."
+    ],
+    media: ["confidential-2.webp"]
   },
   {
     slug: "jump-game",
@@ -603,13 +723,13 @@ window.EXPERIENCE = [
     place: "Kuala Lumpur, Malaysia · Hybrid",
     roles: [
       { title: "Junior Interactive Media and Game Developer", type: "Full-time", start: "2025-02", end: null,
-        text: "Own client projects end to end in Unity, Unreal Engine and PlayCanvas, including the WaterB boat guide, where boats share live GPS positions over Socket.IO and river snapping keeps them on course; the National Museum of Singapore's Glass Rotunda installation, with its companion AI, test builds and Open House mode; the gameplay front end of NHB's Timeline Temasek card game; and porting Combat Cars to WebGPU and Android.",
+        text: "Own client projects end to end in Unity, Unreal Engine and PlayCanvas, including the WaterB boat guide, where boats share live GPS positions over Socket.IO and river snapping keeps them on course; the National Museum of Singapore's Glass Rotunda installation, with its companion AI, test builds and Open House mode; the gameplay front end of an unreleased card game; and porting an unreleased 3D action game to WebGPU and Android.",
         skills: ["Unity", "Unreal Engine", "PlayCanvas", "Game Development", "Web Application Development"] },
       { title: "Junior Interactive Developer", type: "Contract", start: "2024-03", end: "2025-02",
         text: "Built the WaterB passenger web app in PlayCanvas and connected the Unity boat app to the backend over Socket.IO. Also built the museum companion's pathfinding and its navigation to live MQTT coordinates in Unreal Engine, and the NHB Kebaya game.",
         skills: ["Game Development", "Unity", "Unreal Engine", "PlayCanvas"] }
     ],
-    projects: ["jumpchain"]
+    projects: ["singapore-odyssea", "waterb-boat-app", "waterb-web-app", "kebaya-quest", "unreleased-action-game", "unreleased-card-game", "jumpchain"]
   },
   {
     company: "NovaLearn.org",
@@ -653,6 +773,7 @@ window.HERO_SKIP = ["bqclip1.webp", "bqclip3.webp", "covgif1.webp", "covgif3.web
 window.RELATED = [
   ["covid-busters", "covid-busters-brawler", "covid-busters-swordmaster"],
   ["flat-tire", "flat-tire-storyboard"],
+  ["waterb-boat-app", "waterb-web-app"],
   ["kanamoji", "2d-skeleton-rigging"],
   ["kanamoji", "covid-busters-brawler", "covid-busters-swordmaster"]
 ];

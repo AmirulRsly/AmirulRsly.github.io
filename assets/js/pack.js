@@ -30,7 +30,9 @@
     return "rare";
   }
   var LOGOS = { "Unity": "unity", "Unreal Engine": "unreal", "PlayCanvas": "playcanvas", "C#": "csharp", "C++": "cpp",
-    "JavaScript": "javascript", "Clip Studio Paint": "clipstudio", "Adobe Animate": "animate", "Java": "java", "NetBeans": "netbeans" };
+    "JavaScript": "javascript", "Clip Studio Paint": "clipstudio", "Adobe Animate": "animate", "Java": "java", "NetBeans": "netbeans",
+    "Claude": "claude", "ChatGPT": "chatgpt", "Tripo": "tripo" };
+  var AI_TAGS = { "Claude Code": "Claude", "Codex": "ChatGPT", "ChatGPT": "ChatGPT", "Tripo": "Tripo" };
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   function fmtDate(d) { var m = /^(\d{4})-(\d{2})/.exec(d || ""); return m ? MONTHS[+m[2] - 1] + " " + m[1] : ""; }
 
@@ -62,6 +64,7 @@
   function cardHTML(p, n, isNew) {
     var t = tier(p), info = TIERS[t];
     var tools = String(p.engine || "").split(/\s*·\s*/).filter(function (x) { return LOGOS[x]; });
+    (p.tags || []).forEach(function (x) { var k = AI_TAGS[x]; if (k && tools.indexOf(k) < 0) tools.push(k); });
     return '<div class="tcard r-' + t + '" data-slug="' + esc(p.slug) + '" tabindex="0" role="button" aria-label="' + esc(p.title) + ", " + info.label + ' card">' +
       '<div class="tcard__inner">' +
         '<div class="tcard__head"><b>' + esc(p.title) + '</b><span class="tcard__mark" title="' + info.label + '">' + info.mark + "</span></div>" +

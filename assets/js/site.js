@@ -255,9 +255,13 @@
   /* ---------- Project grid ---------- */
   // Tool logos on the card thumbnail, read from the project's engine line ("Unity · C# · WebGL").
   var LOGOS = { "Unity": "unity", "Unreal Engine": "unreal", "PlayCanvas": "playcanvas", "C#": "csharp", "C++": "cpp",
-    "JavaScript": "javascript", "Clip Studio Paint": "clipstudio", "Adobe Animate": "animate", "Java": "java", "NetBeans": "netbeans" };
+    "JavaScript": "javascript", "Clip Studio Paint": "clipstudio", "Adobe Animate": "animate", "Java": "java", "NetBeans": "netbeans",
+    "Claude": "claude", "ChatGPT": "chatgpt", "Tripo": "tripo" };
+  var AI_TAGS = { "Claude Code": "Claude", "Codex": "ChatGPT", "ChatGPT": "ChatGPT", "Tripo": "Tripo" };
   function toolLogos(p) {
+    // AI tools come from the tags (Claude Code, Codex / ChatGPT); everything else from the engine line
     var tools = String(p.engine || "").split(/\s*·\s*/).filter(function (t) { return LOGOS[t]; });
+    (p.tags || []).forEach(function (t) { var k = AI_TAGS[t]; if (k && tools.indexOf(k) < 0) tools.push(k); });
     if (!tools.length) return "";
     return '<span class="proj__tools">' + tools.map(function (t) {
       return '<img src="' + MEDIA + "logos/" + LOGOS[t] + '.png" alt="' + esc(t) + '" title="' + esc(t) + '" width="26" height="26" loading="lazy">';
@@ -272,7 +276,7 @@
         (p.preview ? '<span class="proj__play">' + (finePointer ? "Hover to preview" : "Preview") + "</span>" : "") +
         (p.play ? '<span class="proj__playable">▶ ' + playLabel(p) + "</span>" : "") +
         toolLogos(p) +
-        (p.featured ? '<span class="proj__ribbon badge">Featured</span>' : (p.client ? '<span class="proj__ribbon proj__client">Freelance</span>' : "")) +
+        (p.featured ? '<span class="proj__ribbon badge">Featured</span>' : p.confidential ? '<span class="proj__ribbon proj__client proj__secret">Confidential</span>' : (p.client ? '<span class="proj__ribbon proj__client">Freelance</span>' : "")) +
       "</div>" +
       '<div class="proj__body">' +
         '<div class="proj__meta"><b>' + esc(p.kind) + "</b><span>" + fmtDate(p.date) + "</span>" + "</div>" +
@@ -521,6 +525,7 @@
     $("#viewerBody").innerHTML = "<p>" + esc(p.body[0]) + "</p>" +
       (p.body.length > 1 ? '<div class="viewer__rest" id="viewerRest" hidden>' + p.body.slice(1).map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("") + "</div>" +
         '<button type="button" class="viewer__morebtn" id="viewerMore" aria-expanded="false">See more</button>' : "") +
+      (p.confidential ? '<p class="viewer__note">This project hasn\'t been released yet, so the game and client are kept confidential for now. Screenshots will be added after launch.</p>' : "") +
       (p.clientAssets ? '<p class="viewer__note">The art assets were provided by the client and are AI-generated. I developed the game.</p>' : "");
     [["#viewerPrev", -1, "Previous"], ["#viewerNext", 1, "Next"]].forEach(function (d) {
       var q = projects[(pi + d[1] + projects.length) % projects.length];
