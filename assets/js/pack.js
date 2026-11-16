@@ -268,7 +268,7 @@
       if (!c || c.revealed) return; // idempotent: a quick tap may reveal it before the timer does
       c.revealed = true;
       c.classList.add("is-top");
-      if (!hoverable) playClip(c, true);
+      if (!hoverable || deckHover) playClip(c, true);
       collect(pulled[i]);
       if (fresh[i]) {
         var prog = cardsBox.querySelector(".pack-progress");
@@ -293,7 +293,7 @@
   function bindCard(c, inStack) {
     var art = c.querySelector(".tcard__art img");
     if (art) art.addEventListener("load", function () { art.classList.toggle("is-tall", art.naturalHeight > art.naturalWidth); });
-    if (hoverable) {
+    if (hoverable && !inStack) {
       c.addEventListener("pointerenter", function () { playClip(c, true); });
       c.addEventListener("pointerleave", function () { playClip(c, false); });
     }
@@ -319,8 +319,18 @@
       if (e.key === "ArrowLeft") { e.preventDefault(); next(-1); }
     });
   }
+  // The deck holds on to the pointer while it's pressed, so the cards never get their own hover events:
+  // the deck tracks hover and plays the clip of whichever card is on top.
+  var deckHover = false;
+  function topCard() { return deck && deck.children[at]; }
   function bindDeck() {
     var g = null;
+    deckHover = false;
+    if (hoverable) {
+      deck.addEventListener("pointerenter", function () { deckHover = true; var t = topCard(); if (t && t.revealed) playClip(t, true); });
+      deck.addEventListener("pointermove", function () { if (deckHover) return; deckHover = true; var t = topCard(); if (t && t.revealed) playClip(t, true); });
+      deck.addEventListener("pointerleave", function () { deckHover = false; var t = topCard(); if (t) playClip(t, false); });
+    }
     function tilt(x, y) {
       deck.style.setProperty("--dry", x.toFixed(1) + "deg");
       deck.style.setProperty("--drx", y.toFixed(1) + "deg");
