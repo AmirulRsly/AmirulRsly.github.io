@@ -720,10 +720,10 @@ window.EXPERIENCE = [
     place: "Kuala Lumpur, Malaysia · Hybrid",
     roles: [
       { title: "Junior Interactive Media and Game Developer", type: "Full-time", start: "2025-02", end: null,
-        text: "Develop client projects in Unity, Unreal Engine and PlayCanvas. I'm the developer responsible for the WaterB boat guide's two apps, where boats share live GPS positions over Socket.IO and river snapping keeps them on course. Other work includes the National Museum of Singapore's Glass Rotunda installation, with its companion AI and test builds; the gameplay front end of an unreleased card game; and porting an unreleased 3D action game to WebGPU and Android.",
+        text: "Develop client projects in Unity, Unreal Engine and PlayCanvas. I developed the WaterB boat guide's two apps and still look after them: the passenger web app, built from scratch and bridged to the boat app over Socket.IO so GPS positions line up on both maps, and river snapping to keep the boats on course. Other work includes test builds for the National Museum of Singapore's Glass Rotunda installation, the gameplay front end of an unreleased card game, and porting an unreleased 3D action game to WebGPU and Android.",
         skills: ["Unity", "Unreal Engine", "PlayCanvas", "Game Development", "Web Application Development"] },
       { title: "Junior Interactive Developer", type: "Contract", start: "2024-03", end: "2025-02",
-        text: "Built the WaterB passenger web app from scratch in PlayCanvas, and used Socket.IO to bridge it with the Unity boat app so GPS positions line up precisely on both maps. Also built the museum companion's pathfinding and its navigation to live MQTT coordinates in Unreal Engine, and the NHB Kebaya game.",
+        text: "Built the companion's pathfinding and its navigation to live MQTT coordinates in Unreal Engine for the National Museum of Singapore's Glass Rotunda installation, and worked on the NHB Kebaya game in PlayCanvas.",
         skills: ["Game Development", "Unity", "Unreal Engine", "PlayCanvas"] }
     ],
     projects: ["singapore-odyssea", "waterb-boat-app", "waterb-web-app", "kebaya-quest", "unreleased-action-game", "unreleased-card-game", "jumpchain"]
