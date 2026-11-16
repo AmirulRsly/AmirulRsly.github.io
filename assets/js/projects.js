@@ -173,8 +173,8 @@ window.PROJECTS = [
     tags: ["Unity", "C#", "Socket.IO", "GPS", "Python", "macOS", "Android", "Stream Deck", "Git"],
     links: [],
     body: [
-      "The display app on the TVs of WaterB's river boats in Singapore, built at CraveFX. I have full ownership of it, along with its passenger web app; a teammate handles the backend.",
-      "It connects to the boat's GPS and sends its position to the backend over Socket.IO, so every boat's live position shows on all the display apps and web apps. Passengers scan its QR code to open the web app. I built the QR code generator, a Tour Guide Mode (unlocked with five taps on the QR code), the video and music playback, and Stream Deck and keyboard shortcuts for the crew, and I ship the builds, first for Android and now for macOS.",
+      "The display app on the TVs of WaterB's river boats in Singapore, built at CraveFX. I'm the developer responsible for it and for its passenger web app, from new features to the builds that go on the boats; a teammate handles the backend.",
+      "It connects to the boat's GPS and sends its position over Socket.IO, which I set up as the bridge to the passenger web app, so every boat's live position lands precisely on both the display maps and the passengers' phones. Passengers scan its QR code to open the web app. I built the QR code generator, a Tour Guide Mode (unlocked with five taps on the QR code), the video and music playback, and Stream Deck and keyboard shortcuts for the crew, and I ship the builds, first for Android and now for macOS.",
       "The boats used to zigzag and drift off the river, so I wrote river snapping that clamps the raw GPS point onto the river, compared ride data from phones and GPS receivers, and picked a sub-metre GNSS receiver that fixed the zigzag. I also wrote a Python bridge that reads the serial GPS, sends it over a socket, and reconnects by itself when the GPS drops.",
       "For reliability on the Mac kiosks I measured performance, stress-tested a Mac mini for heat, and added a docked mode and video failsafes. I also made the river masking, three water shaders, Stream Deck profiles with a script that generates them, and a documented setup bundle for the kiosk Macs."
     ],
@@ -184,7 +184,7 @@ window.PROJECTS = [
   {
     slug: "waterb-web-app",
     title: "WaterB Boat Guide: Passenger Web App",
-    short: "The phone app passengers open from the boat's QR code: a live map of the ride, landmarks, bookmarks and sharing.",
+    short: "The phone app passengers open from the boat's QR code, built from scratch: a live map of the ride kept in sync with the boat's GPS, plus landmarks, bookmarks and sharing.",
     category: "apps",
     kind: "Web App",
     engine: "PlayCanvas · JavaScript · HTML5",
@@ -194,9 +194,10 @@ window.PROJECTS = [
     tags: ["PlayCanvas", "JavaScript", "HTML5", "Socket.IO", "Mobile Web", "UI"],
     links: [],
     body: [
-      "The passenger web app for WaterB's river boats, built at CraveFX. Passengers open it by scanning the QR code on the boat's display, which signs them in with a token.",
-      "I built it from the wireframes in PlayCanvas: a live map of the ride with the boat and its trail, camera pan and follow, points of interest with their stories, bookmarks for saved locations, screenshots and share-your-ride, all with a UI that adapts to any phone.",
-      "The boat moves on the map from live server updates, the same position data the boat's display app sends. Later I rebuilt the app in HTML5 to remove the PlayCanvas dependency."
+      "The passenger web app for WaterB's river boats, built at CraveFX. I'm the developer responsible for it, alongside the boat display app. Passengers open it by scanning the QR code on the boat's display, which signs them in with a token.",
+      "I built it from scratch in PlayCanvas, working from the wireframes: a live map of the ride with the boat and its trail, camera pan and follow, points of interest with their stories, bookmarks for saved locations, screenshots and share-your-ride, all with a UI that adapts to any phone.",
+      "The trickiest part was linking it to the boat. I worked out how to use Socket.IO to bridge the boat's display app and the web app, so each GPS coordinate from the boat lands at the same precise spot on both maps, even though one runs in Unity on the boat's TV and the other in PlayCanvas on the passenger's phone.",
+      "Later I rebuilt the app in HTML5 to remove the PlayCanvas dependency."
     ],
     media: ["wbweb1.webp", "wbweb2.webp", "wbweb3.webp", "wbweb4.webp", "wbweb5.webp", "wbweb6.webp",
       { src: "wbwebclip1.webp", clip: true }, { src: "wbwebclip2.webp", clip: true }, { src: "wbwebclip3.webp", clip: true }, { src: "wbwebclip4.webp", clip: true }]
@@ -719,10 +720,10 @@ window.EXPERIENCE = [
     place: "Kuala Lumpur, Malaysia · Hybrid",
     roles: [
       { title: "Junior Interactive Media and Game Developer", type: "Full-time", start: "2025-02", end: null,
-        text: "Own client projects end to end in Unity, Unreal Engine and PlayCanvas, including the WaterB boat guide, where boats share live GPS positions over Socket.IO and river snapping keeps them on course; the National Museum of Singapore's Glass Rotunda installation, with its companion AI, test builds and Open House mode; the gameplay front end of an unreleased card game; and porting an unreleased 3D action game to WebGPU and Android.",
+        text: "Develop client projects in Unity, Unreal Engine and PlayCanvas. I'm the developer responsible for the WaterB boat guide's two apps, where boats share live GPS positions over Socket.IO and river snapping keeps them on course. Other work includes the National Museum of Singapore's Glass Rotunda installation, with its companion AI, test builds and Open House mode; the gameplay front end of an unreleased card game; and porting an unreleased 3D action game to WebGPU and Android.",
         skills: ["Unity", "Unreal Engine", "PlayCanvas", "Game Development", "Web Application Development"] },
       { title: "Junior Interactive Developer", type: "Contract", start: "2024-03", end: "2025-02",
-        text: "Built the WaterB passenger web app in PlayCanvas and connected the Unity boat app to the backend over Socket.IO. Also built the museum companion's pathfinding and its navigation to live MQTT coordinates in Unreal Engine, and the NHB Kebaya game.",
+        text: "Built the WaterB passenger web app from scratch in PlayCanvas, and used Socket.IO to bridge it with the Unity boat app so GPS positions line up precisely on both maps. Also built the museum companion's pathfinding and its navigation to live MQTT coordinates in Unreal Engine, and the NHB Kebaya game.",
         skills: ["Game Development", "Unity", "Unreal Engine", "PlayCanvas"] }
     ],
     projects: ["singapore-odyssea", "waterb-boat-app", "waterb-web-app", "kebaya-quest", "unreleased-action-game", "unreleased-card-game", "jumpchain"]
