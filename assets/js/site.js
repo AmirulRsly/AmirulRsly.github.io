@@ -184,7 +184,10 @@
     // Every clip of every project, dealt out round-robin (each project's 1st clip, then each one's 2nd...)
     // so clips from the same project don't sit side by side.
     var skipHero = window.HERO_SKIP || [];
-    var lists = projects.map(function (p) {
+    var first = window.HERO_FIRST || [], last = window.HERO_LAST || [];
+    function rank(p) { var i = first.indexOf(p.slug); return i > -1 ? i : last.indexOf(p.slug) > -1 ? 999 : 100; }
+    var ordered = projects.slice().sort(function (a, b) { return rank(a) - rank(b); }); // stable: same rank keeps grid order
+    var lists = ordered.map(function (p) {
       var seen = {}, out = [];
       [p.preview].concat(p.media.map(function (m) { return m.clip ? m.src : null; })).forEach(function (f) {
         if (f && !seen[f] && skipHero.indexOf(f) < 0) { seen[f] = 1; out.push(reduceMotion ? p.cover : "hero/" + f); }
@@ -192,9 +195,13 @@
       // At most two per project, so no game fills the wall with near-identical footage.
       return out.slice(0, reduceMotion ? 1 : 2);
     });
+    // Dealt in three groups (featured studio work, everything else, the edge ones), round-robin within each.
     var items = [];
-    for (var round = 0; lists.some(function (l) { return l.length > round; }); round++)
-      lists.forEach(function (l) { if (l[round]) items.push(l[round]); });
+    [[0, 99], [100, 100], [999, 999]].forEach(function (g) {
+      var group = lists.filter(function (l, i) { var r = rank(ordered[i]); return r >= g[0] && r <= g[1]; });
+      for (var round = 0; group.some(function (l) { return l.length > round; }); round++)
+        group.forEach(function (l) { if (l[round]) items.push(l[round]); });
+    });
     var small = window.matchMedia("(max-width: 760px)").matches;
     var ROWS = small ? 4 : 3, PER = small ? 6 : 99;
     function build() {
@@ -525,7 +532,6 @@
     $("#viewerBody").innerHTML = "<p>" + esc(p.body[0]) + "</p>" +
       (p.body.length > 1 ? '<div class="viewer__rest" id="viewerRest" hidden>' + p.body.slice(1).map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("") + "</div>" +
         '<button type="button" class="viewer__morebtn" id="viewerMore" aria-expanded="false">See more</button>' : "") +
-      (p.confidential ? '<p class="viewer__note">This project hasn\'t been released yet, so the game and client are kept confidential for now. Screenshots will be added after launch.</p>' : "") +
       (p.clientAssets ? '<p class="viewer__note">The art assets were provided by the client and are AI-generated. I developed the game.</p>' : "");
     [["#viewerPrev", -1, "Previous"], ["#viewerNext", 1, "Next"]].forEach(function (d) {
       var q = projects[(pi + d[1] + projects.length) % projects.length];
@@ -567,6 +573,8 @@
     $("#viewerClip").hidden = typeof m === "string";
     $("#viewerPlay").hidden = !p.play && !outLink(p);
     $("#viewerCount").textContent = (cur.m + 1) + " / " + n;
+    $$(".viewer__nav", $("#viewer")).forEach(function (b) { b.hidden = n < 2; });
+    $("#viewerCount").hidden = n < 2;
     $$("button", thumbs).forEach(function (b, i) { b.setAttribute("aria-current", i === cur.m ? "true" : "false"); });
     var active = thumbs.children[cur.m];
     if (active) thumbs.scrollTo({ left: active.offsetLeft - thumbs.clientWidth / 2 + active.clientWidth / 2, behavior: reduceMotion ? "auto" : "smooth" });

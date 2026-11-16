@@ -7,6 +7,29 @@
 // play: { type: "game" | "video", src, w, h } lets the game or video run inside the gallery (w/h: its shape).
 window.PROJECTS = [
   {
+    slug: "singapore-odyssea",
+    title: "Singapore Odyssea: Glass Rotunda Installation",
+    short: "An interactive installation at the National Museum of Singapore. I programmed the companion creature that follows visitors along the ramp.",
+    category: "apps",
+    kind: "Interactive Installation",
+    engine: "Unreal Engine · C++ · Blueprints",
+    date: "2026-01",
+    featured: true,
+    cover: "cover-nms.webp",
+    coverLarge: "nms1.webp",
+    preview: "nmsclip1.webp",
+    tags: ["Unreal Engine", "C++", "Blueprints", "Pathfinding", "Game AI", "MQTT", "TCP", "Perforce"],
+    links: [],
+    body: [
+      "Singapore Odyssea: A Journey Through Time is an immersive installation for the Glass Rotunda and Globe Ramp at the National Museum of Singapore, built at CraveFX in Unreal Engine. Across its four episodes, a companion creature, the familiar, moves along the ramp with visitors.",
+      "I worked on the familiar's behaviour: its pathfinding, then navigation to dynamic endpoints driven by live visitor coordinates sent over MQTT, so it always knows where to go next. I later wrote custom obstacle avoidance that replaced the old pathfinder in all the Blueprints, built the animation state control rigs and a skin manager for the companion, and optimised its MQTT-driven movement.",
+      "I packaged and shipped the ramp test builds for all four episodes, each with a changelog, adding debug and stress-test indicators, collider visibility, field-of-view tuning and a fix for the familiar moonwalking. I also made the forked and rolled-back builds.",
+      "With a teammate, I built an Open House mode controlled by TCP messages, shipped its builds for all four episodes with two fallback versions, and tested on site after the exhibit closed each evening. We set up Perforce for the project, and I shipped the final production build and helped prepare the source handover to the client."
+    ],
+    media: ["nms1.webp", "nms2.webp", "nms3.webp", "nms4.webp",
+      { src: "nmsclip1.webp", clip: true }, { src: "nmsclip2.webp", clip: true }, { src: "nmsclip3.webp", clip: true }]
+  },
+  {
     slug: "13-malam",
     play: { type: "game", src: "https://itch.io/embed-upload/19944067?color=07080f", w: 1280, h: 720 },
     title: "13 Malam",
@@ -15,9 +38,7 @@ window.PROJECTS = [
     kind: "Horror Fishing Game",
     engine: "Unity · C# · WebGL",
     date: "2026-10",
-    featured: true,
     cover: "cover-malam.webp",
-    coverLarge: "malam5.webp",
     preview: "malamclip1.webp",
     tags: ["Unity", "C#", "WebGL", "Horror", "AI Navigation", "Day/Night Cycle", "Tripo", "Claude Code", "Codex", "ChatGPT"],
     links: [
@@ -140,27 +161,6 @@ window.PROJECTS = [
       { src: "rigclip0.webp", clip: true }, { src: "rigclip1.webp", clip: true }, { src: "rigclip2.webp", clip: true }, { src: "rigclip3.webp", clip: true }]
   },
   {
-    slug: "singapore-odyssea",
-    title: "Singapore Odyssea: Glass Rotunda Installation",
-    short: "An interactive installation at the National Museum of Singapore. I programmed the companion creature that follows visitors along the ramp.",
-    category: "apps",
-    kind: "Interactive Installation",
-    engine: "Unreal Engine · C++ · Blueprints",
-    date: "2026-01",
-    cover: "cover-nms.webp",
-    preview: "nmsclip1.webp",
-    tags: ["Unreal Engine", "C++", "Blueprints", "Pathfinding", "Game AI", "MQTT", "TCP", "Perforce"],
-    links: [],
-    body: [
-      "Singapore Odyssea: A Journey Through Time is an immersive installation for the Glass Rotunda and Globe Ramp at the National Museum of Singapore, built at CraveFX in Unreal Engine. Across its four episodes, a companion creature, the familiar, moves along the ramp with visitors.",
-      "I worked on the familiar's behaviour: its pathfinding, then navigation to dynamic endpoints driven by live visitor coordinates sent over MQTT, so it always knows where to go next. I later wrote custom obstacle avoidance that replaced the old pathfinder in all the Blueprints, built the animation state control rigs and a skin manager for the companion, and optimised its MQTT-driven movement.",
-      "I packaged and shipped the ramp test builds for all four episodes, each with a changelog, adding debug and stress-test indicators, collider visibility, field-of-view tuning and a fix for the familiar moonwalking. I also made the forked and rolled-back builds.",
-      "With a teammate, I built an Open House mode controlled by TCP messages, shipped its builds for all four episodes with two fallback versions, and tested on site after the exhibit closed each evening. We set up Perforce for the project, and I shipped the final production build and helped prepare the source handover to the client."
-    ],
-    media: ["nms1.webp", "nms2.webp", "nms3.webp", "nms4.webp",
-      { src: "nmsclip1.webp", clip: true }, { src: "nmsclip2.webp", clip: true }, { src: "nmsclip3.webp", clip: true }]
-  },
-  {
     slug: "waterb-boat-app",
     title: "WaterB Boat Guide: Boat Display App",
     short: "The app on the TVs of WaterB's river boats: a live map of the ride, fed by GPS, shared with every boat and passenger.",
@@ -224,38 +224,34 @@ window.PROJECTS = [
   {
     slug: "unreleased-action-game",
     title: "Unreleased 3D Action Game",
-    short: "A 3D action game I'm building at CraveFX. Under wraps until it launches, but here's what I do on it.",
+    short: "Unreleased. Details after launch.",
     category: "games",
     kind: "3D Action Game",
     engine: "Unity · C# · WebGPU · Android",
     date: "2026-05",
     confidential: true,
     cover: "cover-confidential-1.webp",
-    tags: ["Unity", "C#", "WebGPU", "Android", "Performance Optimisation", "Object Pooling", "Confidential"],
+    tags: ["Unity", "C#", "Confidential"],
     links: [],
     body: [
-      "An unreleased 3D action game at CraveFX. The game and client stay confidential until it launches, so there are no screenshots yet, but here's my part in it.",
-      "It started as an R&D task: porting the game from PC to WebGPU and Android. Fixing file I/O, MeshCollider seam collisions and static batching roughly doubled the frame rate on desktop WebGPU, and I added touch controls for mobile. I also wrote the game design document.",
-      "I now own the project day to day: the enemy spawner, an object pooling system, enemy logic, UI, and rigging fixes."
+      "This project hasn't been released yet, so it's kept confidential for now. Screenshots and details will be added after launch."
     ],
     media: ["confidential-1.webp"]
   },
   {
     slug: "unreleased-card-game",
     title: "Unreleased Card Game",
-    short: "A card game for the web, built at CraveFX. Under wraps until it launches; I built its gameplay front end.",
+    short: "Unreleased. Details after launch.",
     category: "games",
     kind: "Card Game",
     engine: "PlayCanvas · JavaScript",
     date: "2026-01",
     confidential: true,
     cover: "cover-confidential-2.webp",
-    tags: ["PlayCanvas", "JavaScript", "Multiplayer", "Card Game", "Front end", "Confidential"],
+    tags: ["PlayCanvas", "JavaScript", "Confidential"],
     links: [],
     body: [
-      "An unreleased web card game built at CraveFX. The game and client stay confidential until it launches, so there are no screenshots yet, but here's my part in it.",
-      "I built the whole gameplay front end in PlayCanvas, for both single player and multiplayer: the card movement, the animations and the game flow. A teammate handles the backend.",
-      "I also run the staging and production releases, fixing issues like multiplayer card ordering and overlapping cards along the way."
+      "This project hasn't been released yet, so it's kept confidential for now. Screenshots and details will be added after launch."
     ],
     media: ["confidential-2.webp"]
   },
@@ -764,6 +760,10 @@ window.EXPERIENCE = [
     projects: ["kanamoji", "rhythm-hero", "covid-busters", "flat-tire"]
   }
 ];
+
+// Hero wall: these projects' clips come first, these go to the far end of the rows.
+window.HERO_FIRST = ["singapore-odyssea", "waterb-boat-app", "waterb-web-app", "kebaya-quest"];
+window.HERO_LAST = ["hotel-check-in", "grade-4-math"];
 
 // Clips left off the hero wall because they look almost the same as another clip of that project.
 window.HERO_SKIP = ["bqclip1.webp", "bqclip3.webp", "covgif1.webp", "covgif3.webp", "covgif4.webp", "covgif5.webp",

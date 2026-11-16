@@ -404,6 +404,8 @@
     var grid = done.querySelector(".pack-done__grid");
     grid.innerHTML = pulled.map(function (p) { return cardHTML(p, all.indexOf(p) + 1); }).join("");
     [].forEach.call(grid.children, function (c) { bindCard(c, false); });
+    grid.classList.add("is-landing");
+    setTimeout(function () { grid.classList.remove("is-landing"); }, reduceMotion ? 0 : 800); // last card lands at ~740ms
     done.hidden = false;
     tip.hidden = true;
     track("finished");
