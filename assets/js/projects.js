@@ -19,7 +19,7 @@ window.PROJECTS = [
     coverLarge: "nms1.webp",
     preview: "nmsclip1.webp",
     tags: ["Unreal Engine", "C++", "Blueprints", "Pathfinding", "Game AI", "MQTT", "Perforce"],
-    links: [],
+    links: [{ label: "View on CraveFX", url: "https://cravefx.com/portfolio/singapore-odyssea-a-journey-through-time/" }],
     body: [
       "Singapore Odyssea: A Journey Through Time is an immersive installation for the Glass Rotunda and Globe Ramp at the National Museum of Singapore, built at CraveFX in Unreal Engine. Across its four episodes, a companion creature, the familiar, moves along the ramp with visitors.",
       "I worked on the familiar's behaviour: its pathfinding, then navigation to dynamic endpoints driven by live visitor coordinates sent over MQTT, so it always knows where to go next. I later wrote custom obstacle avoidance that replaced the old pathfinder in all the Blueprints, built the animation state control rigs and a skin manager for the companion, and optimised its MQTT-driven movement.",
@@ -213,7 +213,7 @@ window.PROJECTS = [
     cover: "cover-keb.webp",
     preview: "kebclip1.webp",
     tags: ["PlayCanvas", "JavaScript", "Minigames", "UI", "Animation"],
-    links: [],
+    links: [{ label: "Play Kebaya Quest", url: "https://nhb-kebayaquest.com/" }, { label: "View on CraveFX", url: "https://cravefx.com/portfolio/kebaya-quest-a-thread-through-tradition/" }],
     body: [
       "Kebaya Quest: A Thread through Tradition is a web game for Singapore's National Heritage Board, built at CraveFX. Players explore a town, meet characters and learn about the kebaya through minigames.",
       "My main parts were the kebaya showcase page, the screenshot feature and the embroidery stitching minigame. I also worked on the UI layering for the first minigame, the kebaya reveal animations and the retry feature, and fixed a screenshot asset and a reveal bug.",
