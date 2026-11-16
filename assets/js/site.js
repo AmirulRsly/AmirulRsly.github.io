@@ -226,6 +226,22 @@
       var rows = [];
       for (var r = 0; r < ROWS; r++) rows.push([]);
       items.forEach(function (f, k) { var row = rows[k % ROWS]; if (row.length < PER) row.push(f); });
+      // Rows loop, so a row's last clip sits right before its first one. Put the HERO_LAST clips in the
+      // middle of the row instead, as far as possible from the lead clips beside the card.
+      var lastFiles = [];
+      lists.forEach(function (l, i) { if (rank(ordered[i]) === 999) lastFiles = lastFiles.concat(l); });
+      var card = $(".card-char"), cr = card && card.getBoundingClientRect();
+      rows = rows.map(function (row, r) {
+        var tail = row.filter(function (f) { return lastFiles.indexOf(f) > -1; });
+        if (!tail.length) return row;
+        var rest = row.filter(function (f) { return lastFiles.indexOf(f) < 0; }), at = Math.ceil(rest.length / 2);
+        if (!small && !reduceMotion && cr) {
+          // desktop: just past the right edge of the screen at load, counted from where the lead clip starts
+          var x = r % 2 ? cr.right + GAP : cr.left - GAP - widthOf(rest[0]);
+          for (at = 0; at < rest.length && x < window.innerWidth + 40; at++) x += widthOf(rest[at]) + GAP;
+        }
+        return rest.slice(0, at).concat(tail, rest.slice(at));
+      });
       render(rows, delays(rows));
     }
     function render(rows, delay) {
