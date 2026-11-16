@@ -204,15 +204,36 @@
     });
     var small = window.matchMedia("(max-width: 760px)").matches;
     var ROWS = small ? 4 : 3, PER = small ? 6 : 99;
+    // Desktop: the left of the wall sits under the intro text, so each row's scroll starts part-way
+    // (a negative animation delay) with its lead clips right beside the profile card.
+    var AR = window.HERO_AR || {}, H = 190, GAP = 14;
+    function widthOf(f) { return (AR[f.replace(/^hero\//, "")] || 16 / 9) * H; }
+    function delays(rows) {
+      var card = $(".card-char");
+      if (small || reduceMotion || !card) return rows.map(function () { return 0; });
+      var wl = wall.getBoundingClientRect().left, c = card.getBoundingClientRect();
+      return rows.map(function (row, r) {
+        var copy = row.reduce(function (s, f) { return s + widthOf(f) + GAP; }, 0);
+        var dur = row.length * 10 + r * 15;
+        if (r % 2) { // drifts right: lead clip starts just right of the card
+          return dur * ((c.right + GAP - wl) / copy);
+        } // drifts left: lead clip ends at the card's left edge
+        var T = c.left - GAP - widthOf(row[0]) - wl;
+        return dur * ((copy - T) / copy);
+      }).map(function (t) { return Math.max(0, t); });
+    }
     function build() {
       var rows = [];
       for (var r = 0; r < ROWS; r++) rows.push([]);
       items.forEach(function (f, k) { var row = rows[k % ROWS]; if (row.length < PER) row.push(f); });
+      render(rows, delays(rows));
+    }
+    function render(rows, delay) {
       wall.innerHTML = rows.map(function (row, r) {
         // Lazy, so only the clips near the screen load; the rest arrive as the rows drift.
-        var tiles = row.map(function (f) { return '<img src="' + MEDIA + f + '" alt="" loading="lazy" decoding="async">'; }).join("");
+        var tiles = row.map(function (f) { return '<img src="' + MEDIA + f + '" alt="" loading="lazy" decoding="async" width="' + Math.round(widthOf(f)) + '" height="' + H + '">'; }).join("");
         // Two copies back to back so the row loops without a seam.
-        return '<div class="wall__row' + (r % 2 ? " wall__row--rev" : "") + '"><div class="wall__track" style="animation-duration:' + Math.round(row.length * 10 + r * 15) + 's">' + tiles + tiles + "</div></div>";
+        return '<div class="wall__row' + (r % 2 ? " wall__row--rev" : "") + '"><div class="wall__track" style="animation-duration:' + Math.round(row.length * 10 + r * 15) + 's;animation-delay:-' + delay[r].toFixed(2) + 's">'  + tiles + tiles + "</div></div>";
       }).join("");
       requestAnimationFrame(function () { wall.classList.add("is-on"); });
     }

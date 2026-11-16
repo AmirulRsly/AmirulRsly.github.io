@@ -3,7 +3,7 @@
 (function () {
   "use strict";
   var MEDIA = "assets/media/";
-  var all = (window.PROJECTS || []).filter(function (p) { return !p.hidden; });
+  var all = (window.PROJECTS || []).filter(function (p) { return !p.hidden && !p.confidential; }); // no cards for unreleased work
   if (all.length < 5) return;
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
