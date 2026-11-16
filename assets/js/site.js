@@ -225,7 +225,19 @@
     function build() {
       var rows = [];
       for (var r = 0; r < ROWS; r++) rows.push([]);
-      items.forEach(function (f, k) { var row = rows[k % ROWS]; if (row.length < PER) row.push(f); });
+      // HERO_ROWS picks which projects lead each row (top, middle, bottom); everything else is dealt after them.
+      var lead = window.HERO_ROWS || [], taken = [];
+      lead.slice(0, ROWS).forEach(function (slugs, r) {
+        slugs.forEach(function (slug) {
+          var i = ordered.findIndex(function (p) { return p.slug === slug; });
+          if (i > -1) lists[i].forEach(function (f) { rows[r].push(f); taken.push(f); });
+        });
+      });
+      var k = 0;
+      items.forEach(function (f) {
+        if (taken.indexOf(f) > -1) return;
+        var row = rows[k++ % ROWS]; if (row.length < PER) row.push(f);
+      });
       // Rows loop, so a row's last clip sits right before its first one. Put the HERO_LAST clips in the
       // middle of the row instead, as far as possible from the lead clips beside the card.
       var lastFiles = [];

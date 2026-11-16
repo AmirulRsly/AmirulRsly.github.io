@@ -765,9 +765,11 @@ window.EXPERIENCE = [
 // Hero wall: these projects' clips come first, these go to the far end of the rows.
 window.HERO_FIRST = ["singapore-odyssea", "waterb-boat-app", "waterb-web-app", "kebaya-quest"];
 window.HERO_LAST = ["hotel-check-in", "grade-4-math"];
+// Which projects lead each row of the hero wall, beside the profile card: top, middle, bottom.
+window.HERO_ROWS = [["kebaya-quest"], ["singapore-odyssea"], ["waterb-boat-app", "waterb-web-app"]];
 
 // Clips left off the hero wall because they look almost the same as another clip of that project.
-window.HERO_SKIP = ["bqclip1.webp", "bqclip3.webp", "covgif1.webp", "covgif3.webp", "covgif4.webp", "covgif5.webp",
+window.HERO_SKIP = ["wbboatclip2.webp", "wbwebclip2.webp", "wbwebclip3.webp", "wbwebclip4.webp", "bqclip1.webp", "bqclip3.webp", "covgif1.webp", "covgif3.webp", "covgif4.webp", "covgif5.webp",
   "fypgif2.webp", "fypgif4.webp", "jcclip2.webp", "nnclip2.webp", "nnclip3.webp", "rhygif3.webp", "rigclip2.webp", "srclip2.webp"];
 
 // Projects that belong together. Each project page links to the others in its group(s).
