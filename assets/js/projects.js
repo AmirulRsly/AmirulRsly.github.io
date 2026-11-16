@@ -18,13 +18,13 @@ window.PROJECTS = [
     cover: "cover-nms.webp",
     coverLarge: "nms1.webp",
     preview: "nmsclip1.webp",
-    tags: ["Unreal Engine", "C++", "Blueprints", "Pathfinding", "Game AI", "MQTT", "TCP", "Perforce"],
+    tags: ["Unreal Engine", "C++", "Blueprints", "Pathfinding", "Game AI", "MQTT", "Perforce"],
     links: [],
     body: [
       "Singapore Odyssea: A Journey Through Time is an immersive installation for the Glass Rotunda and Globe Ramp at the National Museum of Singapore, built at CraveFX in Unreal Engine. Across its four episodes, a companion creature, the familiar, moves along the ramp with visitors.",
       "I worked on the familiar's behaviour: its pathfinding, then navigation to dynamic endpoints driven by live visitor coordinates sent over MQTT, so it always knows where to go next. I later wrote custom obstacle avoidance that replaced the old pathfinder in all the Blueprints, built the animation state control rigs and a skin manager for the companion, and optimised its MQTT-driven movement.",
       "I packaged and shipped the ramp test builds for all four episodes, each with a changelog, adding debug and stress-test indicators, collider visibility, field-of-view tuning and a fix for the familiar moonwalking. I also made the forked and rolled-back builds.",
-      "With a teammate, I built an Open House mode controlled by TCP messages, shipped its builds for all four episodes with two fallback versions, and tested on site after the exhibit closed each evening. We set up Perforce for the project, and I shipped the final production build and helped prepare the source handover to the client."
+      "I also shipped the final production build and helped prepare the source handover to the client. The project lived in a Perforce repository."
     ],
     media: ["nms1.webp", "nms2.webp", "nms3.webp", "nms4.webp",
       { src: "nmsclip1.webp", clip: true }, { src: "nmsclip2.webp", clip: true }, { src: "nmsclip3.webp", clip: true }]
@@ -720,7 +720,7 @@ window.EXPERIENCE = [
     place: "Kuala Lumpur, Malaysia · Hybrid",
     roles: [
       { title: "Junior Interactive Media and Game Developer", type: "Full-time", start: "2025-02", end: null,
-        text: "Develop client projects in Unity, Unreal Engine and PlayCanvas. I'm the developer responsible for the WaterB boat guide's two apps, where boats share live GPS positions over Socket.IO and river snapping keeps them on course. Other work includes the National Museum of Singapore's Glass Rotunda installation, with its companion AI, test builds and Open House mode; the gameplay front end of an unreleased card game; and porting an unreleased 3D action game to WebGPU and Android.",
+        text: "Develop client projects in Unity, Unreal Engine and PlayCanvas. I'm the developer responsible for the WaterB boat guide's two apps, where boats share live GPS positions over Socket.IO and river snapping keeps them on course. Other work includes the National Museum of Singapore's Glass Rotunda installation, with its companion AI and test builds; the gameplay front end of an unreleased card game; and porting an unreleased 3D action game to WebGPU and Android.",
         skills: ["Unity", "Unreal Engine", "PlayCanvas", "Game Development", "Web Application Development"] },
       { title: "Junior Interactive Developer", type: "Contract", start: "2024-03", end: "2025-02",
         text: "Built the WaterB passenger web app from scratch in PlayCanvas, and used Socket.IO to bridge it with the Unity boat app so GPS positions line up precisely on both maps. Also built the museum companion's pathfinding and its navigation to live MQTT coordinates in Unreal Engine, and the NHB Kebaya game.",

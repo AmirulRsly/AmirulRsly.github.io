@@ -68,7 +68,7 @@
     return '<div class="tcard r-' + t + '" data-slug="' + esc(p.slug) + '" tabindex="0" role="button" aria-label="' + esc(p.title) + ", " + info.label + ' card">' +
       '<div class="tcard__inner">' +
         '<div class="tcard__head"><b>' + esc(p.title) + '</b><span class="tcard__mark" title="' + info.label + '">' + info.mark + "</span></div>" +
-        '<div class="tcard__art"><img src="' + MEDIA + esc(p.cover) + '" alt="" draggable="false"></div>' +
+        '<div class="tcard__art"><img src="' + MEDIA + esc(p.cover) + '"' + (p.preview ? ' data-clip="' + MEDIA + esc(p.preview) + '"' : "") + ' alt="" draggable="false"></div>' +
         '<div class="tcard__type">' + esc(p.kind) + "<span>" + fmtDate(p.date) + "</span></div>" +
         '<p class="tcard__text">' + esc(p.short) + "</p>" +
         '<div class="tcard__foot"><span class="tcard__tools">' + tools.map(function (x) {
@@ -184,7 +184,10 @@
     drag = { x: e.clientX, y: e.clientY, rx: rx, ry: ry, id: e.pointerId };
     pack.classList.add("is-dragging");
   });
+  // A mouse/trackpad move with no button held means the release was lost (seen on Mac trackpads): end it here.
+  function released(e) { return e.pointerType !== "touch" && e.buttons === 0; }
   pack.addEventListener("pointermove", function (e) {
+    if ((tear || drag) && released(e)) { endDrag(e); return; }
     if (tear && e.pointerId === tear.id) {
       var p = Math.min(1, Math.abs(e.clientX - tear.x) / (tear.width * 0.5));
       tear.max = Math.max(tear.max, p); // the cut only grows
@@ -200,7 +203,7 @@
   function endDrag(e) {
     if (tear && e.pointerId === tear.id) {
       // let go most of the way across: count it
-      if (tear.max > 0.7 && e.type === "pointerup") { tear = null; cut.style.width = "100%"; rip(); return; }
+      if (tear.max > 0.7 && e.type !== "pointercancel") { tear = null; cut.style.width = "100%"; rip(); return; }
       tear = null;
       top.classList.remove("is-tearing");
       return;
@@ -213,6 +216,12 @@
     setRot(true);
   }
   pack.addEventListener("pointerup", endDrag);
+  window.addEventListener("pointerup", function (e) { endDrag(e); if (deck && deck._release) deck._release(e); });
+  window.addEventListener("blur", function () {
+    var e = { pointerId: (drag || tear || {}).id, type: "pointercancel", clientX: 0, clientY: 0 };
+    if (drag || tear) endDrag(e);
+    if (deck && deck._release) deck._release({ pointerId: null, type: "pointercancel", any: true });
+  });
   pack.addEventListener("pointercancel", endDrag);
 
   /* ---------- Pack: tear it ---------- */
@@ -259,6 +268,7 @@
       if (!c || c.revealed) return; // idempotent: a quick tap may reveal it before the timer does
       c.revealed = true;
       c.classList.add("is-top");
+      if (!hoverable) playClip(c, true);
       collect(pulled[i]);
       if (fresh[i]) {
         var prog = cardsBox.querySelector(".pack-progress");
@@ -271,7 +281,22 @@
   }
 
   // Holo shine follows the pointer; the top card can be flicked away.
+  // Hover (or, on touch screens, reaching the top of the deck) swaps the card art for the project's clip.
+  var hoverable = window.matchMedia("(hover: hover)").matches;
+  function playClip(c, on) {
+    var im = c.querySelector(".tcard__art img");
+    if (!im || !im.dataset.clip) return;
+    if (!im.dataset.still) im.dataset.still = im.src;
+    var want = on ? im.dataset.clip : im.dataset.still;
+    if (im.src !== want) im.src = want;
+  }
   function bindCard(c, inStack) {
+    var art = c.querySelector(".tcard__art img");
+    if (art) art.addEventListener("load", function () { art.classList.toggle("is-tall", art.naturalHeight > art.naturalWidth); });
+    if (hoverable) {
+      c.addEventListener("pointerenter", function () { playClip(c, true); });
+      c.addEventListener("pointerleave", function () { playClip(c, false); });
+    }
     // The entrance animation would otherwise keep control of transform and stop the fly-off / hover transitions.
     c.addEventListener("animationend", function () { c.style.animation = "none"; });
     c.addEventListener("pointermove", function (e) {
@@ -311,6 +336,7 @@
     });
     deck.addEventListener("pointermove", function (e) {
       if (!g || e.pointerId !== g.id) return;
+      if (released(e)) { release(e); return; }
       var dx = e.clientX - g.x, dy = e.clientY - g.y;
       if (!g.moved && Math.hypot(dx, dy) < 8) return;
       g.moved = true;
@@ -320,7 +346,7 @@
       if (g.hist.length > 6) g.hist.shift();
     });
     function release(e) {
-      if (!g || e.pointerId !== g.id) return;
+      if (!g || (e.pointerId !== g.id && !e.any)) return;
       var h = g.hist[0], dx = e.clientX - g.x, vx = (e.clientX - h[0]) / Math.max(1, performance.now() - h[1]);
       var moved = g.moved;
       g = null;
@@ -331,6 +357,7 @@
       else if (Math.abs(vx) > 0.7 && Math.abs(dx) > 50) next(vx < 0 ? -1 : 1); // quick flick
     }
     deck.addEventListener("pointerup", release);
+    deck._release = release;
     deck.addEventListener("pointercancel", release);
   }
   function next(dir) {
