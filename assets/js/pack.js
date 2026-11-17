@@ -68,7 +68,7 @@
     return '<div class="tcard r-' + t + '" data-slug="' + esc(p.slug) + '" tabindex="0" role="button" aria-label="' + esc(p.title) + ", " + info.label + ' card">' +
       '<div class="tcard__inner">' +
         '<div class="tcard__head"><b>' + esc(p.title) + '</b><span class="tcard__mark" title="' + info.label + '">' + info.mark + "</span></div>" +
-        '<div class="tcard__art"><img src="' + MEDIA + esc(p.cover) + '"' + (p.preview ? ' data-clip="' + MEDIA + esc(p.preview) + '"' : "") + ' alt="" draggable="false"></div>' +
+        '<div class="tcard__art" style="background-image:url(' + MEDIA + esc(p.cover) + ')"><img src="' + MEDIA + esc(p.cover) + '"' + (p.preview ? ' data-clip="' + MEDIA + esc(p.preview) + '"' : "") + ' alt="" draggable="false"></div>' +
         '<div class="tcard__type">' + esc(p.kind) + "<span>" + fmtDate(p.date) + "</span></div>" +
         '<p class="tcard__text">' + esc(p.short) + "</p>" +
         '<div class="tcard__foot"><span class="tcard__tools">' + tools.map(function (x) {

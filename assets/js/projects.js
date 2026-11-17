@@ -275,7 +275,7 @@ window.PROJECTS = [
       "A take on Doodle Jump without the shooting or the enemies, built for a client.",
       "The game itself was simple to make. The real challenge was tuning the gyroscope that steers the player left and right: finding the sweet spot took a lot of playtesting. It was my first project with gyro controls."
     ],
-    media: ["jg1.webp", "jg2.webp", "jg3.webp",
+    media: ["jg1.webp", "jg2.webp", "jg3.webp", "jg4.webp",
       { src: "jgclip1.webp", clip: true }, { src: "jgclip2.webp", clip: true }]
   },
   {
@@ -290,7 +290,7 @@ window.PROJECTS = [
     client: true,
     clientAssets: true,
     cover: "cover-er.webp",
-    preview: "erclip1.webp",
+    preview: "erclip2.webp",
     tags: ["Unity", "C#", "WebGL", "Shaders", "Procedural Generation", "Freelance"],
     links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/endlessrunner" }],
     body: [
@@ -298,7 +298,7 @@ window.PROJECTS = [
       "I found out that the way Subway Surfers' world sways left, right, up and down doesn't come from where the objects are placed: it is a shader. Following a YouTube tutorial, I recreated that curved-world shader and built it into this game."
     ],
     media: ["er1.webp", "er2.webp", "er3.webp",
-      { src: "erclip1.webp", clip: true }]
+      { src: "erclip2.webp", clip: true }, { src: "erclip3.webp", clip: true }]
   },
   {
     slug: "rhythm-game",
@@ -364,7 +364,7 @@ window.PROJECTS = [
       "An educational game about addition and how inflation works, built for a client.",
       "The player taps numbered jewels until their total matches the number in the box, before time runs out."
     ],
-    media: ["inf1.webp", "inf2.webp", "inf3.webp",
+    media: ["inf1.webp", "inf2.webp",
       { src: "infclip1.webp", clip: true }]
   },
   {
