@@ -357,7 +357,7 @@ window.PROJECTS = [
     client: true,
     clientAssets: true,
     cover: "cover-inf.webp",
-    preview: "infclip1.webp",
+    preview: "infclip2.webp",
     tags: ["Unity", "C#", "WebGL", "Educational", "Freelance"],
     links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/inflationgame" }],
     body: [
@@ -365,7 +365,7 @@ window.PROJECTS = [
       "The player taps numbered jewels until their total matches the number in the box, before time runs out."
     ],
     media: ["inf1.webp", "inf2.webp",
-      { src: "infclip1.webp", clip: true }]
+      { src: "infclip2.webp", clip: true }]
   },
   {
     slug: "land-mine-panic",
