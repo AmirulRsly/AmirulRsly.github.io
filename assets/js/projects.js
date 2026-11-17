@@ -86,7 +86,8 @@ window.PROJECTS = [
     cover: "cover-fyp.webp",
     preview: "fypgif2.webp",
     tags: ["Unity", "C#", "Finite State Machine", "Fuzzy Logic", "2D Art"],
-    links: [{ label: "Play the demo on itch.io", url: "https://amirulrsly.itch.io/amirulrsly-fyp-demo" }],
+    links: [{ label: "Play the demo on itch.io", url: "https://amirulrsly.itch.io/amirulrsly-fyp-demo" },
+      { label: "View sample code on GitHub", url: "https://github.com/AmirulRsly/kanamoji-scripts" }],
     body: [
       "My degree final year project, titled “Intelligent Enemy in Turn-Based Battle System to Learn Kanamoji”. It is an educational game about learning the Japanese alphabet, built around a mechanic I designed: a turn-based combat system fused with a quiz game, so every attack is a question.",
       "I built the enemy AI with a finite state machine and fuzzy logic. The AI learns Kanamoji alongside the player and competes with them on who can answer correctly and fastest.",
