@@ -259,7 +259,7 @@ window.PROJECTS = [
   {
     slug: "jump-game",
     play: { type: "game", src: "https://itch.io/embed-upload/16752877?color=07080f", w: 720, h: 1280 },
-    title: "Jump Game",
+    title: "Blizzard Jump",
     short: "A Doodle Jump style climber for a client, steered by tilting your phone.",
     category: "games",
     kind: "Mobile Minigame",
@@ -270,7 +270,7 @@ window.PROJECTS = [
     cover: "cover-jg.webp",
     preview: "jgclip1.webp",
     tags: ["Unity", "C#", "WebGL", "Gyroscope Controls", "Freelance"],
-    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/jump-game" }],
+    links: [{ label: "Play on itch.io", url: "https://amirulrsly.itch.io/blizzard-jump" }],
     body: [
       "A take on Doodle Jump without the shooting or the enemies, built for a client.",
       "The game itself was simple to make. The real challenge was tuning the gyroscope that steers the player left and right: finding the sweet spot took a lot of playtesting. It was my first project with gyro controls."
