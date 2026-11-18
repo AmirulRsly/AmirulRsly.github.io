@@ -258,16 +258,32 @@
     }
     function render(rows, delay) {
       wall.innerHTML = rows.map(function (row, r) {
-        // Lazy, so only the clips near the screen load; the rest arrive as the rows drift.
-        var tiles = row.map(function (f) { return '<img src="' + MEDIA + f + '" alt="" loading="lazy" decoding="async" width="' + Math.round(widthOf(f)) + '" height="' + H + '">'; }).join("");
+        // No src yet: feed() gives each clip its src as its row drifts it near the screen.
+        var tiles = row.map(function (f) { return '<img data-src="' + MEDIA + f + '" alt="" decoding="async" width="' + Math.round(widthOf(f)) + '" height="' + H + '">'; }).join("");
         // Two copies back to back so the row loops without a seam.
         return '<div class="wall__row' + (r % 2 ? " wall__row--rev" : "") + '"><div class="wall__track" style="animation-duration:' + Math.round(row.length * 10 + r * 15) + 's;animation-delay:-' + delay[r].toFixed(2) + 's">'  + tiles + tiles + "</div></div>";
       }).join("");
-      requestAnimationFrame(function () { wall.classList.add("is-on"); });
+      requestAnimationFrame(function () { wall.classList.add("is-on"); feed(); });
+    }
+    // The browser's own lazy loading doesn't see clips scrolled off to the side inside the rows, so it
+    // fetched nearly the whole wall up front. Instead, give a clip its src once it's within LEAD px of
+    // the screen. Rows drift about 30-40px a second, so checking once a second keeps well ahead.
+    var LEAD = 400, feeder = 0, onScreen = true;
+    function feed() {
+      var waiting = wall.querySelectorAll("img[data-src]");
+      if (!waiting.length) { clearInterval(feeder); feeder = 0; return; }
+      if (onScreen) {
+        var right = window.innerWidth + LEAD;
+        waiting.forEach(function (img) {
+          var b = img.getBoundingClientRect();
+          if (b.right > -LEAD && b.left < right) { img.src = img.getAttribute("data-src"); img.removeAttribute("data-src"); }
+        });
+      }
+      if (!feeder) feeder = setInterval(feed, 1000);
     }
     if (document.readyState === "complete") setTimeout(build, 200);
     else window.addEventListener("load", function () { setTimeout(build, 200); }, { once: true });
-    new IntersectionObserver(function (en) { wall.classList.toggle("is-paused", !en[0].isIntersecting); }).observe(wall);
+    new IntersectionObserver(function (en) { onScreen = en[0].isIntersecting; wall.classList.toggle("is-paused", !onScreen); }).observe(wall);
   })();
 
   /* ---------- Tilt ---------- */
